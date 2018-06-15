@@ -1,0 +1,21 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc/apps/installation",
+    "baseUrl": "./",
+    "module": "es2015",
+    "types": [],
+    "paths": {
+      "@dilta/*": [
+        "../../../libs/*"
+      ]
+    }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
+}

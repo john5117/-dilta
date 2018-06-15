@@ -1,0 +1,11 @@
+<header class="row header min-header center liensce-color">
+    Admin Authentication Signup
+</header>
+<div>
+
+  <!-- signup setion -->
+  <div>
+    <app-auth-signup-editor [levels]="authLevels" [err]="err$ | async" (emitter)="signUp($event)" ></app-auth-signup-editor>
+  </div>
+
+</div>

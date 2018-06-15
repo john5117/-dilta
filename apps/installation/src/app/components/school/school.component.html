@@ -1,0 +1,22 @@
+<header  class="row header min-header center liensce-color">
+  School Setup
+</header>
+<div class="school">
+  <app-school-biodata-editor (emitter)="onSubmit($event)">
+
+  </app-school-biodata-editor>
+</div>
+<div  *ngIf="err" class="row alert-row">
+  <!-- notification template -->
+  <div class="alert alert-danger">
+    <div class="alert-items">
+      <div class="alert-item static">
+          <!-- <div class="alert-icon-wrapper">
+          <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+        </div> -->
+        <span class="alert-text"> {{ err }} </span>
+      </div>
+    </div>
+  </div>
+  <!-- notification template -->
+</div>

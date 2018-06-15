@@ -1,0 +1,35 @@
+<div class="start-up">
+  <div class="placer">
+    <img class="svg-container" [src]="logo" alt="">
+  </div>
+  <div class="row">
+    <form class="form-group">
+      <div class="form-group center">
+        <div class="row" style="padding-top: 10%">
+          <input accept=".drsk" class="file-styled" type="file" ngFileSelect [options]="uploadOptions"
+            (uploadOutput)="fil($event.file)" name="file" id="">
+          <input [(ngModel)]="path" class="form-control liensce-input" placeholder="Liensce Key" type="text" name="liensce" id="liensce-input">
+          <div class="space-center">
+            <button class="btn btn-primary" (click)="verify(key)"> Verify </button>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div  *ngIf="err" class="row alert-row">
+          <!-- notification template -->
+          <div class="alert alert-danger">
+            <div class="alert-items">
+              <div class="alert-item static">
+                  <!-- <div class="alert-icon-wrapper">
+                  <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                </div> -->
+                <span class="alert-text"> {{ err }} </span>
+              </div>
+            </div>
+          </div>
+          <!-- notification template -->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
