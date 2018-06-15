@@ -1,0 +1,22 @@
+<div class="login-wrapper">
+  <form  [formGroup]="loginForm"   class="login">
+      <label class="title">
+          <h3 class="welcome">Welcome to</h3>
+          Dreamstack Mozart
+          <h5 class="hint">Use your Company | School | PhoneNo ID to sign in or create one now</h5>
+      </label>
+      <div class="login-group">
+          <input formControlName="username"  class="username" type="text" id="login_username" placeholder="ID">
+          <span *ngIf="!loginForm.controls['username'].valid && loginForm.controls['username'].touched"
+            class="form-error"> <i class="mi mi-Info "></i> Company | School | PhoneNo ID is required </span>
+          <input formControlName="password"  class="password" type="password" id="login_password" placeholder="Password">
+          <span *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched"
+            class="form-error"> <i class="mi mi-Info "></i> Password is required </span>
+          <div *ngIf="err" class="error active">
+              {{ err }}
+          </div>
+          <button type="submit" [disabled]="!loginForm.valid" (click)="emit(loginForm.value)" 
+          class="btn btn-primary" >LOGIN</button>
+      </div>
+  </form>
+</div>

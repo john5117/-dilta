@@ -1,0 +1,34 @@
+<div class="login-wrapper">
+  <form [formGroup]="signupForm" class="login">
+      <label class="title">
+          <h3 class="welcome">Welcome to</h3>
+          Dreamstack Mozart
+          <h5 class="hint">Use your Company | School | PhoneNO ID to sign in or create one now</h5>
+      </label>
+      <div class="login-group">
+        <input formControlName="username" class="username" type="text" id="login_username" placeholder="ID">
+        <span *ngIf="!signupForm.controls['username'].valid && signupForm.controls['username'].touched"
+            class="form-error"> <i class="mi mi-Info "></i> Company | School | PhoneNO ID is required </span>
+        <input formControlName="password" class="password" type="password" id="login_password" placeholder="Password">
+        <span *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched"
+            class="form-error"> <i class="mi mi-Info "></i> Password is required </span>
+        <input formControlName="clogin_password" class="password" type="password" id="clogin_password" placeholder="Confirm Password">
+        <span *ngIf="!signupForm.controls['clogin_password'].valid && signupForm.controls['clogin_password'].touched"
+            class="form-error"> <i class="mi mi-Info "></i> Password confirmation is required </span>
+        <div class="auth-source select">
+            <select formControlName="level" id="login-auth-source-1">
+                <option *ngFor="let _lvl of levels"> {{ _lvl }} </option>
+            </select>
+        </div>
+        <span  *ngIf="!signupForm.controls['level'].valid && signupForm.controls['level'].touched"
+            class="form-error"> <i class="mi mi-Info "></i> Access Level is required </span>
+        <div id="mismatch" *ngIf="signupForm.controls['password'].touched && signupForm.controls['clogin_password'].touched && signupForm.controls['password'].value !== signupForm.controls['clogin_password'].value" class="error active" >
+            password confirmation doesn't match
+        </div>
+          <div *ngIf="err" class="error active">
+              {{ err }}
+          </div>
+          <button type="submit" (click)="emit(signupForm.value)" [disabled]="!(signupForm.valid && signupForm.controls['password'].value === signupForm.controls['clogin_password'].value)" class="btn btn-primary">SIGN UP</button>
+      </div>
+  </form>
+</div>

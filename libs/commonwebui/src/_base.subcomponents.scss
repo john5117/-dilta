@@ -1,0 +1,11 @@
+@mixin floatright{
+  float: right!important;
+}
+
+.float-right {
+  @include floatright();
+}
+
+.form-error {
+  color: rgb(216, 103, 103)!important;
+}
