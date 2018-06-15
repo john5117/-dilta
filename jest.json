@@ -1,0 +1,14 @@
+{
+    "preset": "jest-preset-angular",
+    "setupTestFrameworkScriptFile": "<rootDir>/setupJest.ts",
+    "collectCoverage": true,
+    "globals": {
+        "ts-jest": {
+        "tsConfigFile": "tsconfig.spec.json"
+        },
+        "__TRANSFORM_HTML__": true
+    },
+    "moduleNameMapper": {
+        "@dilta/(.*)$": "<rootDir>/libs/$1"
+    }
+}
