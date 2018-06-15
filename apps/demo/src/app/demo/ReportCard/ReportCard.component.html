@@ -1,0 +1,59 @@
+<div class="container">
+
+  <div class="form">
+  <div class="row">
+    <div class="col-xs">
+        <label class="required"> Format </label>
+        <div class="select">
+          <select [(ngModel)]="format">
+                  <option *ngFor="let _format of formatList"> {{ _format }} </option>
+          </select>
+        </div>
+      </div>  
+  </div>
+  <div *ngIf="format === 'Group'" class="row">
+        <div class="col-xs">
+            <label class="required"> Class </label>
+            <div class="select">
+              <select [(ngModel)]="class">
+                      <option *ngFor="let _class of classList"> {{ _class }} </option>
+              </select>
+            </div>
+          </div>
+        <div class="col-xs">
+            <label class="required"> Subject </label>
+            <div class="select">
+              <select [(ngModel)]="subject">
+                      <option *ngFor="let _subject of subjectList"> {{ _subject }} </option>
+              </select>
+            </div>
+          </div>
+        <div class="col-xs">
+          <div class="form-group">
+              <label class="required"> Student Count </label>
+                <input [(ngModel)]="stdCount" type="number" class="form-control" >
+              </div>
+          </div>
+    </div>
+  <div *ngIf="(format !== 'Group') && studentList | async" class="row">
+        <div class="col-xs">
+            <label class="required"> Students </label>
+            <div class="select">
+              <select [(ngModel)]="student">
+                      <option *ngFor="let _student of studentList | async"> {{ _student }} </option>
+              </select>
+            </div>
+          </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <app-dynamic-table (changedData)="newData($event)" [tracker]="'id'" [keys]="config | async"
+      [datagrid]="scores" [mathExp]="expEval" ></app-dynamic-table>
+      <!-- [mathExp]="'total = fa + sa + exam'" -->
+  </div>
+</div>
+
+
+<button class="btn btn-primary" (click)="home()"> Home</button>
+{{ studentList | async | json }}

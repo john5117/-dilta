@@ -1,0 +1,44 @@
+<div class="container">
+
+  <button class="btn btn-primary" (click)="next($event)"> Next </button>
+
+  <div class="row" *ngIf="i === 0">
+    <app-auth-login-editor></app-auth-login-editor>
+  </div>
+
+  <div *ngIf="i === 1">
+    <app-auth-signup-editor></app-auth-signup-editor>
+  </div>
+
+  <div *ngIf="i === 2">
+    <app-admin-biodata-editor [classes]="classes" [subjects]="subjects" [levels]="levels"></app-admin-biodata-editor>
+  </div>
+
+  <div *ngIf="i === 3">
+    <app-managers-biodata-editor></app-managers-biodata-editor>
+  </div>
+
+  <div *ngIf="i === 4">
+    <app-parent-biodata-editor></app-parent-biodata-editor>
+  </div>
+  <div *ngIf="i === 5">
+    <app-school-biodata-editor></app-school-biodata-editor>
+  </div>
+
+  <div *ngIf="i === 6">
+    <app-school-receipt-editor [teacher]="teacher" [reciept]="reciept" [termsList]="terms" [classList]="classes" [sessionList]="sessions"></app-school-receipt-editor>
+  </div>
+
+  <div *ngIf="i === 7">
+    <app-student-biodata-editor></app-student-biodata-editor>
+  </div>
+
+  <div *ngIf="i === 8">
+    <app-dynamic-table (sender)="exam.sender($event)" (changedData)="exam.changedData($event)" [tracker]="'id'" [keys]="exam.keys"
+      [datagrid]="exam.datagrid" [mathExp]="exam.express"></app-dynamic-table>
+  </div>
+
+  <div *ngIf="i === 9">
+    <app-charts [data]="data" [keys]="fieldconfig" [config]="config"></app-charts>
+  </div>
+</div>
