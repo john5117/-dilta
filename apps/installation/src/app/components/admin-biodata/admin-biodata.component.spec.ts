@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { Injectable } from '@angular/core';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonwebuiModule } from '@dilta/commonwebui';
@@ -85,6 +85,13 @@ describe('AdminBiodataComponent', () => {
     spys.forEach(_spy => expect(_spy).toHaveBeenCalled());
   });
 
+  it('should call setupView with value', () => {
+    const viewSetupSpy = spyOn(component, 'setupView');
+    component.schoolDetails();
+    fixture.detectChanges();
+    expect(viewSetupSpy).toHaveBeenCalled();
+  });
+
 
   it('should call changeRoute when onValue is subscribed', () => {
     const changeRouteSpy = spyOn(component, 'changeRoute');
@@ -112,15 +119,6 @@ describe('AdminBiodataComponent', () => {
     expect(navigateSpy).toHaveBeenCalledWith(`finished`);
   });
 
-  it('should call changeRoute on value received and create subscription', () => {
-    const changeRouteSpy = spyOn(component, 'changeRoute');
-    const subscription = component.onValue();
-    adminSvc.entities$ = cold('-a', { a: [] });
-    fixture.detectChanges();
-    expect(changeRouteSpy).toHaveBeenCalled();
-    (expect(subscription) as any).toHaveSubscriptions();
-  });
-
   it('should display & send error and later nullify the error', fakeAsync(() => {
     const nextSpy = spyOn(component.err$, 'next');
     const error = new Error('the new display error');
@@ -131,7 +129,7 @@ describe('AdminBiodataComponent', () => {
     expect(nextSpy).toHaveBeenCalledWith(undefined);
   }));
 
-  it('should call display error onError ', () => {
+  it('should call displayerror onErrors ', () => {
     const displayErrorSpy = spyOn(component, 'displayError');
     const error = new Error('admin entity error');
     adminSvc.errors$ = cold('-e-', { e: { payload: { error } } }) as any;

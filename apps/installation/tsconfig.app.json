@@ -1,0 +1,43 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/installation",
+    "module": "es2015",
+    "baseUrl": ".",
+    "types": [],
+    "paths": {
+      "@dilta/process": [
+        "../../libs/process"
+      ],
+      "@dilta/store": [
+        "../../libs/store"
+      ],
+      "@dilta/commonwebui": [
+        "../../libs/commonwebui"
+      ],
+      "@dilta/models": [
+        "../../libs/models"
+      ],
+      "@dilta/util": [
+        "../../libs/util"
+      ],
+      "@dilta/screwbox": [
+        "../../libs/screwbox"
+      ],
+      "@dilta/offlinedatabase": [
+        "../../libs/offlinedatabase"
+      ],
+      "@dilta/*": [
+        "../../libs/*"
+      ]
+    }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts",
+    "src/test.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
+}

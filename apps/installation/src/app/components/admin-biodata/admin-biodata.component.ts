@@ -11,9 +11,9 @@ import { pick } from 'lodash';
 import { RxError } from 'rxdb';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
 import { combineLatest, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-admin-biodata',
@@ -152,8 +152,10 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
    * @param {keyof SchoolPreset} [school='primary']
    * @memberof AdminBiodataComponent
    */
-  setupView(school:  = 'primary') {
-    
+  setupView(school: SchoolDict) {
+    this.classes$.next(school.classes);
+    this.levels$.next(Object.keys(school.permisions));
+    this.subjects$.next(school.subjects);
   }
 
   /**
@@ -189,7 +191,7 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
    */
   schoolDetails() {
     return this.school.entities$
-      .pipe(map(schools => this.util.schoolPreset(schools[0].category || 'primary' as any) ),
+      .pipe(map(schools => this.util.schoolPreset(schools[0].category || 'primary' as any) ))
       .subscribe(this.setupView.bind(this), this.displayError.bind(this));
   }
 

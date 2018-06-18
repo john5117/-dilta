@@ -16,6 +16,30 @@
       "dom"
     ],
     "paths": {
+      "@dilta/process": [
+        "libs/process"
+      ],
+      "@dilta/store": [
+        "libs/store"
+      ],
+      "@dilta/commonwebui": [
+        "libs/commonwebui"
+      ],
+      "@dilta/models": [
+        "libs/models"
+      ],
+      "@dilta/util": [
+        "libs/util"
+      ],
+      "@dilta/screwbox": [
+        "libs/screwbox"
+      ],
+      "@dilta/presets": [
+        "libs/presets"
+      ],
+      "@dilta/offlinedatabase": [
+        "libs/offlinedatabase"
+      ],
       "@dilta/*": [
         "libs/*"
       ]

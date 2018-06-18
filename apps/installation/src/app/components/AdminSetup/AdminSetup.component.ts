@@ -4,8 +4,8 @@ import { Manager } from '@dilta/commonwebui';
 import { ManagerService } from '@dilta/store';
 import { UtilService } from '@dilta/util';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
 
 
 /**
@@ -107,8 +107,8 @@ export class AdminSetupComponent implements OnInit, OnDestroy {
    */
   onValue() {
     return this.manager.entities$
-      .map(m => m[0])
-      .subscribe(this.changeRoute.bind(this));
+    .pipe(map(m => m[0]))
+    .subscribe(this.changeRoute.bind(this));
   }
 
   /**

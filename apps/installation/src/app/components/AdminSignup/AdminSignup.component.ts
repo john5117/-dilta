@@ -1,22 +1,11 @@
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  ChangeDetectionStrategy,
-  OnDestroy
-} from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { switchMap, map } from 'rxjs/operators';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Signup } from '@dilta/commonwebui';
-import { UtilService } from '@dilta/util';
-import { AuthDataService, AuthService } from '@dilta/store';
 import { Auth } from '@dilta/models';
-
-import * as math from 'mathjs';
+import { AuthService } from '@dilta/store';
+import { UtilService } from '@dilta/util';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
 /**
@@ -51,7 +40,7 @@ export class AdminSignupComponent implements OnInit, OnDestroy {
 
   public schoolId: string;
 
-  private localSubscription: Subscription[] = [];
+  public localSubscription: Subscription[] = [];
 
   constructor(
     private route: Router,

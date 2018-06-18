@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { School } from '@dilta/commonwebui';
 import { SchoolService } from '@dilta/store';
 import { UtilService } from '@dilta/util';
-import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
 
 const ErrorDisplayTimeOut = 4000;
 
@@ -92,7 +92,9 @@ export class SchoolComponent implements OnInit {
    * @memberof SchoolComponent
    */
   onValue() {
-    return this.school.entities$.map(e => e[0]).subscribe(val => {
+    return this.school.entities$
+    .pipe(map(e => e[0]))
+    .subscribe(val => {
       if (val) {
         this.changeRoute(val.id);
       }

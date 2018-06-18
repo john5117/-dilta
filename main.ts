@@ -1,9 +1,6 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
-import * as path from 'path';
-import { to } from 'await-to-js';
-
 import { createLiensceWindow, mainframeIPC } from '@dilta/electron';
-import { throwError } from '@dilta/screwbox';
+import { app, BrowserWindow, ipcMain, screen } from 'electron';
+
 
 let win, serve;
 const args = process.argv.slice(1);

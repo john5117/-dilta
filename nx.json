@@ -1,0 +1,57 @@
+{
+  "npmScope": "@dilta",
+  "projects": {
+    "demo": {
+      "tags": []
+    },
+    "demo-e2e": {
+      "tags": []
+    },
+    "installation": {
+      "tags": []
+    },
+    "abstract-imp": {
+      "tags": []
+    },
+    "commonwebui": {
+      "tags": []
+    },
+    "electron": {
+      "tags": []
+    },
+    "generator": {
+      "tags": []
+    },
+    "model": {
+      "tags": []
+    },
+    "offlinedatabase": {
+      "tags": []
+    },
+    "presets": {
+      "tags": []
+    },
+    "rxdbmodels": {
+      "tags": []
+    },
+    "screwbox": {
+      "tags": []
+    },
+    "security": {
+      "tags": []
+    },
+    "store": {
+      "tags": []
+    },
+    "util": {
+      "tags": []
+    }
+  },
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  }
+}

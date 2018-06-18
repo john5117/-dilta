@@ -1,21 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { ClarityModule } from 'clarity-angular';
-import { NgUploaderModule } from 'ngx-uploader';
-
-import { EntityServicesModule } from '@dilta/store';
+import { ClarityModule } from '@clr/angular';
 import { CommonwebuiModule } from '@dilta/commonwebui';
+import { EntityServicesModule } from '@dilta/store';
 import { UtilModule } from '@dilta/util';
-
+import { NgUploaderModule } from 'ngx-uploader';
+import { AdminBiodataComponent } from './admin-biodata/admin-biodata.component';
 import { AdminSetupComponent } from './AdminSetup';
+import { AdminSignupComponent } from './AdminSignup';
 import { LiensceKeyComponent } from './LiensceKey';
 import { SchoolComponent } from './school';
-import { AdminSignupComponent } from './AdminSignup';
-import { AdminBiodataComponent } from './admin-biodata/admin-biodata.component';
 import { SetupDoneComponent } from './setup-done/setup-done.component';
+
+
+
 
 const _comps = [
   AdminSetupComponent,

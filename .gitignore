@@ -5,9 +5,13 @@
 /dist-server
 /tmp
 /out-tsc
+/doc
 
 # dependencies
 /node_modules
+
+# previous code base
+/backup_src
 
 # IDEs and editors
 /.idea
