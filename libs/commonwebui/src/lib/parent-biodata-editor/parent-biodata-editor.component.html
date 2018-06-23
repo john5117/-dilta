@@ -51,7 +51,7 @@
     <label >Work Address</label>
     <textarea formControlName="workAddress" class="form-control entry-text-area" rows="3"></textarea>
   </div>
-  <div class="form-group row flex-items-xs-between"> 
+  <div class="form-group row flex-items-xs-between">
     <div class="col-xs m-left">
       <label class="required"> Home Town </label>
       <div class="select">
@@ -63,7 +63,7 @@
             </select>
         <span *ngIf="!parentForm.controls['town'].valid && parentForm.controls['town'].touched" class="form-error"> <i class="mi mi-Info "></i> Home Town location is required </span>
       </div>
-  
+
     </div>
     <div class="col-xs space-left">
       <label class="required"> State </label>

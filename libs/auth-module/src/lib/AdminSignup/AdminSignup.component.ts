@@ -16,13 +16,14 @@ import { Subscription } from 'rxjs/Subscription';
  * @implements {OnInit}
  */
 @Component({
-  selector: 'app-admin-signup',
+  selector: 'auth-admin-signup',
   templateUrl: './AdminSignup.component.html',
   styleUrls: ['./AdminSignup.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminSignupComponent implements OnInit, OnDestroy {
+
   /**
    * error displayed by the sub component
    *

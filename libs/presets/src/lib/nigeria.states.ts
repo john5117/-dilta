@@ -1,4 +1,3 @@
-import { Nigeria } from './states.presets';
 
 export const NigeriaPreset = {
   Abia: {
@@ -508,7 +507,7 @@ export const NigeriaPreset = {
     ]
   },
   'Federal Capital Territory': {
-    message: "No state found for 'federal_capital_territory'",
+    message: 'No state found for \'federal_capital_territory\'',
     status: 404
   },
   Niger: {
@@ -585,7 +584,7 @@ export const NigeriaPreset = {
       'Katsina',
       'Kurfi',
       'Kusada',
-      "Mai'Adua",
+      'Mai\'Adua',
       'Malumfashi',
       'Mani',
       'Mashi',
@@ -751,7 +750,7 @@ export const NigeriaPreset = {
     maxLong: 10.6606639,
     alias: 'plateau',
     cities: {
-      message: "No cities found for 'plateau'",
+      message: 'No cities found for \'plateau\'',
       status: 404
     },
     lgas: [
@@ -768,7 +767,7 @@ export const NigeriaPreset = {
       'Mangu',
       'Mikang',
       'Pankshin',
-      "Qua'an Pan",
+      'Qua\'an Pan',
       'Riyom',
       'Shendam',
       'Wase'
@@ -817,7 +816,7 @@ export const NigeriaPreset = {
       'Ikara',
       'Igabi',
       'Jaba',
-      "Jema'a",
+      'Jema\'a',
       'Kachia',
       'Kaduna North',
       'Kaduna South',
@@ -847,7 +846,7 @@ export const NigeriaPreset = {
     maxLong: 8.6704765,
     alias: 'kano',
     cities: {
-      message: "No cities found for 'kano'",
+      message: 'No cities found for \'kano\'',
       status: 404
     },
     lgas: [
@@ -1066,7 +1065,7 @@ export const NigeriaPreset = {
     maxLong: 5.2881144,
     alias: 'sokoto',
     cities: {
-      message: "No cities found for 'sokoto'",
+      message: 'No cities found for \'sokoto\'',
       status: 404
     },
     lgas: [

@@ -1,28 +1,18 @@
-import {
-  RxDatabase,
-  RxDocument,
-  RxSchema,
-  RxCollectionCreator,
-  RxCollection
-} from 'rxdb';
-import * as RxDB from 'rxdb';
-import { StudentKoll, studentModel } from './student.model';
-import { authModel, AuthKoll } from './auth.model';
-import { managerModel, ManagerKoll } from './manager.model';
-import { parentModel, ParentKoll } from './parent.model';
-import { UserKoll, userModel } from './user.model';
-import { SubjectKoll, subjectModel } from './subject.model';
-import { SchoolKoll, schoolModel } from './school.model';
-import { ReceiptKoll, receiptModel } from './receipt.model';
-import { to } from 'await-to-js';
-import { Logger } from 'winston';
 import { throwError } from '@dilta/screwbox';
+import { to } from 'await-to-js';
+import * as RxDB from 'rxdb';
+import { RxCollection, RxDatabase, RxSchema } from 'rxdb';
+import { Logger } from 'winston';
+import { AuthKoll, authModel } from './auth.model';
+import { ManagerKoll, managerModel } from './manager.model';
+import { ParentKoll, parentModel } from './parent.model';
+import { ReceiptKoll, receiptModel } from './receipt.model';
+import { SchoolKoll, schoolModel } from './school.model';
+import { StudentKoll, studentModel } from './student.model';
+import { SubjectKoll, subjectModel } from './subject.model';
+import { UserKoll, userModel } from './user.model';
 
 const { debug, warn, info, error } = new Logger({});
-
-//  plugin adapter to use
-RxDB.plugin(require('pouchdb-adapter-memory'));
-info(`setup:::mainframe: intialize rxdb plugins`);
 
 /** the database name for rxdb */
 const DB_NAME = 'carddemodb';
@@ -63,7 +53,8 @@ export interface DBKollections extends RxDatabase {
  * @export
  * @returns {Promise< DBKollections>}
  */
-export async function mainframe(): Promise<DBKollections> {
+export async function mainframe(plugins?: any[]): Promise<DBKollections> {
+  applyPlugins(plugins);
   let db: RxDatabase, err: Error;
   [err, db] = await to<RxDatabase, Error>(
     RxDB.create({
@@ -135,6 +126,13 @@ export async function initalizeKolls(
     throwError(err);
     debug(`added ${config.name} collection to the database`);
   }
+}
+
+export function applyPlugins(plugins: any[]) {
+  if (plugins) {
+    plugins.forEach(RxDB.plugin);
+  }
+  info(`setup:::mainframe: intialize rxdb plugins`);
 }
 
 /** throws error for empty of undefined config */

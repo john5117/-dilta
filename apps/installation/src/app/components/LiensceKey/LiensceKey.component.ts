@@ -1,27 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs/Subscription';
-import { tap, switchMap } from 'rxjs/operators';
-import { to } from 'await-to-js';
-import {
-  UploadOutput,
-  UploadInput,
-  UploadFile,
-  humanizeBytes,
-  UploaderOptions
-} from 'ngx-uploader';
-
+import { processFeature, ProcessReducer, VerifyLiensceKey } from '@dilta/process';
 import { reader } from '@dilta/screwbox';
 import { LoggerService } from '@dilta/util';
+import { Store } from '@ngrx/store';
+import { to } from 'await-to-js';
+import { UploadFile } from 'ngx-uploader';
 
-import {
-  ProcessReducer,
-  VerifyLiensceKey,
-  processFeature
-} from '@dilta/process';
-import { Auth } from '@dilta/models';
-import { EntityServiceFactory } from 'ngrx-data';
 
 /**
  * ui for selecting the liensce key for the app
@@ -76,10 +61,10 @@ export class LiensceKeyComponent implements OnInit, OnDestroy {
    * @param event an uploading event containing
    * image file to be uploaded
    */
-  async fil(event) {
+  async fil(event?: UploadFile) {
     const evnt: File = event ? event.nativeFile : undefined;
     const [err, key] = await to<string, Error>(reader(evnt, 'readAsText'));
-    this.path = evnt.path;
+    this.path = (evnt as any).path;
     this.displayError(err);
     this.key = key;
   }

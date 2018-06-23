@@ -16,7 +16,7 @@ import { combineLatest, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-admin-biodata',
+  selector: 'auth-admin-biodata',
   templateUrl: './admin-biodata.component.html',
   styleUrls: ['./admin-biodata.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -114,7 +114,10 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
     const schoolId$ = this.store
       .select(processFeature)
       .pipe(map(process => process.schoolId));
-    return event$.pipe(combineLatest(authId$, schoolId$), map(this.remap));
+    return event$.pipe(
+      combineLatest(authId$, schoolId$),
+      map(this.remap.bind(this))
+    );
   }
 
   /**
@@ -124,7 +127,8 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
    * @returns
    * @memberof AdminBiodataComponent
    */
-  remap([event, schoolId, authId]: [any, string, string]) {
+  remap([event, authId, schoolId]: [any, string, string]) {
+    console.log(arguments);
     event['class'] = event.classInCh;
     event['subject'] = event.subjectICh;
     event['authId'] = authId;
@@ -141,7 +145,7 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
    * @memberof AdminBiodataComponent
    */
   saveBiodata($event: Admin) {
-    this.remapEvent$($event).subscribe(user => {
+    this.remapEvent$($event).subscribe((user: User) => {
       this.admin.add(user);
     });
   }
@@ -191,7 +195,11 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
    */
   schoolDetails() {
     return this.school.entities$
-      .pipe(map(schools => this.util.schoolPreset(schools[0].category || 'primary' as any) ))
+      .pipe(
+        map(schools =>
+          this.util.schoolPreset(schools[0].category || ('primary' as any))
+        )
+      )
       .subscribe(this.setupView.bind(this), this.displayError.bind(this));
   }
 
@@ -201,7 +209,11 @@ export class AdminBiodataComponent implements OnInit, OnDestroy {
    * @memberof AdminBiodataComponent
    */
   storeListen() {
-    this.localSubscription.push(this.onErrors(), this.onValue(), this.schoolDetails());
+    this.localSubscription.push(
+      this.onErrors(),
+      this.onValue(),
+      this.schoolDetails()
+    );
   }
 
   /**

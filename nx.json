@@ -45,6 +45,15 @@
     },
     "util": {
       "tags": []
+    },
+    "dreamstack": {
+      "tags": []
+    },
+    "dreamstack-e2e": {
+      "tags": []
+    },
+    "auth-module": {
+      "tags": []
     }
   },
   "implicitDependencies": {

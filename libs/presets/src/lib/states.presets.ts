@@ -1,3 +1,5 @@
+import { NigeriaPreset } from '@dilta/presets/src/lib/nigeria.states';
+
 /**
  * osun state details for the nigerian states json
  *
@@ -76,4 +78,8 @@ export interface Cities {
 
 /** importing the nigerian state */
 // export const NigeriaPreset: Nigeria = require('./nigeria.states.json');
-export * from './nigeria.states';
+export { NigeriaPreset } from './nigeria.states';
+
+export function states() {
+  return Object.keys(NigeriaPreset);
+}

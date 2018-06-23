@@ -40,13 +40,27 @@
       "@dilta/offlinedatabase": [
         "libs/offlinedatabase"
       ],
+      "@dilta/security": [
+        "libs/security"
+      ],
+      "@dilta/electron": [
+        "libs/electron"
+      ],
+      "@dilta/abstract-imp": [
+        "libs/abstract-imp"
+      ],
       "@dilta/*": [
         "libs/*"
+      ],
+      "@dilta/auth-module": [
+        "libs/auth-module/src/index.ts"
       ]
     },
     "baseUrl": "."
   },
-  "include": [
-    "main.ts"
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts",
+    "src/test.ts"
   ]
 }

@@ -10,8 +10,6 @@
     [levels]="levels$ | async" (emitter)="saveBiodata($event)" ></app-admin-biodata-editor>
   </div>
 
-  <button (click)="saveBiodata($event)"> T </button>
-
   <p class="alert-text"> {{ err$ | async }} </p>
 
 </div>

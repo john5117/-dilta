@@ -46,9 +46,7 @@ export function createLiensceWindow({
 
   liensceWindow.setMenu(null);
   liensceWindow.setMenuBarVisibility(false);
-  liensceWindow.webContents.openDevTools();
-
-  // addExtension(BrowserWindow as any);
+  addExtension(BrowserWindow as any);
 
   // loading events
   if (events) {

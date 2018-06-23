@@ -1,14 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { AdminBiodataComponent, AdminSignupComponent } from '@dilta/auth-module';
+import { AdminSetupComponent, LiensceKeyComponent, SchoolComponent, SetupDoneComponent } from './components';
 
-import {
-  LiensceKeyComponent,
-  SchoolComponent,
-  SetupDoneComponent,
-  AdminSetupComponent,
-  AdminSignupComponent,
-  AdminBiodataComponent
-} from './components';
 
 // const routes: Routes = [
 //   {

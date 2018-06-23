@@ -11,6 +11,7 @@ const SCHOOL_NAME = 'school';
  */
 export interface SchoolKoll {
   id?: string;
+  logo?: string;
   name: string;
   email: string;
   description: string;
@@ -54,6 +55,9 @@ export const schoolSchema = {
       type: 'string'
     },
     state: {
+      type: 'string'
+    },
+    logo: {
       type: 'string'
     }
   },

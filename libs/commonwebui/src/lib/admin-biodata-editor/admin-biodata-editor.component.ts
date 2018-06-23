@@ -75,15 +75,15 @@ export class AdminBiodataEditorComponent implements OnInit {
     // constructs the form group value
     return this.fb.group({
       address: [value.address, required],
-      classInCh: [value.classInCh, required],
+      classInCh: [value.classInCh || this.classes[0], required],
       email: [value.email, ''],
       gender: [value.gender, required],
       image: [value.image, required],
       name: [value.name, required],
       phoneNo: [value.phoneNo, required],
       phoneNos: [value.phoneNos, ''],
-      subjectICh: [value.subjectICh, required],
-      level: [value.level, required]
+      subjectICh: [value.subjectICh || this.subjects[0], required],
+      level: [value.level || this.levels[0], required]
     });
   }
 

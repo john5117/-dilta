@@ -1,4 +1,11 @@
 <form class="form-group" [formGroup]="schoolForm">
+    <div class="form-group">
+        <img class="sm-img school-logo-img" [src]="img" />
+        <label class="upload-button">
+            <input type="file" ngFileSelect [options]="uploadOptions" (uploadOutput)="fil($event.file)" [uploadInput]="uploadInput">
+            School Logo
+        </label>
+    </div>
   <div class="form-group">
     <label class="required">School name</label>
     <input size="75" formControlName="name" type="text" class="form-control">

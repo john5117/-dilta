@@ -608,6 +608,157 @@
         }
       },
       "prefix": "app"
+    },
+    "dreamstack": {
+      "root": "apps/dreamstack/",
+      "sourceRoot": "apps/dreamstack/src",
+      "projectType": "application",
+      "prefix": "dreams",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/dreamstack",
+            "index": "apps/dreamstack/src/index.html",
+            "main": "apps/dreamstack/src/main.ts",
+            "polyfills": "apps/dreamstack/src/polyfills.ts",
+            "tsConfig": "apps/dreamstack/tsconfig.app.json",
+            "assets": [
+              "apps/dreamstack/src/favicon.ico",
+              "apps/dreamstack/src/assets"
+            ],
+            "styles": [
+              "apps/dreamstack/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/dreamstack/src/environments/environment.ts",
+                  "with": "apps/dreamstack/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "dreamstack:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "dreamstack:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "dreamstack:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/dreamstack/src/test.ts",
+            "polyfills": "apps/dreamstack/src/polyfills.ts",
+            "tsConfig": "apps/dreamstack/tsconfig.spec.json",
+            "karmaConfig": "apps/dreamstack/karma.conf.js",
+            "styles": [
+              "apps/dreamstack/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "apps/dreamstack/src/favicon.ico",
+              "apps/dreamstack/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/dreamstack/tsconfig.app.json",
+              "apps/dreamstack/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "dreamstack-e2e": {
+      "root": "apps/dreamstack-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/dreamstack-e2e/protractor.conf.js",
+            "devServerTarget": "dreamstack:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "dreamstack:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/dreamstack-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "auth-module": {
+      "root": "libs/auth-module",
+      "sourceRoot": "libs/auth-module/src",
+      "projectType": "library",
+      "prefix": "auth",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/auth-module/src/test.ts",
+            "tsConfig": "libs/auth-module/tsconfig.spec.json",
+            "karmaConfig": "libs/auth-module/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/auth-module/tsconfig.lib.json",
+              "libs/auth-module/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo",

@@ -65,6 +65,7 @@ export class UtilService {
     console.log('this.err', this['err']);
   }
 
+
   /**
    * generates a random uuid string
    *
@@ -74,4 +75,5 @@ export class UtilService {
   randomuuid() {
     return uuidRandom();
   }
+
 }

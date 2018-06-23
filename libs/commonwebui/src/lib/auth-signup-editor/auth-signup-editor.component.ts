@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface Signup {
   username: string;
@@ -25,20 +25,24 @@ export class AuthSignupEditorComponent implements OnInit {
 
   public signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    const { required } = Validators;
-    this.signupForm = this.fb.group({
-      username: [null, required],
-      password: [null, required],
-      level: [null, required],
-      clogin_password: [null, required]
-    });
-  }
+  constructor(private fb: FormBuilder) { }
 
   emit(value) {
     delete value.clogin_password;
     this.emitter.emit(value);
   }
 
-  ngOnInit() {}
+  setupForm() {
+    const { required } = Validators;
+    this.signupForm = this.fb.group({
+      username: [null, required],
+      password: [null, required],
+      level: [null || this.levels[0], required],
+      clogin_password: [null, required]
+    });
+  }
+
+  ngOnInit() {
+    this.setupForm();
+  }
 }

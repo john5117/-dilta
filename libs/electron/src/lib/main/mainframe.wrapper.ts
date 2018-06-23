@@ -1,18 +1,11 @@
-import { ipcMain, ipcRenderer } from 'electron';
-import { to } from 'await-to-js';
-
 import { mainframe } from '@dilta/models';
 import { decryptLiensce } from '@dilta/security';
-
+import { to } from 'await-to-js';
+import { ipcMain, ipcRenderer } from 'electron';
 import * as CONSTANTS from './constants.ipc';
-import {
-  liensceKey,
-  saveLiensceKey,
-  deleteLiensceKey,
-  schoolId,
-  saveSchoolId,
-  deleteSchoolId
-} from './keys.program';
+import { deleteLiensceKey, deleteSchoolId, liensceKey, saveLiensceKey, saveSchoolId, schoolId } from './keys.program';
+
+
 
 /**
  * event object interface of IPCS
@@ -29,6 +22,9 @@ interface IpcEvent {
   sender: typeof ipcRenderer;
 }
 
+//  database plugin adapters to use
+const rxDbPlugins = [require('pouchdb-adapter-memory')];
+
 /**
  * appends custom database events to the electron process
  *
@@ -37,7 +33,7 @@ interface IpcEvent {
  */
 export async function mainframeIPC(ipc: typeof ipcMain) {
   /** initalize the database once alone */
-  global['_databaseInit'] = await to(mainframe());
+  global['_databaseInit'] = await to(mainframe(rxDbPlugins));
   global['decryptLiensce'] = decryptLiensce;
 
   // ipc events for DATABASE

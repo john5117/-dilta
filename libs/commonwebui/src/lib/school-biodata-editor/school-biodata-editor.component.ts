@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { defaultKeys } from '@dilta/screwbox';
+import { defaultKeys, fileBase64 } from '@dilta/screwbox';
+import { UploadInput } from 'ngx-uploader';
 
 export interface School {
   id?: string;
+  logo?: string;
   name: string;
   email: string;
   description: string;
@@ -20,7 +22,8 @@ export const objSchoolKeys = [
   'category',
   'address',
   'town',
-  'state'
+  'state',
+  'logo'
 ];
 
 /**
@@ -39,7 +42,13 @@ export class SchoolBiodataEditorComponent implements OnInit {
   @Input() public school: School = {} as any;
   @Output() public emitter = new EventEmitter();
 
+  // additional configuration for file uploads
+  @Input() public uploadOptions = {};
+
+  public uploadInput = new EventEmitter<UploadInput>();
+
   public schoolForm: FormGroup;
+  public img: string;
 
   constructor(private fb: FormBuilder) {
     this.schoolForm = this.form(this.school);
@@ -71,8 +80,30 @@ export class SchoolBiodataEditorComponent implements OnInit {
       category: [school.category, required],
       address: [school.address, required],
       town: [school.town, required],
-      state: [school.state, required]
+      state: [school.state, required],
+      logo: [school.logo, required]
     });
+  }
+
+  /**
+   * fil(event)
+   * @param event an uploading event containing
+   * image file to be uploaded
+   */
+  async fil(event) {
+    const _evnt = event ? event.nativeFile : undefined;
+    this.setImg(await fileBase64(_evnt));
+  }
+
+  /**
+   * setImg(img)
+   * @param img base64 of an image
+   * sets the img to display to the display
+   * and sets the form image value
+   */
+  setImg(img) {
+    this.img = img;
+    this.schoolForm.get('logo').setValue(this.img);
   }
 
   /**
