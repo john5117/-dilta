@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from '@clr/angular';
 import { AuthPagesModule } from '@dilta/auth-module';
-import { CommonwebuiModule } from '@dilta/commonwebui';
+import { CommonWebPagesModule, CommonwebuiModule } from '@dilta/commonwebui';
 import { EntityServicesModule } from '@dilta/store';
 import { UtilModule } from '@dilta/util';
 import { NgUploaderModule } from 'ngx-uploader';
@@ -28,6 +28,7 @@ const _comps = [
     BrowserAnimationsModule,
     CommonModule,
     CommonwebuiModule,
+    CommonWebPagesModule,
     ClarityModule,
     UtilModule,
     NgUploaderModule,

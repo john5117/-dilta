@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~clarity-ui/clarity-ui";
+@import "~@clr/ui/clr-ui.min.css";
 
 html, body {
   margin: 0;
@@ -12,4 +12,24 @@ html, body {
 
 .liensce-color {
   display: none;
+}
+
+@mixin floatright{
+  float: right!important;
+}
+
+.float-right {
+  @include floatright();
+}
+
+.form-error {
+  color: rgb(216, 103, 103)!important;
+}
+
+.center-items {
+  text-align: center;
+}
+
+.right-items {
+  text-align: right;
 }

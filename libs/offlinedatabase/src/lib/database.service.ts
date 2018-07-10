@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, Manager, Parent, Receipt, School, Score, Student, User } from '@dilta/models';
-import { EntityNames } from '@dilta/store/src/lib/constants';
+import { EntityNames } from '@dilta/store/src/lib/entities/constants';
 import { EntityService } from 'ngrx-data';
 import { Database } from './Database';
 import { ModelBase } from './models.base';

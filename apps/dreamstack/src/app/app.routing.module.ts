@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminSignupComponent } from '@dilta/auth-module';
+import { AuthUserLoginComponent } from '@dilta/auth-module';
 
 
 const routes: Routes = [
-  { path: '', component: AdminSignupComponent },
+  { path: '', redirectTo: 'busar/preferences', pathMatch: 'full' },
+  { path: 'login', component: AuthUserLoginComponent },
+  // { path: 'busar', component: BusarAppModule.RootComponent }
 ];
 
 @NgModule({
@@ -13,4 +15,4 @@ const routes: Routes = [
 })
 export class DreamstackRoutingModule { }
 
-export const routedComponents = [AdminSignupComponent];
+export const routedComponents = [AuthUserLoginComponent];

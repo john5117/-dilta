@@ -1,0 +1,58 @@
+<form class="form-group" [formGroup]="recieptForm">
+  <div class="form-group">
+    <label class="required">Name</label>
+    <input size="75" formControlName="name" type="text" class="form-control">
+    <span *ngIf="!recieptForm.controls['name'].valid && recieptForm.controls['name'].touched  " class="form-error"><i class="mi mi-Info "></i> Student Name is required </span>
+  </div>
+  <div class="form-group">
+    <label class="required">Amount</label>
+    <input size="75" formControlName="amount" type="number" class="form-control">
+    <span *ngIf="!recieptForm.controls['amount'].valid && recieptForm.controls['amount'].touched  " class="form-error"><i class="mi mi-Info "></i> Amount paid is required </span>
+  </div>
+  <div class="form-group">
+      <label class="required">Student School Id</label>
+      <input size="75" formControlName="studentId" type="text" class="form-control">
+      <span *ngIf="!recieptForm.controls['studentId'].valid && recieptForm.controls['studentId'].touched  " class="form-error"><i class="mi mi-Info "></i> Student School Admission No is required </span>
+    </div>
+  <div class="form-group">
+    <label for="dateControl">Date</label>
+            <input id="dateControl" type="date" clrDate formControlName="date"/>
+    <span *ngIf="!recieptForm.controls['date'].valid && recieptForm.controls['date'].touched  " class="form-error"><i class="mi mi-Info "></i> Date paid is required </span>
+  </div>
+
+  <div class="form-group clr-row">
+    <div class="clr-col-4">
+      <label class="required">Class</label>
+      <div class="select">
+          <select formControlName="class">
+                    <!-- <option> Session </option> -->
+                    <option *ngFor="let _class of classList">{{ _class }}</option>
+          </select>
+      </div>
+      <span *ngIf="!recieptForm.controls['class'].valid && recieptForm.controls['class'].touched  " class="form-error"><i class="mi mi-Info "></i> Student Class is required </span>
+    </div>
+    <div class="clr-col-4">
+      <label class="required"> Term </label>
+      <div class="select">
+        <select formControlName="term">
+                  <!-- <option> Term </option> -->
+                  <option *ngFor="let _term of termsList" >{{ _term }}</option>
+              </select>
+      </div>
+      <span *ngIf="!recieptForm.controls['term'].valid && recieptForm.controls['term'].touched" class="form-error"><i class="mi mi-Info "></i> term Paid for is  required </span>
+    </div>
+    <div class="clr-col-4">
+      <label class="required"> Session </label>
+      <div class="select">
+        <select formControlName="session">
+                  <!-- <option> Session </option> -->
+                  <option *ngFor="let _session of sessionList">{{ _session }}</option>
+              </select>
+      </div>
+      <span *ngIf="!recieptForm.controls['session'].valid && recieptForm.controls['session'].touched" class="form-error"><i class="mi mi-Info "></i> Session Paid for is required </span>
+    </div>
+  </div>
+  <div class="float-right">
+    <button id="save" [disabled]="!recieptForm.valid" (click)="emit(recieptForm.value)" class="btn btn-primary"> Save</button>
+  </div>
+</form>

@@ -1,3 +1,4 @@
+import { BusarExpenseSummary, BusarRevenueSummary } from '@dilta/busar';
 import * as faker from 'faker';
 import { pick } from 'shuffle-array';
 
@@ -274,3 +275,34 @@ export function teacher() {
 }
 
 // export const managerList = (amount?: number) => list(manager, amount);
+
+export function busarRevenueSummary() {
+  return <BusarRevenueSummary>{
+    currentMonthHighestCategory: faker.commerce.product(),
+    currentMonthHighestCategoryRevenue: faker.random.number(500000),
+    currentMonthHighestClass: select(classes) as any,
+    currentMonthLowestClass: select(classes) as any,
+    currentMonthHighestRevenue: faker.random.number(2000000),
+    currentMonthLowestRevenue: faker.random.number(20000),
+    currentMonthPercentage: faker.random.number(90),
+    currentMonthRevenue: faker.random.number(20000),
+    expectedTermSchoolFees: faker.random.number(20000000),
+    highestMonthPercentage: faker.random.number(70),
+    previousMonthRevenue: faker.random.number(20000),
+    totalTermSchoolFees: faker.random.number(20000000),
+  };
+}
+
+export function busarExpenseSummary() {
+  return <BusarExpenseSummary>{
+    currentMonth: faker.random.number(500000),
+    currentMonthCapital: faker.random.number(300000),
+    currentMonthHighestCategory: faker.commerce.product(),
+    currentMonthHighestCategoryExpense: faker.random.number(300000),
+    currentMonthLowestCategory: faker.commerce.product(),
+    currentMonthLowestCategoryExpense: faker.random.number(90000),
+    currentMonthRecurrent: faker.random.number(60000),
+    preivousMonth: faker.random.number(30000),
+    totalTerm: faker.random.number(20000000)
+  };
+}

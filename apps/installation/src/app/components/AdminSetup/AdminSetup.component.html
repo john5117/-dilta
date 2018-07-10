@@ -2,7 +2,7 @@
     Managers Informaton
   </header>
 <div>
-  <app-managers-biodata-editor (emitter)="saveManagers($event)" ></app-managers-biodata-editor>
+  <app-managers-biodata-form (emitter)="saveManagers($event)" ></app-managers-biodata-form>
 </div>
 <div  *ngIf="err$ | async" class="row alert-row">
   <!-- notification template -->

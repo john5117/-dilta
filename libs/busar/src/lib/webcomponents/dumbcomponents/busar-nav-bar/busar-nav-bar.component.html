@@ -1,0 +1,32 @@
+<header class="header-6 header-card">
+  <div class="branding">
+    <a (click)="route.emit('busar')" href="#" class="nav-link">
+      <clr-icon shape="vm-bug"></clr-icon>
+      <span class="title">Project Clarity</span>
+    </a>
+  </div>
+  <div class="header-nav">
+    <a *ngFor="let nav of mainNavs" (click)="route.emit(nav.url)" class="nav-link">
+      <span class="nav-text"> {{ nav.name }} </span>
+    </a>
+  </div>
+  <div class="search">
+    <label for="search_input">
+      <input (change)="search.emit($event.srcElement.value)" id="search_input" type="text" placeholder="Search for keywords...">
+    </label>
+  </div>
+
+  <div class="header-actions">
+    <clr-dropdown>
+      <button class="nav-icon" clrDropdownTrigger>
+        <clr-icon size="36" shape="user"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <a *ngFor="let nav of profileSubNavs" (click)="route.emit(nav.url)" clrDropdownItem>
+          {{ nav.name }}
+        </a>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+  </div>
+
+</header>

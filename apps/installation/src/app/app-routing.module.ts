@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminBiodataComponent, AdminSignupComponent } from '@dilta/auth-module';
+import { AuthUserSignupComponent } from '@dilta/auth-module';
+import { UserBioDataFormPageComponent } from '@dilta/commonwebui';
 import { AdminSetupComponent, LiensceKeyComponent, SchoolComponent, SetupDoneComponent } from './components';
 
 
@@ -25,11 +26,11 @@ const routes: Routes = [
   },
   {
     path: 'signup/:id',
-    component: AdminSignupComponent
+    component: AuthUserSignupComponent
   },
   {
-    path: 'biodata/:authId',
-    component: AdminBiodataComponent
+    path: 'biodata',
+    component: UserBioDataFormPageComponent
   },
   {
     path: 'finished',

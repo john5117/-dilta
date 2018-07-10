@@ -54,6 +54,9 @@
     },
     "auth-module": {
       "tags": []
+    },
+    "busar": {
+      "tags": []
     }
   },
   "implicitDependencies": {
