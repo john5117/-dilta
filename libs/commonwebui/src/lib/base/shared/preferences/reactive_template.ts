@@ -122,7 +122,7 @@ export class ReactivePreferenceListBase implements OnInit {
    * @memberof ReactivePreferenceBase
    */
   @Input() settings: ReactivePreferenceBaseInput<any>[] = [];
-  @Input() title = 'Form List Title';
+  @Input() title;
   @Input() keyEditable = false;
   @Input() menuOperations = false;
 
