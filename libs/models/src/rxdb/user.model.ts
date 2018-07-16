@@ -1,29 +1,7 @@
-import { KolConfig } from './setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { CollectionConfig } from './setup.mainframe';
 
 /** key to retrieve the collection form the db intialize object */
-const USER_NAME = 'user';
-
-/**
- * teachers biodata information recored stored in the database's interface
- *
- * @export
- * @interface UserKoll
- */
-export interface UserKoll {
-  id?: string;
-  name: string;
-  gender: string;
-  phoneNo: string | number;
-  class: string;
-  subject: string;
-  phoneNos: string;
-  address: string;
-  image: File | string;
-  email?: string;
-  level: string;
-  authId: string;
-  school: string;
-}
 
 /**
  * subject record information and schema
@@ -84,7 +62,7 @@ export const userSchema = {
   required: ['name', 'gender', 'address', 'email', 'authId', 'school']
 };
 
-export const userModel: KolConfig<typeof userSchema> = {
-  name: USER_NAME,
+export const userModel: CollectionConfig<typeof userSchema> = {
+  name: EntityNames.User,
   schema: userSchema
 };

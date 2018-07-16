@@ -1,25 +1,7 @@
-import { KolConfig } from './setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { CollectionConfig } from './setup.mainframe';
 
 /** key to retrieve the collection form the db intialize object */
-const MANAGER_NAME = 'manager';
-
-/**
- * school managers biodata's record stored in the database's interface
- *
- * @export
- * @interface ManagerKoll
- */
-export interface ManagerKoll {
-  id?: string;
-  propName: string;
-  propPhone: string;
-  propEmail: string;
-  sMName: string;
-  sMPhone: string;
-  sMEmail: string;
-  motto: string;
-  school: string;
-}
 
 /**
  * the school managers biodata schema configuration and properties
@@ -68,7 +50,7 @@ export const managerSchema = {
   required: ['propName', 'propPhone', 'sMName', 'sMPhone', 'motto', 'school']
 };
 
-export const managerModel: KolConfig<typeof managerSchema> = {
-  name: MANAGER_NAME,
+export const managerModel: CollectionConfig<typeof managerSchema> = {
+  name: EntityNames.Manager,
   schema: managerSchema
 };

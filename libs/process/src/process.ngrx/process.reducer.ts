@@ -1,11 +1,20 @@
-import { ProcessStoreActions, ProcessStoreEvents } from '../actions';
 import { SchoolEncryptedData } from '@dilta/security';
+import { createFeatureSelector } from '@ngrx/store';
+import { ProcessStoreActions, ProcessStoreEvents } from './process.actions';
+
+
+/** Process Feature Name */
+export const ProcessFeatureName = 'process';
+/** feature selector for selecting process state section fro the store */
+export const processFeature = createFeatureSelector<ProcessState>(
+  ProcessFeatureName
+);
 
 export interface ProcessState {
   apikey: string;
   schoolId: string;
   schoolData: SchoolEncryptedData;
-  error: string;
+  error: Error;
 }
 
 export const coreInitialState: ProcessState = {
@@ -25,7 +34,7 @@ export function ProcessStoreEventsReducer(
     case ProcessStoreEvents.VERIFIED_LIENSCE_KEY_FAILURE:
       return {
         ...state,
-        error: action.payload.message
+        error: action.payload,
       };
     case ProcessStoreEvents.SAVE_APIKEY_KEY:
       return {

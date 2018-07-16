@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Manager } from '@dilta/commonwebui';
+import { Manager } from '@dilta/models';
 import { ManagerService } from '@dilta/store';
-import { UtilService } from '@dilta/util';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
@@ -39,7 +38,6 @@ export class AdminSetupComponent implements OnInit, OnDestroy {
   constructor(
     private _router: Router,
     private _actR: ActivatedRoute,
-    private util: UtilService,
     private manager: ManagerService
   ) {}
 

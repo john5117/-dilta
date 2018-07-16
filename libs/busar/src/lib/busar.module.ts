@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ClarityModule } from '@clr/angular';
 import { CommonwebuiModule } from '@dilta/commonwebui';
 import { BusaryNgrxModule } from './store';
+// tslint:disable-next-line:max-line-length
 import { BusarDumbsModule, BusarHomePageComponent, BusarInfoDashboardComponent, BusarPreferencesComponent, BusarRoutingModule } from './webcomponents';
 
 @NgModule({

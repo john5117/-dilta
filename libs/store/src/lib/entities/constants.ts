@@ -12,5 +12,7 @@ export enum EntityNames {
   Parent = 'parent',
   Score = 'score',
   Student = 'student',
-  Receipt = 'receipt'
+  Receipt = 'receipt',
+  Setting = 'setting',
+  Expense = 'expense',
 }

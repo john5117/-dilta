@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessReducer } from '@dilta/process';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
 import { AuthUserLoginBase } from '../../../base/pages';
@@ -12,7 +11,7 @@ import { AuthUserLoginBase } from '../../../base/pages';
 })
 export class AuthUserLoginComponent extends AuthUserLoginBase {
   constructor(
-    store: Store<ProcessReducer>,
+    store: Store<any>,
     route: Router,
     _actR: ActivatedRoute,
     util: UtilService

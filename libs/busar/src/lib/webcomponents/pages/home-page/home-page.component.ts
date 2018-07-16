@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BusaryEffects } from '@dilta/busar/src/lib/store';
 import { BusarHomePageBase } from '../../../base';
 
 @Component({
@@ -9,8 +10,8 @@ import { BusarHomePageBase } from '../../../base';
 })
 export class BusarHomePageComponent extends BusarHomePageBase {
 
-  constructor(router: Router) {
-    super(router);
+  constructor(router: Router, busarEffect: BusaryEffects) {
+    super(router, busarEffect);
   }
 
 }

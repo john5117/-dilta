@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { School } from '@dilta/commonwebui';
+import { School } from '@dilta/models';
 import { SchoolService } from '@dilta/store';
 import { UtilService } from '@dilta/util';
 import { map } from 'rxjs/operators';

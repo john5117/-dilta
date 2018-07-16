@@ -1,5 +1,5 @@
 import { EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SettingPreference, SettingState } from '@dilta/busar';
+import { SettingPreference, Settings } from '@dilta/models';
 import { toPairs } from 'lodash';
 
 interface SiderBarView {
@@ -29,7 +29,7 @@ interface SiderBarView {
 }
 
 export class SideBarBase implements OnInit {
-  @Input() settings: SettingState;
+  @Input() settings: Settings;
   @Output() emitter = new EventEmitter();
 
   constructor() {}
@@ -37,11 +37,11 @@ export class SideBarBase implements OnInit {
   /**
    * remap view object to an array for view
    *
-   * @param {SettingState<any>} [settings={}]
+   * @param {Settings<any>} [settings={}]
    * @returns {SiderBarView[]}
    * @memberof SideBarBase
    */
-  remap(settings: SettingState = {}): SiderBarView[] {
+  remap(settings: Settings = {}): SiderBarView[] {
     return toPairs(settings).map(([key, value]) => {
       let subMenus = [];
       if (value.submenus) {

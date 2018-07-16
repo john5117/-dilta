@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
 import { SchoolEncryptedData } from '@dilta/security';
+import { Action } from '@ngrx/store';
 /**
  * ngrx actions for getting the ProcessStoreEvents liensce key and school id
  *
@@ -16,7 +16,6 @@ export enum ProcessStoreEvents {
   GET_LIENSCE_KEY = '[IPC]::[EMIT]::[LIENSCE]::[GET]',
   UPDATE_LIENSCE_KEY = '[IPC]::[EMIT]::[LIENSCE]::[UPDATE]',
   DELETE_LIENSCE_KEY = '[IPC]::[EMIT]::[LIENSCE]::[DELETE]',
-  SAVE_LIENSCE_KEY = '[IPC]::[EMIT]::[LIENSCE]::[SAVE]',
   RETRIEVE_LIENSCE_KEY = '[IPC]::[EMIT]::[LIENSCE]::[RETRIEVE]',
   VERITY_LIENSCE_KEY = '[IPC]::[EMIT]::[LIENSCE]::[VERITY]',
   VERIFIED_LIENSCE_KEY_SUCCESS = '[IPC]::[EMIT]::[LIENSCE]::[VERIFIED]::[SUCCESS]',
@@ -127,18 +126,7 @@ export class DelLiensceKey implements Action {
  */
 export class UpdateLiensceKey implements Action {
   readonly type = ProcessStoreEvents.UPDATE_LIENSCE_KEY;
-  constructor(public payload: string) {}
-}
-/**
- * action to save the liensce key to the local store
- *
- * @export
- * @class SaveApiKey
- * @implements {Action}
- */
-export class SaveLiensceKey implements Action {
-  readonly type = ProcessStoreEvents.SAVE_LIENSCE_KEY;
-  constructor(public payload: string) {}
+  constructor(public payload: SchoolEncryptedData) {}
 }
 
 /**

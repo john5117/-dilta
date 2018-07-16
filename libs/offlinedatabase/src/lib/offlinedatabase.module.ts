@@ -1,26 +1,10 @@
-import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs/observable';
-
+import { forwardRef, NgModule } from '@angular/core';
 import { Database } from './Database';
-import {
-  AuthDBService,
-  ManagerDBService,
-  SchoolDBService,
-  ScoreDBService,
-  StudentDBService,
-  UserDBService,
-  ReceiptDBService,
-  ParentDBService
-} from './database.service';
-import {
-  AuthModel,
-  StudentModel,
-  ManagerModel,
-  SchoolModel,
-  ScoreModel,
-  UserModel
-} from './model.tokens';
+// tslint:disable-next-line:max-line-length
+import { AuthDBService, ExpenseDBService, ManagerDBService, ParentDBService, ReceiptDBService, SchoolDBService, ScoreDBService, SettingDBService, StudentDBService, UserDBService } from './database.service';
+// tslint:disable-next-line:max-line-length
+import { AuthModel, ExpenseModel, ManagerModel, RecieptModel, SchoolModel, ScoreModel, SettingModel, StudentModel, UserModel } from './model.tokens';
 
 const injectMappings = [
   {
@@ -47,6 +31,18 @@ const injectMappings = [
   {
     provide: UserModel,
     useExisting: forwardRef(() => UserDBService)
+  },
+  {
+    provide: SettingModel,
+    useExisting: forwardRef(() => SettingDBService)
+  },
+  {
+    provide: ExpenseModel,
+    useExisting: forwardRef(() => ExpenseDBService)
+  },
+  {
+    provide: RecieptModel,
+    useExisting: forwardRef(() => ReceiptDBService)
   }
 ];
 
@@ -59,7 +55,9 @@ const providers = [
   SchoolDBService,
   ScoreDBService,
   StudentDBService,
-  UserDBService
+  UserDBService,
+  SettingDBService,
+  ExpenseDBService
 ];
 
 /**

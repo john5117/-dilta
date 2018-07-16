@@ -2,22 +2,31 @@ import { NgModule } from '@angular/core';
 import { EntityDataService, EntityMetadataMap } from 'ngrx-data';
 import { AuthDataService, AuthService } from './auth.service';
 import { DataServicesModule } from './data.module';
+import { ExpenseDataService, ExpenseService } from './expense.service';
 import { ManagerDataService, ManagerService } from './manager.service';
+import { ReceiptDataService, ReceiptService } from './reciept.service';
 import { SchoolDataService, SchoolService } from './school.service';
+import { SettingDataService, SettingService } from './setting.service';
 import { UserDataService, UserService } from './users.service';
 
 export const entityMetadata: EntityMetadataMap = {
   user: {},
   school: {},
   manager: {},
-  auth: {}
+  auth: {},
+  reciept: {},
+  expense: {},
+  setting: {}
 };
 
 export const providers = [
   UserService,
   SchoolService,
   ManagerService,
-  AuthService
+  AuthService,
+  ReceiptService,
+  SettingService,
+  ExpenseService
 ];
 
 @NgModule({
@@ -26,17 +35,23 @@ export const providers = [
 })
 export class EntityServicesModule {
   constructor(
-    private eds: EntityDataService,
+    eds: EntityDataService,
     auth: AuthDataService,
     manager: ManagerDataService,
     school: SchoolDataService,
-    user: UserDataService
+    user: UserDataService,
+    reciept: ReceiptDataService,
+    setting: SettingDataService,
+    expense: ExpenseDataService
   ) {
     eds.registerServices({
       auth,
       user,
       manager,
-      school
+      reciept,
+      school,
+      setting,
+      expense
     });
   }
 }

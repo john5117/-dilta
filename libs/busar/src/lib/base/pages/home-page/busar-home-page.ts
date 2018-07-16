@@ -1,9 +1,10 @@
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BusaryEffects } from '../../../store';
 
 export class BusarHomePageBase implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private busary: BusaryEffects) { }
 
   changeRoute(url: string) {
     console.log(url);
@@ -15,6 +16,6 @@ export class BusarHomePageBase implements OnInit {
   }
 
   ngOnInit() {
-
+    this.busary.checkBusarySettings();
   }
 }

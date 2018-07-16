@@ -1,7 +1,10 @@
 import { BrowserWindow } from 'electron';
+import { logger } from './localscope';
 
 
+const { debug } = logger;
 export async function addExtension(browserWindow: BrowserWindow) {
+  debug({ message: `adding developement extensions to electron`, trace: 'extensions:: addExtension' });
   Extensions.forEach(async (path) => {
     await BrowserWindow.addDevToolsExtension(path);
   });

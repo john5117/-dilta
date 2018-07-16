@@ -1,11 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
+import { Injectable, Optional } from '@angular/core';
 import { Log, LoggerBase } from '@dilta/abstract-imp';
-
 // TODO: Provide optional logger and config
-import * as jsLogger from 'js-logger';
-
-jsLogger.useDefaults();
+import * as pino from 'pino';
+import { Level, Logger } from 'pino';
 
 /**
  * a wrapper along js logger
@@ -15,13 +12,18 @@ jsLogger.useDefaults();
  */
 @Injectable()
 export class LoggerService extends LoggerBase implements LoggerBase {
-  private logger = jsLogger;
-  // constructor(private logger: Console) {
-  constructor() {
+  private logger: Logger;
+
+  constructor(
+    @Optional() public loggerNameSpace: string = 'default',
+    @Optional() loglevel?: Level,
+  ) {
     super();
+    this.logger = pino({ name: loggerNameSpace });
+    this.logger.level = loglevel || this.logger.level;
   }
   /**
-   * wrapper against jslogger.debug
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @memberof LoggerService
@@ -29,28 +31,24 @@ export class LoggerService extends LoggerBase implements LoggerBase {
   debug(customLog: Log, ...other: any[]) {
     this.validate(customLog);
     this.logger.debug(
-      `${customLog.trace}:::${customLog.message}::${Date()}}`,
+      `${this.loggerNameSpace}:::${customLog.trace}:::${customLog.message}::${Date()}}`,
       other
     );
   }
 
   /**
-   * wrapper against jslogger.log
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
    * @memberof LoggerService
    */
   log(customLog: Log, ...other: any[]) {
-    this.validate(customLog);
-    this.logger.log(
-      `${customLog.trace}:::${customLog.message}::${Date()}}`,
-      other
-    );
+    return this.info(customLog, ...other);
   }
 
   /**
-   * wrapper against jslogger.warn
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
@@ -65,7 +63,7 @@ export class LoggerService extends LoggerBase implements LoggerBase {
   }
 
   /**
-   * wrapper against jslogger.info
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
@@ -80,7 +78,7 @@ export class LoggerService extends LoggerBase implements LoggerBase {
   }
 
   /**
-   * wrapper against jslogger.error
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other

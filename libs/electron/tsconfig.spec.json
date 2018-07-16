@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/libs/electron",
     "types": [
-      "jasmine",
+      "jest",
       "node"
     ]
   },

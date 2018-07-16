@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessReducer } from '@dilta/process';
 import { AuthFeature, AuthLogin, Authsuccess, Login } from '@dilta/store/src/lib/auth';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
@@ -19,7 +18,7 @@ export class AuthUserLoginBase implements OnInit {
   public err$ = new BehaviorSubject(undefined);
 
   constructor(
-    private store: Store<ProcessReducer>,
+    private store: Store<any>,
     private route: Router,
     private _actR: ActivatedRoute,
     private util: UtilService,

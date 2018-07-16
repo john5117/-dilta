@@ -1,10 +1,12 @@
-import { mainframe } from '@dilta/models';
-import { decryptLiensce } from '@dilta/security';
+import { decryptLiensce, SchoolEncryptedData } from '@dilta/security';
 import { to } from 'await-to-js';
 import { ipcMain, ipcRenderer } from 'electron';
 import * as CONSTANTS from './constants.ipc';
+import database from './database';
 import { deleteLiensceKey, deleteSchoolId, liensceKey, saveLiensceKey, saveSchoolId, schoolId } from './keys.program';
+import { logger } from './localscope';
 
+const { debug } = logger;
 
 
 /**
@@ -22,9 +24,6 @@ interface IpcEvent {
   sender: typeof ipcRenderer;
 }
 
-//  database plugin adapters to use
-const rxDbPlugins = [require('pouchdb-adapter-memory')];
-
 /**
  * appends custom database events to the electron process
  *
@@ -32,10 +31,9 @@ const rxDbPlugins = [require('pouchdb-adapter-memory')];
  * @param {typeof ipc} ipcMain
  */
 export async function mainframeIPC(ipc: typeof ipcMain) {
-  /** initalize the database once alone */
-  global['_databaseInit'] = await to(mainframe(rxDbPlugins));
-  global['decryptLiensce'] = decryptLiensce;
+  // global['_databaseInit'] = await database();
 
+  debug({ message: `setting up IPC Events Bindings`, trace: 'mainframe::mainframeIPC' });
   // ipc events for DATABASE
   // ipc event for sending the database
   ipc.on(CONSTANTS.GET_DATABASE, async (event: IpcEvent) => {
@@ -50,11 +48,8 @@ export async function mainframeIPC(ipc: typeof ipcMain) {
   // for saving liensce key
   ipc.on(
     CONSTANTS.SET_LIENSCE_KEY,
-    async (event: IpcEvent, { key }: { key: string }) => {
-      event.sender.send(
-        CONSTANTS.SAVED_LIENSCE_KEY,
-        await to(saveLiensceKey(key))
-      );
+    async (event: IpcEvent, key: SchoolEncryptedData ) => {
+      event.sender.send(CONSTANTS.SAVED_LIENSCE_KEY, await saveLiensceKey(key));
     }
   );
   // for deleting the liensce key returns promisfied boolean
@@ -90,6 +85,7 @@ export async function mainframeIPC(ipc: typeof ipcMain) {
     }
   );
 }
+
 
 function decryptLiensceAsync(token) {
   console.log(token);

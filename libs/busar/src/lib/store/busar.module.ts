@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import { createFeatureSelector, StoreModule } from '@ngrx/store';
-import { BusaryEffects } from './busar.effects';
-import { reducer, SettingState } from './busar.reducer';
-
-export const BusaryStoreFeatureName = 'busary';
-export const BusarFeature = createFeatureSelector<SettingState>(BusaryStoreFeatureName);
+import { StoreModule } from '@ngrx/store';
+import { BusaryEffects, BusaryStoreFeatureName } from './busar.effects';
+import { reducer } from './busar.reducer';
 
 
 

@@ -1,25 +1,8 @@
-import { KolConfig } from './setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { CollectionConfig } from './setup.mainframe';
 
 /** key to retrieve the collection form the db intialize object */
 const SCHOOL_NAME = 'school';
-
-/**
- * School biodata record stored in the database's interface
- *
- * @export
- * @interface SchoolKoll
- */
-export interface SchoolKoll {
-  id?: string;
-  logo?: string;
-  name: string;
-  email: string;
-  description: string;
-  category: string;
-  address: string;
-  town: string;
-  state: string;
-}
 
 /**
  * the student biodata schema configuration and properties
@@ -66,7 +49,7 @@ export const schoolSchema = {
   //     'category', 'town', 'state']
 };
 
-export const schoolModel: KolConfig<typeof schoolSchema> = {
-  name: SCHOOL_NAME,
+export const schoolModel: CollectionConfig<typeof schoolSchema> = {
+  name: EntityNames.School,
   schema: schoolSchema
 };

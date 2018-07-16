@@ -2,16 +2,15 @@ import { NgModule } from '@angular/core';
 import { ElectronProcessModule, ProcessEffectService } from '@dilta/electron/src/lib/renderer';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './reducer';
+import { ProcessFeatureName, ProcessStoreEventsReducer } from './process.reducer';
 
 
 
-export const ProcessFeatureName = 'process';
 
 @NgModule({
   imports: [
     ElectronProcessModule,
-    StoreModule.forFeature(ProcessFeatureName, reducer),
+    StoreModule.forFeature(ProcessFeatureName, ProcessStoreEventsReducer),
     EffectsModule.forFeature([ProcessEffectService])
   ],
   exports: [],

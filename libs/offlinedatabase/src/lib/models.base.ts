@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
 import { Model } from '@dilta/abstract-imp';
-import { Observable } from 'rxjs/observable';
-import { RxCollection, RxDocument } from 'rxdb';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { OfflineDB } from '@dilta/models';
-import { formatError } from '@dilta/screwbox';
+import { RxCollection } from 'rxdb';
+import { Observable } from 'rxjs/observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { map, switchMap } from 'rxjs/operators';
 
 /**
  * base class for all model must adhere to has an interface for interaction

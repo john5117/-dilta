@@ -1,4 +1,6 @@
+import { Setting } from '@dilta/models';
 import { uniq } from 'lodash';
+import * as uuidRandom from 'uuid/v4';
 
 /**
  * school Preset containing various courses and interface
@@ -234,7 +236,7 @@ export function dictSchool(
 ): SchoolDict {
   const _schoolPresetBios = customDict || schoolPresetBios;
   // tslint:disable-next-line:no-shadowed-variable
-  const { levels, name, permision } = _schoolPresetBios[preset];
+  const { levels, permision } = _schoolPresetBios[preset];
   const schoolClasses: string[] = levels.map(level => level.name);
   const schoolSubjects = uniq(
     levels.map(level => level.courses).reduce((p, c) => {
@@ -260,4 +262,80 @@ export function dictPermision(permsions: Permission[] = []) {
   const _dict = {};
   permsions.forEach(p => (_dict[p.name] = p.value));
   return _dict;
+}
+
+
+/**
+ * Creates an inital presets dynamically for the school
+ *
+ * @export
+ * @param {keyof SchoolPreset} category
+ * @param {string} owner
+ * @returns {Setting}
+ */
+export function InitalBusaryPreset(category: keyof SchoolPreset, owner: string ): Setting {
+  const inputs = dictSchool(category).classes.map(e => {
+    const _obj = {};
+    _obj[e] = '';
+    return _obj;
+  });
+  return {
+    owner,
+    school: owner,
+    settings: busarySetting(inputs),
+    id: uuidRandom(),
+    type: category
+  };
+}
+
+
+/**
+ * Function to return Busary Preference
+ *
+ * @param {*} inputs
+ * @returns
+ */
+function busarySetting(inputs) {
+  return {
+    revenue: {
+      name: 'Revenue',
+      link: 'revenue',
+      enabled: true,
+      submenus: {
+        schoolFee: {
+          enabled: true,
+          name: 'schoolFee',
+          link: 'revenue:schoolFee',
+          inputs
+        },
+        uniform: {
+          enabled: true,
+          name: 'uniform',
+          link: 'revenue:uniform',
+          inputs
+        },
+        transportation: {
+          enabled: true,
+          name: 'transportation',
+          link: 'revenue:transportation',
+          inputs
+        }
+      }
+    },
+    expenses: {
+      name: 'Expenses',
+      link: 'Expenses',
+      submenus: {
+        'link 1': {
+          enabled: false,
+          name: 'link 1',
+          link: 'link 1'
+        },
+        'link 2': {
+          name: 'link 2',
+          link: 'link 2'
+        }
+      }
+    }
+  };
 }

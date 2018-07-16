@@ -6,10 +6,10 @@ import { CollectionConfig } from './setup.mainframe';
 /**
  * the student's payment receipt schema configuration and properties
  */
-export const receiptSchema = {
-  title: 'User Receipt Schema',
+export const ExpenseSchema = {
+  title: 'School expense Schema',
   version: 0,
-  description: 'stores users payments receipt schema',
+  description: 'stores users expense schema',
   type: 'object',
   properties: {
     id: {
@@ -29,17 +29,18 @@ export const receiptSchema = {
       type: 'number',
       final: true
     },
-    teacherId: {
+    receiverId: {
+      type: 'string'
+    },
+    busarId: {
       type: 'string',
       final: true
     },
-    teacherName: {
-      type: 'string',
-      final: true
+    purpose: {
+      type: 'string'
     },
-    studentId: {
-      type: 'string',
-      final: true
+    category: {
+      type: 'string'
     },
     universalId: {
       type: 'string',
@@ -53,10 +54,6 @@ export const receiptSchema = {
       type: 'string',
       final: true
     },
-    class: {
-      type: 'string',
-      final: true
-    },
     createdAt: {
       type: 'string',
       final: true
@@ -64,16 +61,28 @@ export const receiptSchema = {
     updatedAt: {
       type: 'string'
     },
+    capital: {
+      type: 'boolean'
+    },
     school: {
       ref: 'school',
       type: 'string',
       final: true
     }
   },
-  required: ['school']
+  required: [
+    'busarId',
+    'name',
+    'amount',
+    'session',
+    'term',
+    'universalId',
+    'school',
+    'createdAt'
+  ]
 };
 
-export const receiptModel: CollectionConfig<typeof receiptSchema> = {
-  name: EntityNames.Receipt,
-  schema: receiptSchema
+export const ExpenseModel: CollectionConfig<typeof ExpenseSchema> = {
+  name: EntityNames.Expense,
+  schema: ExpenseSchema
 };

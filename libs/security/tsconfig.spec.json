@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/libs/security",
     "types": [
-      "jasmine",
+      "jest",
       "node"
     ]
   },

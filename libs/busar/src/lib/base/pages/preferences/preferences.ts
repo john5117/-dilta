@@ -1,13 +1,13 @@
 import { OnInit } from '@angular/core';
+import { SettingPreference, Settings } from '@dilta/models';
 import { dictSchool } from '@dilta/presets';
 import { flatten } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { SettingPreference, SettingState } from '../../../store';
 
 const defaultView = 'schoolFee';
 
 interface IntialBusarPrefenceState  {
-  menus: SettingState;
+  menus: Settings;
   views: string[];
   currentForm: string;
   settings: {}[];
@@ -81,7 +81,7 @@ const inputs = dictSchool('primary').classes.map(e => {
   return _obj;
 });
 
-const sideBar: SettingState = {
+const sideBar: Settings = {
   revenue: {
     name: 'Revenue',
     link: 'revenue',
@@ -130,11 +130,11 @@ const sideBar: SettingState = {
 };
 
 // TODO: Flat _settings to an array of a single level
-function flatByKey<T>(sidebar: SettingState, key: string) {
+function flatByKey<T>(sidebar: Settings, key: string) {
   const _items = Object.values(sidebar).map(e => e.name);
   const _subItems = flatten(
     Object.values(sideBar).map(e =>
-      Object.values(e.submenus || {}).map(s => s.name)
+      Object.values(e.submenus || {}).map((s) => (s as any).name)
     )
   );
   console.log(_subItems);
