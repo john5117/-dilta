@@ -1,4 +1,3 @@
-export * from './base';
-export * from './busar.module';
-export * from './store';
-export * from './webcomponents';
+export * from './busar-routes.module';
+export * from './dumbcomponents';
+export * from './pages';

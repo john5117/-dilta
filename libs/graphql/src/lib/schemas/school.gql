@@ -1,0 +1,14 @@
+type School {
+  logo: String
+  name: String!
+  email: String
+  description: String!
+  category: String!
+  address: String!
+  town: String!
+  state: String!
+  id: ID!
+  hash: String!
+  createdAt: Int!
+  updatedAt: Int!
+}

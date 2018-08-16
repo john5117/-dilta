@@ -1,23 +1,53 @@
 import { NgModule } from '@angular/core';
 import { EntityDataService, EntityMetadataMap } from 'ngrx-data';
-import { AuthDataService, AuthService } from './auth.service';
-import { DataServicesModule } from './data.module';
-import { ManagerDataService, ManagerService } from './manager.service';
-import { SchoolDataService, SchoolService } from './school.service';
-import { UserDataService, UserService } from './users.service';
+import {
+  AuthDataService,
+  AuthService
+} from '@dilta/store/src/lib/entities/auth.service';
+import { DataServicesModule } from '@dilta/store/src/lib/entities/data.module';
+import {
+  ExpenseDataService,
+  ExpenseService
+} from '@dilta/store/src/lib/entities/expense.service';
+import {
+  ManagerDataService,
+  ManagerService
+} from '@dilta/store/src/lib/entities/manager.service';
+import {
+  ReceiptDataService,
+  ReceiptService
+} from '@dilta/store/src/lib/entities/reciept.service';
+import {
+  SchoolDataService,
+  SchoolService
+} from '@dilta/store/src/lib/entities/school.service';
+import {
+  SettingDataService,
+  SettingService
+} from '@dilta/store/src/lib/entities/setting.service';
+import {
+  UserDataService,
+  UserService
+} from '@dilta/store/src/lib/entities/users.service';
 
 export const entityMetadata: EntityMetadataMap = {
   user: {},
   school: {},
   manager: {},
-  auth: {}
+  auth: {},
+  reciept: {},
+  expense: {},
+  setting: {}
 };
 
 export const providers = [
   UserService,
   SchoolService,
   ManagerService,
-  AuthService
+  AuthService,
+  ReceiptService,
+  SettingService,
+  ExpenseService
 ];
 
 @NgModule({
@@ -26,17 +56,23 @@ export const providers = [
 })
 export class EntityServicesModule {
   constructor(
-    private eds: EntityDataService,
+    eds: EntityDataService,
     auth: AuthDataService,
     manager: ManagerDataService,
     school: SchoolDataService,
-    user: UserDataService
+    user: UserDataService,
+    reciept: ReceiptDataService,
+    setting: SettingDataService,
+    expense: ExpenseDataService
   ) {
     eds.registerServices({
       auth,
       user,
       manager,
-      school
+      reciept,
+      school,
+      setting,
+      expense
     });
   }
 }

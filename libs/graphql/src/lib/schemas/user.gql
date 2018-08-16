@@ -1,0 +1,19 @@
+type User {
+  name: String!
+  gender: String!
+  phoneNo: String!
+  address: String!
+  # authId: Auth
+  authId: Auth!
+  image: String!
+  class: String
+  subject: String
+  phoneNos: String
+  email: String
+  id: ID!
+  hash: String!
+  createdAt: Int!
+  updatedAt: Int!
+  school: School!
+}
+

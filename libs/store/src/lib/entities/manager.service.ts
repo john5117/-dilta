@@ -3,10 +3,8 @@ import { Model } from '@dilta/abstract-imp';
 import { Manager } from '@dilta/models';
 import { ManagerModel } from '@dilta/offlinedatabase/src/lib/model.tokens';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
-import { EntityNames } from './constants';
-import { EntityDataBase } from './entitybase';
-
-
+import { EntityNames } from '@dilta/store/src/lib/entities/constants';
+import { EntityDataBase } from '@dilta/store/src/lib/entities/entitybase';
 
 /**
  * ManagerDataService resonsible for creation of the entity

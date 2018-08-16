@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/libs/busar",
     "types": [
-      "jasmine",
+      "jest",
       "node"
     ]
   },

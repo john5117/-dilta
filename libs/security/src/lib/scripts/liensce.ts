@@ -1,6 +1,5 @@
-import { readFileSync, writeFileSync } from 'fs';
-import { join, normalize } from 'path';
 import * as NodeRsa from 'node-rsa';
+import { logger } from '@dilta/security/src/lib/localScope';
 
 export class LiensceGenerator {
   /**
@@ -61,6 +60,10 @@ export class LiensceGenerator {
   }
 
   static privateEncrypt(secret) {
+    logger.debug({
+      message: `encrypting secret key`,
+      trace: 'LiensceGenerator::generateDemoKey'
+    });
     return this.privateKey.encrypt(secret, 'base64');
   }
 
@@ -79,10 +82,18 @@ export class LiensceGenerator {
   }
 
   static publicDecrypt(secret) {
+    logger.debug({
+      message: `decrypting secret key`,
+      trace: 'LiensceGenerator::generateDemoKey'
+    });
     return this.privateKey.decrypt(secret, 'utf8');
   }
 
   static generateDemoKey() {
+    logger.debug({
+      message: `generating demo key`,
+      trace: 'LiensceGenerator::generateDemoKey'
+    });
     const bio = {
       apikey: 'apikey',
       globalId: '123random5xyz',

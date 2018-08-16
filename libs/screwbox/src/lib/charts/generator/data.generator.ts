@@ -3,8 +3,8 @@
  * FOR THE CHART GRAPH TO HAVE PREDESITINE VALUE
  */
 
+import { list, Score, select } from '@dilta/generator';
 import * as faker from 'faker';
-import { examList, Score, select, list } from './../../gen.faker';
 import * as fs from 'fs';
 
 /**
@@ -68,11 +68,10 @@ function scoreGen(): Score {
       'government',
       'literature'
     ]) as any,
-    b_id: faker.random.uuid(),
-    name: select(students) as any,
     fa: faker.random.number({ min: 0, max: 30 }),
     sa: faker.random.number({ min: 0, max: 30 }),
     exam: faker.random.number({ min: 0, max: 70 }),
+    student: faker.random.uuid(),
     id: faker.random.uuid(),
     session: select(['2016/2017', '2018/2019', '2015/2016']) as any,
     term: select(['first term', 'second term', 'third term']) as any

@@ -1,0 +1,20 @@
+type Query {
+  getAuth: Auth
+  findAuths: [Auth]
+  getExpense: Expense
+  findExpenses: [Expense]
+  getManager: Manager
+  findManagers: [Manager]
+  getReceipt: Receipt
+  findReceipts: [Receipt]
+  getParent: Parent
+  findParents: [Parent]
+  getSchool: School
+  findSchools: [School]
+  getScore: Score
+  findScores: [Score]
+  getStudent: Student
+  findStudents: [Student]
+  getUser: User
+  findUsers: [User]
+}

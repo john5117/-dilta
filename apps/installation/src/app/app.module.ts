@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProcessNgrxModule } from '@dilta/process';
 import { entityMetadata } from '@dilta/store';
+import { loggerServiceFactory, LoggerService } from '@dilta/util';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -13,8 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LienscePagesModule } from './components';
 
-
-
+const logger = new LoggerService('@dilta/installation', 'info');
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +36,7 @@ import { LienscePagesModule } from './components';
     ProcessNgrxModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{ useValue: logger, provide: LoggerService }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

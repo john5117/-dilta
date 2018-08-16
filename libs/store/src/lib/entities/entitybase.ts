@@ -3,7 +3,6 @@ import { EntityCollectionDataService, Update } from 'ngrx-data';
 import { Observable } from 'rxjs/observable';
 import { map } from 'rxjs/operators';
 
-
 /**
  * EntityBase setups the effects for corresponding actions
  * for any defined Entity
@@ -16,13 +15,11 @@ export class EntityDataBase<T> implements EntityCollectionDataService<T> {
   constructor(readonly name: string, private dataSvc: Model<T>) {}
 
   add(item: T) {
-    console.log('called add service');
     return this.dataSvc.update$(item);
   }
 
   delete(id: string) {
-    return this.dataSvc.delete$({ id } as any)
-    .pipe(map(b => null));
+    return this.dataSvc.delete$({ id } as any).pipe(map(b => null));
   }
 
   getWithQuery(query) {

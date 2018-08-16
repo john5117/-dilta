@@ -1,4 +1,7 @@
+import { Setting } from '@dilta/models';
 import { uniq } from 'lodash';
+import * as moment from 'moment';
+import * as uuidRandom from 'uuid/v4';
 
 /**
  * school Preset containing various courses and interface
@@ -190,6 +193,9 @@ export const schoolPresetBios: SchoolPreset = {
   nusery_primary: nuseryPrimarySchool
 };
 
+/** school categories supported */
+export const schoolCategories = Object.keys(schoolPresetBios);
+
 /**
  * school dictonary interface after transformations
  *
@@ -234,7 +240,7 @@ export function dictSchool(
 ): SchoolDict {
   const _schoolPresetBios = customDict || schoolPresetBios;
   // tslint:disable-next-line:no-shadowed-variable
-  const { levels, name, permision } = _schoolPresetBios[preset];
+  const { levels, permision } = _schoolPresetBios[preset];
   const schoolClasses: string[] = levels.map(level => level.name);
   const schoolSubjects = uniq(
     levels.map(level => level.courses).reduce((p, c) => {
@@ -260,4 +266,126 @@ export function dictPermision(permsions: Permission[] = []) {
   const _dict = {};
   permsions.forEach(p => (_dict[p.name] = p.value));
   return _dict;
+}
+
+/**
+ * Types of settings configuration either school or user
+ *
+ * @export
+ * @enum {number}
+ */
+export enum SettingTypes {
+  school = 'school',
+  user = 'user'
+}
+
+/**
+ * Creates an inital presets dynamically for the school
+ *
+ * @export
+ * @param {keyof SchoolPreset} category
+ * @param {string} owner
+ * @returns {Setting}
+ */
+export function InitalBusaryPreset(
+  category: keyof SchoolPreset,
+  owner: string
+): Setting {
+  const memberclassesInputs = dictSchool(category).classes.map(e => {
+    const _obj = {};
+    _obj[e] = '';
+    return _obj;
+  });
+  return {
+    owner,
+    school: owner,
+    type: SettingTypes.school,
+    settings: busarySetting({ memberclassesInputs }),
+    id: uuidRandom(),
+    defaultView: 'revenue:schoolFee',
+    hash: `${Date.now()}:{uuidRandom()}`,
+    createdAt: moment(new Date()).unix()
+  };
+}
+
+/**
+ * Function to return Busary Preference
+ *
+ * @param {*} inputs
+ * @returns
+ */
+function busarySetting({ memberclassesInputs }) {
+  const today = moment();
+  return {
+    revenue: {
+      name: 'Revenue',
+      link: 'revenue',
+      enabled: true,
+      submenus: {
+        schoolFee: {
+          enabled: true,
+          name: 'schoolFee',
+          link: 'revenue:schoolFee',
+          inputs: memberclassesInputs
+        },
+        uniform: {
+          enabled: true,
+          name: 'uniform',
+          link: 'revenue:uniform',
+          inputs: memberclassesInputs
+        },
+        transportation: {
+          enabled: true,
+          name: 'transportation',
+          link: 'revenue:transportation',
+          inputs: memberclassesInputs
+        }
+      }
+    },
+    expenses: {
+      name: 'Expenses',
+      link: 'expenses',
+      enabled: true,
+      inputs: [
+        { name: 'Stationaries' },
+        { name: 'Transportation' },
+        { name: 'Miscelious' }
+      ]
+    },
+    others: {
+      name: 'Others',
+      link: 'others',
+      submenus: {
+        termList: {
+          enabled: true,
+          name: 'TermList',
+          link: 'others:termList',
+          inputs: [
+            { name: 'First Term' },
+            { name: 'Second Term' },
+            { name: 'Third Term' }
+          ]
+        },
+        sessionList: {
+          enabled: true,
+          name: 'SessionList',
+          link: 'others:sessionList',
+          inputs: [
+            { name: `${today.year()}\\${today.add('1', 'y').year()}` },
+            { name: `${today.subtract('1', 'y').year()}\\${today.year()}` },
+            {
+              name: `${today.subtract('2', 'y').year()}\\${today
+                .subtract('1', 'y')
+                .year()}`
+            },
+            {
+              name: `${today.subtract('3', 'y').year()}\\${today
+                .subtract('2', 'y')
+                .year()}`
+            }
+          ]
+        }
+      }
+    }
+  };
 }

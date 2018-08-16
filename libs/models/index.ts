@@ -1,1 +1,1 @@
-export * from './src/rxdb';
+export * from '@dilta/models/src/rxdb';

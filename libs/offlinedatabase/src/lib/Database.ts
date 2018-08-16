@@ -11,9 +11,16 @@ import { Observable } from 'rxjs/observable';
  */
 @Injectable()
 export class Database {
-  readonly db: Observable<OfflineDB> = (window['require']('electron')
-    .remote as Remote).getGlobal('_databaseInit')[1];
-  constructor() {}
+  private readonly _db: [Error, Observable<OfflineDB>] = (window['require'](
+    'electron'
+  ).remote as Remote).getGlobal('_databaseInit');
+  public db: Observable<OfflineDB>;
+  constructor() {
+    if (this._db[0]) {
+      throw this._db[0];
+    }
+    this.db = this._db[1];
+  }
 }
 
 function isElectron() {

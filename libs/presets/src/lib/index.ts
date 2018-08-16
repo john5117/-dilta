@@ -1,3 +1,3 @@
-export * from './nigeria.states';
-export * from './schools.preset';
-export * from './states.presets';
+export * from '@dilta/presets/src/lib/nigeria.states';
+export * from '@dilta/presets/src/lib/schools.preset';
+export * from '@dilta/presets/src/lib/states.presets';

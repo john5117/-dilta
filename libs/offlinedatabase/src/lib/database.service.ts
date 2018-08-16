@@ -1,9 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Auth, Manager, Parent, Receipt, School, Score, Student, User } from '@dilta/models';
+import {
+  Auth,
+  Expense,
+  Manager,
+  Parent,
+  Receipt,
+  School,
+  Score,
+  Setting,
+  Settings,
+  Student,
+  User
+} from '@dilta/models';
 import { EntityNames } from '@dilta/store/src/lib/entities/constants';
 import { EntityService } from 'ngrx-data';
-import { Database } from './Database';
-import { ModelBase } from './models.base';
+import { Database } from '@dilta/offlinedatabase/src/lib/Database';
+import { ModelBase } from '@dilta/offlinedatabase/src/lib/models.base';
 
 /**
  * Service priovider for user Authentication storage and operations
@@ -116,5 +128,33 @@ export class StudentDBService extends ModelBase<Student> {
 export class UserDBService extends ModelBase<User> {
   constructor(database: Database) {
     super(EntityNames.User, database.db);
+  }
+}
+
+/**
+ * responsible for users and school settings database operations
+ *
+ * @export
+ * @class SettingDBService
+ * @extends {ModelBase<Settings>}
+ */
+@Injectable()
+export class SettingDBService extends ModelBase<Setting> {
+  constructor(database: Database) {
+    super(EntityNames.Setting, database.db);
+  }
+}
+
+/**
+ * responsible for expenses database operations
+ *
+ * @export
+ * @class ExpenseDBService
+ * @extends {ModelBase<Expense>}
+ */
+@Injectable()
+export class ExpenseDBService extends ModelBase<Expense> {
+  constructor(database: Database) {
+    super(EntityNames.Expense, database.db);
   }
 }

@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { processFeature, ProcessReducer, VerifyLiensceKey } from '@dilta/process';
+import { processFeature, ProcessState, VerifyLiensceKey } from '@dilta/process';
 import { reader } from '@dilta/screwbox';
 import { LoggerService } from '@dilta/util';
 import { Store } from '@ngrx/store';
 import { to } from 'await-to-js';
 import { UploadFile } from 'ngx-uploader';
-
 
 /**
  * ui for selecting the liensce key for the app
@@ -51,7 +50,7 @@ export class LiensceKeyComponent implements OnInit, OnDestroy {
   public key: string;
 
   constructor(
-    private store: Store<ProcessReducer>,
+    private store: Store<ProcessState>,
     private log: LoggerService,
     private router: Router
   ) {}
@@ -111,12 +110,14 @@ export class LiensceKeyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(processFeature).subscribe(store => {
-      console.log({ store });
-      if (store.error) {
-        return this.displayError(new Error(store.error));
+    this.store.select(processFeature).subscribe(({ error, schoolData }) => {
+      console.log({ error, schoolData });
+      if (error) {
+        return this.displayError(new Error(error.message));
       }
-      this.setupSchoolDetails(store.schoolId);
+      if (schoolData) {
+        this.setupSchoolDetails(schoolData.schoolId);
+      }
     });
   }
 

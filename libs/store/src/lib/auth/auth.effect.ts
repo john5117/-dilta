@@ -3,9 +3,12 @@ import { Actions, Effect } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators/catchError';
-import { AuthDataService, UserDataService } from '../entities';
-import * as AuthActions from './auth.action';
-import { Authsuccess } from './auth.reducer';
+import {
+  AuthDataService,
+  UserDataService
+} from '@dilta/store/src/lib/entities';
+import * as AuthActions from '@dilta/store/src/lib/auth/auth.action';
+import { Authsuccess } from '@dilta/store/src/lib/auth/auth.reducer';
 
 const { AuthActionTypes, Status } = AuthActions;
 

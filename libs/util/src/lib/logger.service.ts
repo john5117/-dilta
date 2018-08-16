@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
+import { FactoryProvider } from '@angular/core';
 import { Log, LoggerBase } from '@dilta/abstract-imp';
-
 // TODO: Provide optional logger and config
-import * as jsLogger from 'js-logger';
+import * as pino from 'pino';
+import { Level, Logger } from 'pino';
 
-jsLogger.useDefaults();
+export type logNameSpace = 'default' | string;
 
 /**
  * a wrapper along js logger
@@ -13,44 +12,44 @@ jsLogger.useDefaults();
  * @export
  * @class LoggerService
  */
-@Injectable()
+// @Injectable()
 export class LoggerService extends LoggerBase implements LoggerBase {
-  private logger = jsLogger;
-  // constructor(private logger: Console) {
-  constructor() {
+  private logger: Logger;
+
+  constructor(public loggerNameSpace: string, loglevel?: string) {
     super();
+    this.logger = pino({ name: loggerNameSpace, prettyPrint: true } as any);
+    this.logger.level = (loglevel as any) || this.logger.level;
   }
+
   /**
-   * wrapper against jslogger.debug
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @memberof LoggerService
    */
   debug(customLog: Log, ...other: any[]) {
+    // return this.info(customLog, ...other);
     this.validate(customLog);
     this.logger.debug(
-      `${customLog.trace}:::${customLog.message}::${Date()}}`,
+      `${this.loggerNameSpace}:::${customLog.trace}:::${customLog.message}::${Date()}}`,
       other
     );
   }
 
   /**
-   * wrapper against jslogger.log
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
    * @memberof LoggerService
    */
   log(customLog: Log, ...other: any[]) {
-    this.validate(customLog);
-    this.logger.log(
-      `${customLog.trace}:::${customLog.message}::${Date()}}`,
-      other
-    );
+    return this.info(customLog, ...other);
   }
 
   /**
-   * wrapper against jslogger.warn
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
@@ -65,7 +64,7 @@ export class LoggerService extends LoggerBase implements LoggerBase {
   }
 
   /**
-   * wrapper against jslogger.info
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
@@ -80,7 +79,7 @@ export class LoggerService extends LoggerBase implements LoggerBase {
   }
 
   /**
-   * wrapper against jslogger.error
+   * wrapper for a cross platform logger
    *
    * @param {Log} customLog
    * @param {...any[]} other
@@ -103,4 +102,23 @@ export class LoggerService extends LoggerBase implements LoggerBase {
       data
     );
   }
+}
+
+/**
+ * dynamically creates logger with data
+ *
+ * @export
+ * @param {string} [name='default']
+ * @param {Level} [loglevel='info']
+ * @returns
+ */
+export function loggerServiceFactory(
+  name: string = 'default',
+  loglevel: Level = 'info'
+): FactoryProvider {
+  const logger = () => new LoggerService(name, loglevel);
+  return {
+    provide: LoggerService,
+    useFactory: logger
+  };
 }

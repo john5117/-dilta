@@ -14,7 +14,7 @@
     "source.organizeImports": true
   },
   "typescript.implementationsCodeLens.enabled": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "C:\\Users\\AbiZeus\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -26,7 +26,7 @@
     "apps/*-e2e": true,
     "coverage": true,
     "doc": true,
-    "dist": true,
+    "dist": false,
     "keys": true,
     "node_modules": true,
     "tools": true,
@@ -36,17 +36,32 @@
     "backup_src": true,
     ".vscode": true,
     "libs/abstract-imp": true,
-    "libs/auth-module": false,
-    "libs/commonwebui": false,
-    "libs/electron": true,
-    "libs/generator": true,
-    "libs/models": true,
-    "libs/offlinedatabase": true,
-    "libs/presets": true,
+    "libs/auth-module": true,
+    "libs/electron": false,
+    "libs/generator": false,
+    "libs/models": false,
+    "libs/offlinedatabase": false,
+    "libs/presets": false,
     "libs/process": true,
-    "libs/screwbox": true,
-    "libs/security": true,
+    "libs/screwbox": false,
+    "libs/security": false,
     "libs/store": true,
     "libs/util": true,
-  }
+    "libs/common-ui": false,
+    "libs/commonwebui": true,
+    "libs/busar": true,
+    "libs/busar-base": false,
+  },
+  "typescript.format.insertSpaceAfterTypeAssertion": true,
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.preferences.importModuleSpecifier": "auto",
+  "line-counter.excludes": [
+    "**/.vscode/**",
+    "**/libs/presets/src/lib/nigeria.states.ts"
+  ],
+  "line-counter.includes": [
+    "**/apps/**",
+    "**/libs/**",
+    "main.ts"
+  ]
 }

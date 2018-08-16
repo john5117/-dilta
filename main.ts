@@ -1,4 +1,5 @@
 import { createLiensceWindow, mainframeIPC } from '@dilta/electron';
+import { logger } from '@dilta/electron/src/lib/main/localscope';
 import { app, BrowserWindow, ipcMain, screen } from 'electron';
 
 
@@ -28,6 +29,10 @@ function createMainWindow() {
 }
 
 async function createWindow() {
+  logger.debug({
+   message: 'window ready event triggered',
+    trace: 'main::createWindow'
+  });
   await mainframeIPC(ipcMain);
   createLiensceWindow({});
   // createMainWindow();
@@ -41,6 +46,10 @@ try {
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
+    logger.debug({
+      message: 'window-all-closed event triggered',
+      trace: 'main::close-window'
+    });
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
@@ -49,6 +58,10 @@ try {
   });
 
   app.on('activate', () => {
+    logger.debug({
+      message: 'window activate event triggered',
+      trace: 'main::close-window'
+    });
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (win === null) {

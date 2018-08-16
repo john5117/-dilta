@@ -1,29 +1,8 @@
-import { KolConfig } from './setup.mainframe';
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
-const USER_NAME = 'user';
-
-/**
- * teachers biodata information recored stored in the database's interface
- *
- * @export
- * @interface UserKoll
- */
-export interface UserKoll {
-  id?: string;
-  name: string;
-  gender: string;
-  phoneNo: string | number;
-  class: string;
-  subject: string;
-  phoneNos: string;
-  address: string;
-  image: File | string;
-  email?: string;
-  level: string;
-  authId: string;
-  school: string;
-}
 
 /**
  * subject record information and schema
@@ -34,10 +13,6 @@ export const userSchema = {
   description: 'stores various users biodata',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     name: {
       type: 'string'
     },
@@ -45,7 +20,7 @@ export const userSchema = {
       type: 'string'
     },
     phoneNo: {
-      type: 'number'
+      type: 'string'
     },
     class: {
       type: 'string',
@@ -58,9 +33,6 @@ export const userSchema = {
     phoneNos: {
       type: 'string'
     },
-    level: {
-      type: 'string'
-    },
     address: {
       type: 'string'
     },
@@ -71,20 +43,24 @@ export const userSchema = {
       type: 'string'
     },
     authId: {
-      ref: 'auth',
       type: 'string',
       final: true
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['name', 'gender', 'address', 'email', 'authId', 'school']
+  required: [
+    'name',
+    'gender',
+    'phoneNo',
+    'address',
+    'email',
+    'image',
+    'authId',
+    ...baseModel.required
+  ]
 };
 
-export const userModel: KolConfig<typeof userSchema> = {
-  name: USER_NAME,
+export const userModel: CollectionConfig<typeof userSchema> = {
+  name: EntityNames.User,
   schema: userSchema
 };

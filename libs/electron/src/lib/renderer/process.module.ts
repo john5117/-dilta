@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
-import { ProcessEffectService } from './process.service';
+import { ProcessEffectService } from '@dilta/electron/src/lib/renderer/process.service';
 
 @NgModule({
   imports: [NgxElectronModule],

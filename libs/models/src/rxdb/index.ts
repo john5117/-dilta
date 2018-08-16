@@ -1,10 +1,2 @@
-export * from './models';
-export { authModel } from './auth.model';
-export { managerModel } from './manager.model';
-export { parentModel } from './parent.model';
-export { receiptModel } from './receipt.model';
-export { schoolModel } from './school.model';
-export { studentModel } from './student.model';
-export { subjectModel } from './subject.model';
-export { userModel } from './user.model';
-export { mainframe } from './setup.mainframe';
+export * from '@dilta/models/src/rxdb/models';
+export * from '@dilta/models/src/rxdb/setup.mainframe';

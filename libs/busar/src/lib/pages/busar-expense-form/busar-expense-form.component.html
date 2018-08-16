@@ -1,0 +1,8 @@
+<!-- expenseModal -->
+<clr-modal [(clrModalOpen)]="displayExpenseForm">
+  <h3 class="modal-title">Expense</h3>
+  <div class="modal-body">
+    <busar-expense-form [sessionList]="(localStore$ | async)?.sessionList" [termsList]="(localStore$ | async)?.termList" *ngIf="displayExpenseForm">
+    </busar-expense-form>
+  </div>
+</clr-modal>

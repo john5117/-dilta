@@ -1,4 +1,6 @@
-import { BusarExpenseSummary, BusarRevenueSummary } from '@dilta/busar';
+import { BusarExpenseSummary, BusarRevenueSummary } from '@dilta/busar-base';
+import { BaseModel, Manager, Parent, Receipt, School, Student, User } from '@dilta/models';
+import { getDate } from 'date-fns';
 import * as faker from 'faker';
 import { pick } from 'shuffle-array';
 
@@ -28,68 +30,53 @@ export function list<T>(method: Function, amount: number = 5): T[] {
  * @param {Array<T>} array
  * @returns {(T | T[])}
  */
-export function select<T>(array: Array<T>): T | T[] {
-  return pick(array);
+export function select<T>(array: Array<T>): T {
+  return pick(array) as any;
 }
 
-export interface School {
-  name: string;
-  email: string;
-  description: string;
-  category: any;
-  address: string;
-  town: string;
-  state: string;
+function baseModel(): BaseModel {
+  return {
+    id: faker.random.uuid(),
+    updatedAt: getDate(faker.date.past()),
+    createdAt: getDate(faker.date.past()),
+    hash: faker.random.uuid(),
+    school: faker.company.companyName()
+  };
 }
 
 export function school(): School {
+  const skul = baseModel();
+  delete skul.school;
   return {
-    address: faker.address.streetAddress(),
-    category: select(['primary', 'secondary']),
-    description: faker.random.words(45),
-    email: faker.internet.email(),
     name: faker.company.companyName(),
+    email: faker.internet.email(),
+    description: faker.random.words(45),
+    category: select(['primary', 'secondary']) as any,
+    address: faker.address.streetAddress(),
+    town: faker.address.city(),
     state: faker.address.state(),
-    town: faker.address.city()
+    logo: faker.image.dataUri(100, 200),
+    ...skul
   };
 }
 
 export const schoolList = (amount?: number) => list<School>(school, amount);
 
-export interface Manager {
-  propName: string;
-  propPhone: string;
-  propEmail: string;
-  sMName: string;
-  sMPhone: string;
-  sMEmail: string;
-  motto: string;
-}
-
 export function manager(): Manager {
   return {
+    school: faker.company.companyName(),
     motto: faker.lorem.lines(1),
     propEmail: faker.internet.email(),
     propName: `${faker.name.firstName()} ${faker.name.lastName()}`,
     propPhone: faker.phone.phoneNumber(),
     sMEmail: faker.internet.email(),
     sMName: `${faker.name.firstName()} ${faker.name.lastName()}`,
-    sMPhone: faker.phone.phoneNumber()
+    sMPhone: faker.phone.phoneNumber(),
+    ...baseModel()
   };
 }
 
 export const managerList = (amount?: number) => list<Manager>(manager, amount);
-
-export interface Student {
-  name: string;
-  age: number;
-  class: any;
-  gender: any;
-  parentPhone: string;
-  bloodgroup?: any;
-  prevschool: string;
-  id?: string;
-}
 
 export const classes = [
   'pry1',
@@ -107,100 +94,71 @@ export const bloodgroups = ['A', 'B', 'AB', 'O'];
 
 export function student(): Student {
   return {
-    age: faker.random.number({ min: 2, max: 10 }),
+    dob: getDate(faker.date.past(3)),
+    school: faker.random.uuid(),
     class: select(classes),
     bloodgroup: select(bloodgroups),
     gender: select(genders),
     name: `${faker.name.firstName()} ${faker.name.lastName()}`,
     parentPhone: faker.phone.phoneNumber(),
     prevschool: faker.company.companyName(),
-    id: faker.random.uuid()
+    ...baseModel()
   };
 }
 
 export const studentList = (amount?: number) => list<Student>(student, amount);
 
-export interface Parent {
-  phoneNo: string;
-  name: string;
-  relationship: any;
-  homeAddress: string;
-  workAddress?: string;
-  email?: string;
-  profession: string;
-  workcategory: string;
-  town: string;
-  state: string;
-}
-
 export const relationships = ['Guardian', 'Parent'];
 
 export function parent(): Parent {
   return {
+    school: faker.random.uuid(),
     email: faker.internet.email(),
     homeAddress: faker.address.streetAddress(),
     name: `${faker.name.firstName()} ${faker.name.lastName()}`,
     phoneNo: faker.phone.phoneNumber(),
     profession: faker.name.jobDescriptor(),
-    relationship: select(relationships),
+    relationship: select(relationships) as any,
     state: faker.address.state(),
     town: faker.address.city(),
     workAddress: faker.address.secondaryAddress(),
-    workcategory: faker.name.jobType()
+    workcategory: faker.name.jobType(),
+    ...baseModel()
   };
 }
 
 export const parentList = (amount?: number) => list<Parent>(parent, amount);
-
-export interface Receipt {
-  name: string;
-  date: string | Date;
-  amount: number;
-  teacherId: string;
-  teacherName: string;
-  studentId: string;
-  universalId: string;
-  session: any;
-  term: any;
-  class: any;
-  createdAt: any;
-  updatedAt: any;
-}
 
 export const terms = ['first term', 'second term', 'third term'];
 export const sessions = ['2016/2017', '2018/2019', '2015/2016'];
 
 export function receipt(): Receipt {
   return {
+    school: faker.random.uuid(),
     name: faker.name.findName(),
-    amount: faker.random.number({ max: 10000, min: 2000 }),
-    class: select(classes),
-    createdAt: Date.now(),
-    date: Date(),
-    session: select(sessions),
+    class: select(classes) as any,
+    createdAt: getDate(Date()),
+    date: getDate(Date()),
+    session: select(sessions) as any,
     studentId: faker.random.alphaNumeric(8),
     teacherId: faker.random.uuid(),
-    teacherName: faker.name.findName(),
-    term: select(terms),
-    universalId: faker.random.uuid(),
-    updatedAt: Date()
+    term: select(terms) as any,
+    updatedAt: Date(),
+    items: [
+      {
+        name: 'school fee',
+        value: faker.random.number({ max: 60000, min: 10000 })
+      },
+      {
+        name: 'transportation',
+        value: faker.random.number({ max: 10000, min: 2000 })
+      }
+    ],
+    ...baseModel()
   };
 }
 
 export const receiptList = (amount = 5) => list<Receipt>(receipt, amount);
-
-export interface Admin {
-  name: string;
-  gender: string;
-  phoneNo: string | number;
-  classInCh: string;
-  subjectICh: string;
-  phoneNos: string;
-  address: string;
-  image: File | string;
-  email?: string;
-  level: string;
-}
 
 export const subjects = [
   'english',
@@ -215,31 +173,32 @@ export const subjects = [
 ];
 export const levels = ['owner', 'manager', 'busar', 'teacher'];
 
-export function admin(): Admin {
+export function admin(): User {
   return {
+    authId: faker.internet.userName(),
+    school: faker.random.uuid(),
     address: faker.address.streetAddress(),
-    classInCh: select(classes) as any,
-    subjectICh: select(subjects) as any,
+    class: select(classes) as any,
+    subject: select(subjects) as any,
     email: faker.internet.email(),
     gender: faker.helpers.randomize(genders)[0],
     image: faker.image.dataUri(100, 200),
     name: faker.name.findName(),
     phoneNo: faker.phone.phoneNumber(),
     phoneNos: faker.phone.phoneNumber(),
-    level: select(levels) as any
+    ...baseModel()
   };
 }
 
-export const adminsList = (amount = 5) => list<Admin>(admin, amount);
+export const adminsList = (amount = 5) => list<User>(admin, amount);
 
-export interface Score {
-  name: string;
+export interface Score extends Partial<BaseModel> {
+  student: string;
   fa: number;
   sa: number;
   exam: number;
   id: string;
   session: string;
-  b_id: string;
   subject: string;
   class: string;
   term: string;
@@ -249,16 +208,16 @@ export function scoreGen(): Score {
   return {
     class: select(classes) as any,
     subject: select(subjects) as any,
-    b_id: faker.random.uuid(),
-    name: faker.name.findName(),
+    student: faker.random.uuid(),
     fa: faker.random.number({ min: 0, max: 15 }),
     sa: faker.random.number({ min: 0, max: 15 }),
     exam: faker.random.number({ min: 0, max: 70 }),
-    id: faker.random.uuid(),
     session: select(sessions) as any,
-    term: select(terms) as any
+    term: select(terms) as any,
+    ...baseModel()
   };
 }
+// ...baseModel()
 
 export const examList = (no = 5) => list<Score>(scoreGen, no);
 // accounts doesnt use erasers...methodlogy
@@ -289,7 +248,7 @@ export function busarRevenueSummary() {
     expectedTermSchoolFees: faker.random.number(20000000),
     highestMonthPercentage: faker.random.number(70),
     previousMonthRevenue: faker.random.number(20000),
-    totalTermSchoolFees: faker.random.number(20000000),
+    totalTermSchoolFees: faker.random.number(20000000)
   };
 }
 

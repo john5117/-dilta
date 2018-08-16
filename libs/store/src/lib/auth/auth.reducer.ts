@@ -1,5 +1,10 @@
 import { Auth, User } from '@dilta/models';
-import { AuthActions, AuthActionTypes, Status } from './auth.action';
+import {
+  AuthActions,
+  AuthActionTypes,
+  Status
+} from '@dilta/store/src/lib/auth/auth.action';
+import { admin } from '@dilta/generator';
 
 /**
  * Interface for a successfull Authentication
@@ -45,22 +50,22 @@ export interface Authsuccess {
    */
   error?: Error;
 
-/**
- * the user's level
- *
- * @type {string}
- * @memberof Authsuccess
- */
-level?: string;
+  /**
+   * the user's level
+   *
+   * @type {string}
+   * @memberof Authsuccess
+   */
+  level?: string;
 }
-
 
 export const authInitialState: Authsuccess = {
   authId: null,
   status: Status.Pending,
   timeStamp: Date(),
-  user: null,
-  error: null,
+  user: admin(),
+  // user:  null,
+  error: null
 };
 
 /**
@@ -71,24 +76,27 @@ export const authInitialState: Authsuccess = {
  * @param {AuthActions} action
  * @returns {Authsuccess}
  */
-export function authReducer(state = authInitialState, action: AuthActions ): Authsuccess {
+export function authReducer(
+  state = authInitialState,
+  action: AuthActions
+): Authsuccess {
   switch (action.type) {
     // when the login is succesfull
-    case  AuthActionTypes.Success: {
+    case AuthActionTypes.Success: {
       return {
         // return new class state
         ...state,
         ...action.payload,
         error: null,
         status: Status.Success,
-        timeStamp: Date(),
+        timeStamp: Date()
       };
     }
     // when the login auth is loged - out
-    case  AuthActionTypes.LogOut: {
+    case AuthActionTypes.LogOut: {
       return {
         ...authInitialState,
-        status: Status.Success,
+        status: Status.Success
       };
     }
 

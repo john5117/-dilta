@@ -1,23 +1,34 @@
+import { authModel } from '@dilta/models/src/rxdb/auth.model';
+import { ExpenseModel } from '@dilta/models/src/rxdb/expense.model';
+import { managerModel } from '@dilta/models/src/rxdb/manager.model';
+import {
+  Auth,
+  Manager,
+  Parent,
+  Receipt,
+  School,
+  Score,
+  Settings,
+  Student,
+  User
+} from '@dilta/models/src/rxdb/models';
+import { parentModel } from '@dilta/models/src/rxdb/parent.model';
+import { receiptModel } from '@dilta/models/src/rxdb/receipt.model';
+import { schoolModel } from '@dilta/models/src/rxdb/school.model';
+import { SettingModel } from '@dilta/models/src/rxdb/setting.model';
+import { studentModel } from '@dilta/models/src/rxdb/student.model';
+import { subjectModel } from '@dilta/models/src/rxdb/subject.model';
+import { userModel } from '@dilta/models/src/rxdb/user.model';
 import { throwError } from '@dilta/screwbox';
+import { LoggerService } from '@dilta/util';
 import { to } from 'await-to-js';
 import * as RxDB from 'rxdb';
 import { RxCollection, RxDatabase, RxSchema } from 'rxdb';
-import { Logger } from 'winston';
-import { AuthKoll, authModel } from './auth.model';
-import { ManagerKoll, managerModel } from './manager.model';
-import { ParentKoll, parentModel } from './parent.model';
-import { ReceiptKoll, receiptModel } from './receipt.model';
-import { SchoolKoll, schoolModel } from './school.model';
-import { StudentKoll, studentModel } from './student.model';
-import { SubjectKoll, subjectModel } from './subject.model';
-import { UserKoll, userModel } from './user.model';
 
-const { debug, warn, info, error } = new Logger({});
-
+/** Logger For Database Scope */
+export const logger = new LoggerService('@dilta/electron:rxdb::models');
 /** the database name for rxdb */
 const DB_NAME = 'carddemodb';
-/** the typeof adapter for rxdb */
-const DB_ADAPTER = 'memory';
 
 /** collection configurations to be created on the database */
 export const Kollections = [
@@ -28,7 +39,9 @@ export const Kollections = [
   schoolModel,
   studentModel,
   subjectModel,
-  userModel
+  userModel,
+  SettingModel,
+  ExpenseModel
 ];
 
 /**
@@ -37,35 +50,43 @@ export const Kollections = [
  * @interface DBKollections
  */
 export interface DBKollections extends RxDatabase {
-  auth: RxCollection<AuthKoll>;
-  manager: RxCollection<ManagerKoll>;
-  parent: RxCollection<ParentKoll>;
-  receipt: RxCollection<ReceiptKoll>;
-  school: RxCollection<SchoolKoll>;
-  student: RxCollection<StudentKoll>;
-  score: RxCollection<SubjectKoll>;
-  user: RxCollection<UserKoll>;
+  auth: RxCollection<Auth>;
+  manager: RxCollection<Manager>;
+  parent: RxCollection<Parent>;
+  receipt: RxCollection<Receipt>;
+  school: RxCollection<School>;
+  student: RxCollection<Student>;
+  score: RxCollection<Score>;
+  user: RxCollection<User>;
+  setting: RxCollection<Settings>;
 }
 
 /**
  * returns the intialized database connections
  *
  * @export
- * @returns {Promise< DBKollections>}
+ * @param {string} DB_ADAPTER storage adapter
+ * @param {*} [options={}] options to be passed to pouchdb
+ * @param {any[]} [plugins] Arrays of pouchdb plugins
+ * @returns {Promise<DBKollections>}
  */
-export async function mainframe(plugins?: any[]): Promise<DBKollections> {
+export async function mainframe(
+  DB_ADAPTER: string,
+  options = {},
+  plugins?: any[]
+): Promise<DBKollections> {
   applyPlugins(plugins);
   let db: RxDatabase, err: Error;
   [err, db] = await to<RxDatabase, Error>(
     RxDB.create({
       name: DB_NAME,
-      adapter: DB_ADAPTER
+      adapter: DB_ADAPTER,
+      pouchSettings: options
     })
   );
   throwError(err);
-  debug(`finshed intializing the database`);
-  let _;
-  [err, _] = await to(initalizeKolls(db, Kollections));
+  // logger.debug({ message: `finshed intializing the database`, trace: 'setup::mainframe'  });
+  [err] = await to(initalizeKolls(db, Kollections));
   throwError(err);
   return db as any;
 }
@@ -74,14 +95,14 @@ export async function mainframe(plugins?: any[]): Promise<DBKollections> {
  * the configuration interface for creating collections on the database
  *
  * @export
- * @interface KolConfig
+ * @interface CollectionConfig
  */
-export interface KolConfig<T> {
+export interface CollectionConfig<T> {
   /**
    * the name of the collection is key
    *
    * @type {string}
-   * @memberof KolConfig
+   * @memberof CollectionConfig
    */
   name: string;
   /**
@@ -89,14 +110,14 @@ export interface KolConfig<T> {
    * defaulted to name if ommitted
    *
    * @type {string}
-   * @memberof KolConfig
+   * @memberof CollectionConfig
    */
   collection?: string;
   /**
    * the schema of the collection to be created
    *
    * @type {RxSchema}
-   * @memberof KolConfig
+   * @memberof CollectionConfig
    */
   schema: T;
 }
@@ -106,25 +127,25 @@ export interface KolConfig<T> {
  * to it.
  *
  * @param {RxDatabase} db an intialize database
- * @param {KolConfig[]} configs kollection configurations to be created on the db
+ * @param {CollectionConfig[]} configs kollection configurations to be created on the db
  * @returns an object containing the kollections
  */
 export async function initalizeKolls(
   db: RxDatabase,
-  configs: KolConfig<any>[]
+  configs: CollectionConfig<any>[]
 ) {
   if (!configs.length || configs.length < 1) {
     throw configsError;
   }
   for (const config of configs) {
-    const [err, dbCollection] = await to(
+    const [err] = await to(
       db.collection({
         name: config.collection || config.name,
         schema: config.schema
       })
     );
     throwError(err);
-    debug(`added ${config.name} collection to the database`);
+    // logger.debug({ message: `added ${config.name} collection to the database`, trace: 'setup::initalizeKolls'  });
   }
 }
 
@@ -132,7 +153,10 @@ export function applyPlugins(plugins: any[]) {
   if (plugins) {
     plugins.forEach(RxDB.plugin);
   }
-  info(`setup:::mainframe: intialize rxdb plugins`);
+  logger.info({
+    message: `setup:::mainframe: intialize rxdb plugins`,
+    trace: 'setup::applyPlugins'
+  });
 }
 
 /** throws error for empty of undefined config */

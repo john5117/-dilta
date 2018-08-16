@@ -1,5 +1,5 @@
 import { NigeriaPreset } from '@dilta/presets/src/lib/nigeria.states';
-
+import { flatMap } from 'lodash';
 /**
  * osun state details for the nigerian states json
  *
@@ -7,7 +7,7 @@ import { NigeriaPreset } from '@dilta/presets/src/lib/nigeria.states';
  * @interface Nigeria
  */
 export interface Nigeria {
-  State: State;
+  Abia: State;
   Adamawa: State;
   'Akwa Ibom': State;
   Anambra: State;
@@ -77,9 +77,27 @@ export interface Cities {
 }
 
 /** importing the nigerian state */
-// export const NigeriaPreset: Nigeria = require('./nigeria.states.json');
 export { NigeriaPreset } from './nigeria.states';
 
+/**
+ * returns the list of states in nigeria
+ *
+ * @export
+ * @returns
+ */
 export function states() {
-  return Object.keys(NigeriaPreset);
+  return Object.keys(NigeriaPreset).sort();
+}
+
+/**
+ * retrieves the list of local govts
+ *
+ * @export
+ * @returns
+ */
+export function localGovts() {
+  const names = Object.values(NigeriaPreset as any).map(
+    ({ lgas }: State) => lgas || []
+  );
+  return [...flatMap(names), 'Federal Capital Territory'].sort();
 }

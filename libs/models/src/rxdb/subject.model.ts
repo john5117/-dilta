@@ -1,26 +1,8 @@
-import { KolConfig } from './setup.mainframe';
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
-const SUBJECT_NAME = 'score';
-
-/**
- * subject records information recored stored in the database's interface
- *
- * @export
- * @interface SubjectKoll
- */
-export interface SubjectKoll {
-  subject: string;
-  teacherId: string;
-  class: string;
-  session: string;
-  term: string;
-  firstCa: number;
-  secondCa: number;
-  exam: number;
-  studentId: string;
-  school: string;
-}
 
 /**
  * subject record information and schema
@@ -31,10 +13,6 @@ export const subjectSchema = {
   description: 'stores student subject records and scores',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     subject: {
       type: 'string',
       final: true
@@ -79,11 +57,7 @@ export const subjectSchema = {
       type: 'string',
       final: true
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
   required: [
     'subject',
@@ -92,11 +66,11 @@ export const subjectSchema = {
     'session',
     'term',
     'studentId',
-    'school'
+    ...baseModel.required
   ]
 };
 
-export const subjectModel: KolConfig<typeof subjectSchema> = {
-  name: SUBJECT_NAME,
+export const subjectModel: CollectionConfig<typeof subjectSchema> = {
+  name: EntityNames.Score,
   schema: subjectSchema
 };

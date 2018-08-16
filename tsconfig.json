@@ -55,17 +55,42 @@
       "@dilta/auth-module": [
         "libs/auth-module/src/index.ts"
       ],
-      "busar/*": [
-        "dist/busar/*"
-      ],
-      "@@dilta/busar": [
+      "@dilta/busar": [
         "libs/busar/src/index.ts"
+      ],
+      "@dilta/busar-base": [
+        "libs/busar-base/src/index.ts"
+      ],
+      "common-ui/*": [
+        "dist/common-ui/*"
+      ],
+      "@dilta/common-ui": [
+        "libs/common-ui/src/index.ts"
+      ],
+      "@dilta/database": [
+        "libs/database/src/index.ts"
+      ],
+      "@dilta/embededdb": [
+        "libs/embededdb/src/index.ts"
+      ],
+      "@dilta/graphql": [
+        "libs/graphql/src/index.ts"
+      ],
+      "@dilta/server": [
+        "libs/server/src/index.ts"
+      ],
+      "@dilta/authentication": [
+        "libs/authentication/src/index.ts"
+      ],
+      "@dilta/auth-base": [
+        "libs/auth-base/src/index.ts"
       ]
     },
     "baseUrl": "."
   },
   "exclude": [
     "test.ts",
+    "apps/demo",
     "**/*.spec.ts",
     "src/test.ts"
   ]

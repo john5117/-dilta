@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoggerService } from './logger.service';
-import { UtilService } from './util.service';
+import { NgModule } from '@angular/core';
+import { UtilService } from '@dilta/util/src/lib/util.service';
 
 @NgModule({
   imports: [CommonModule],
-  providers: [LoggerService, UtilService]
+  providers: [UtilService]
 })
 export class UtilModule {}

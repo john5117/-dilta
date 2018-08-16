@@ -5,10 +5,8 @@ import { AuthLoginFormComponent } from './auth-login-form/auth-login-editor.comp
 import { AuthSignupFormComponent } from './auth-signup-form/auth-signup-editor.component';
 
 @NgModule({
-  imports: [
-    CommonModule, ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   declarations: [AuthLoginFormComponent, AuthSignupFormComponent],
   exports: [AuthLoginFormComponent, AuthSignupFormComponent]
 })
-export class AuthSharedModule { }
+export class AuthSharedModule {}

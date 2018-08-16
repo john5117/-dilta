@@ -1,25 +1,8 @@
-import { KolConfig } from './setup.mainframe';
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
-const STUDENT_NAME = 'student';
-
-/**
- * student biodata information recored stored in the database's interface
- *
- * @export
- * @interface StudentKoll
- */
-export interface StudentKoll {
-  id: string;
-  name: string;
-  class: string;
-  gender: string;
-  dob: string;
-  bloodgroup?: string;
-  prevschool?: string;
-  parentPhone: number;
-  school: string;
-}
 
 /**
  * the student biodata schema configuration and properties
@@ -30,10 +13,6 @@ export const studentSchema = {
   description: 'stores student biodata records',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     name: {
       type: 'string'
     },
@@ -44,7 +23,7 @@ export const studentSchema = {
       type: 'string'
     },
     dob: {
-      type: 'string'
+      type: 'number'
     },
     bloodgroup: {
       type: 'string'
@@ -53,20 +32,22 @@ export const studentSchema = {
       type: 'string'
     },
     parentPhone: {
-      ref: 'parent',
       type: 'string',
       final: true
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['name', 'class', 'dob', 'gender', 'parentPhone', 'school']
+  required: [
+    'name',
+    'class',
+    'dob',
+    'gender',
+    'parentPhone',
+    ...baseModel.required
+  ]
 };
 
-export const studentModel: KolConfig<typeof studentSchema> = {
-  name: STUDENT_NAME,
+export const studentModel: CollectionConfig<typeof studentSchema> = {
+  name: EntityNames.Student,
   schema: studentSchema
 };

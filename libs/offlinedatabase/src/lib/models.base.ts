@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
 import { Model } from '@dilta/abstract-imp';
-import { Observable } from 'rxjs/observable';
-import { RxCollection, RxDocument } from 'rxdb';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { OfflineDB } from '@dilta/models';
-import { formatError } from '@dilta/screwbox';
+import { RxCollection } from 'rxdb';
+import { Observable } from 'rxjs/observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { map, switchMap, debounceTime, delay } from 'rxjs/operators';
 
 /**
  * base class for all model must adhere to has an interface for interaction
@@ -16,7 +14,7 @@ import { formatError } from '@dilta/screwbox';
  * @template T
  */
 export class ModelBase<T> implements Model<T> {
-  private collection: RxCollection<T>;
+  public collection: RxCollection<T>;
 
   constructor(
     collectionName: keyof OfflineDB,
@@ -33,7 +31,9 @@ export class ModelBase<T> implements Model<T> {
    * @memberof ModelBase
    */
   retrieve$(query: Partial<T>) {
-    return this.collection.findOne(query).$.pipe(map(res => res.toJSON()));
+    return fromPromise(this.collection.findOne(query).exec()).pipe(
+      map(res => (res ? res.toJSON() : res))
+    );
   }
 
   /**
@@ -44,9 +44,9 @@ export class ModelBase<T> implements Model<T> {
    * @memberof ModelBase
    */
   find$(query: Partial<T>) {
-    return this.collection
-      .find(query)
-      .$.pipe(map(res => res.map(e => e.toJSON())));
+    return fromPromise(this.collection.find(query).exec()).pipe(
+      map(res => res.map(e => e.toJSON()))
+    );
   }
 
   /**

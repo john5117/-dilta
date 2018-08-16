@@ -1,0 +1,7 @@
+<div class="right-items">
+  <button (click)="goback()" class="btn btn-danger-outline "> Back </button>
+</div>
+
+<busar-receipt-form [paymentOptions]="paymentOptions$ | async" [sessionList]="(localStore$ | async)?.sessionList" [teacher]="(localStore$ | async)?.teacher" [termsList]="(localStore$ | async)?.termList"
+  [classList]="(localStore$ | async)?.classList" *ngIf="displayRecieptForm" (evntEmitter)="onReciept$.next($event)">
+</busar-receipt-form>

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Authsuccess } from './auth.reducer';
+import { Authsuccess } from '@dilta/store/src/lib/auth/auth.reducer';
 
 export enum Status {
   Pending = 'PENDING',

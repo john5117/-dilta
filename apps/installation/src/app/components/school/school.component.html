@@ -2,7 +2,11 @@
   School Setup
 </header>
 <div class="school">
-  <app-school-biodata-form (emitter)="onSubmit($event)">
+  <app-school-biodata-form
+  [categorys]="schoolCategories"
+  [states]="states"
+  [lgas]="lgas"
+  (emitter)="onSubmit($event)">
 
   </app-school-biodata-form>
 </div>

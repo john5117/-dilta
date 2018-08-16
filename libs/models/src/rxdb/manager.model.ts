@@ -1,25 +1,8 @@
-import { KolConfig } from './setup.mainframe';
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { EntityNames } from '@dilta/store';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
-const MANAGER_NAME = 'manager';
-
-/**
- * school managers biodata's record stored in the database's interface
- *
- * @export
- * @interface ManagerKoll
- */
-export interface ManagerKoll {
-  id?: string;
-  propName: string;
-  propPhone: string;
-  propEmail: string;
-  sMName: string;
-  sMPhone: string;
-  sMEmail: string;
-  motto: string;
-  school: string;
-}
 
 /**
  * the school managers biodata schema configuration and properties
@@ -32,13 +15,8 @@ export const managerSchema = {
     and properiotes name and contact`,
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     propName: {
       type: 'string',
-      unique: true,
       final: true
     },
     propPhone: {
@@ -59,16 +37,19 @@ export const managerSchema = {
     motto: {
       type: 'string'
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['propName', 'propPhone', 'sMName', 'sMPhone', 'motto', 'school']
+  required: [
+    'propName',
+    'propPhone',
+    'sMName',
+    'sMPhone',
+    'motto',
+    ...baseModel.required
+  ]
 };
 
-export const managerModel: KolConfig<typeof managerSchema> = {
-  name: MANAGER_NAME,
+export const managerModel: CollectionConfig<typeof managerSchema> = {
+  name: EntityNames.Manager,
   schema: managerSchema
 };

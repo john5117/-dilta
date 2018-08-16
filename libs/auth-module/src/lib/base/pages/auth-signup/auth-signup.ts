@@ -8,8 +8,6 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { Signup } from '../../shared';
 
-
-
 /**
  * base class for users authentication signup
  *
@@ -19,7 +17,6 @@ import { Signup } from '../../shared';
  * @implements {OnDestroy}
  */
 export class AuthUserSignupBase implements OnInit, OnDestroy {
-
   /**
    * error displayed by the sub component
    *
@@ -65,7 +62,9 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
    */
   changeRoute(auth: Auth) {
     if (auth) {
-      this.route.navigate(['biodata'], { queryParams: { authId: auth.id, schoolId: this.schoolId }});
+      this.route.navigate(['biodata'], {
+        queryParams: { authId: auth.id, schoolId: this.schoolId }
+      });
       // this.route.navigateByUrl(`/biodata/${auth.id}`);
     }
   }
