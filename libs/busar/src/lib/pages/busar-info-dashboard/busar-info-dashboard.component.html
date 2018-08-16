@@ -1,0 +1,85 @@
+<div class="content-container">
+  <div class="content-area">
+    <!-- page view -->
+    <div class="right-items">
+      <div class="btn-group">
+        <button class="btn" disabled>New</button>
+        <button (click)="changeRoute('busar/reciept')" class="btn">Recipet</button>
+        <button (click)="changeRoute('busar/expense')" class="btn">Expense</button>
+      </div>`
+    </div>
+
+    <!-- show page modals -->
+    <clr-modal [clrModalStaticBackdrop]="true"  [(clrModalOpen)]="showOverlay"    >
+        <h3 class="modal-title">Reciept</h3>
+        <div class="modal-body">
+          <router-outlet (deactivate)="showOverlay = false" (activate)="showOverlay = true"></router-outlet>
+        </div>
+    </clr-modal>
+
+
+    <!-- <busar-reciept-form-web></busar-reciept-form-web> -->
+
+    <div class="clr-row">
+      <div class="clr-col">
+        <!-- revenue -->
+        <busar-dashboard-line></busar-dashboard-line>
+      </div>
+      <div class="clr-col">
+        <!-- expenses -->
+        <busar-dashboard-line></busar-dashboard-line>
+      </div>
+    </div>
+    <!-- & -->
+    <div class="clr-row">
+
+    </div>
+    <!-- Revenue Summary -->
+    <div class="">
+      <hr>
+      <div class="clr-row select">
+        <div class="clr-col-12 center-items">
+          <p> Revenue Summary for
+            <select class="select-size" name="">
+              <option> July </option>
+            </select>
+            <select class="select-size" name="">
+              <option>
+                2013/2015
+              </option>
+            </select>
+          </p>
+        </div>
+      </div>
+      <hr>
+      <!-- busar-revenue-summary -->
+      <busar-revenue-summary [summary]="revenueSummary$ | async"></busar-revenue-summary>
+      <hr>
+      <button class="btn btn-outline-primary btn-block">Debitors List </button>
+    </div>
+    <!-- Expenses Summary -->
+    <div class="">
+      <hr>
+      <div class="clr-row select">
+        <div class="clr-col-12 center-items">
+          <p> Expenditure Analysis for
+            <select class="select-size" name="">
+              <option> July </option>
+            </select>
+            <select class="select-size" name="">
+              <option>
+                2013/2015
+              </option>
+            </select>
+          </p>
+        </div>
+      </div>
+      <hr>
+      <!-- busar-expenses-summary -->
+      <busar-expense-summary [summary]="expenseSummary$ | async"></busar-expense-summary>
+      <hr>
+      <button class="btn btn-outline-danger btn-block">Full Analysis </button>
+    </div>
+
+  </div>
+</div>

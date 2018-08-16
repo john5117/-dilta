@@ -1,0 +1,24 @@
+<nav class="subnav"></nav>
+<div class="content-container">
+  <div class="content-area">
+    <!-- form view -->
+    <div [ngSwitch]="(sideBar$ | async)?.currentForm">
+      <div *ngFor="let view of (sideBar$ | async)?.views">
+        <div *ngSwitchCase="view">
+          <app-preferences-list
+          *ngIf="!switched"
+          (emitter)="onInput$.next($event)"
+          [settings]="(sideBar$ | async)?.settings"
+          [keyEditable]="(sideBar$ | async)?.keyValueEditable"
+          [menuOperations]="(sideBar$ | async)?.menuOperations"
+          [title]="(sideBar$ | async)?.title"
+          ></app-preferences-list>
+      </div>
+    </div>
+    <div *ngSwitchDefault> No Setting Selected </div>
+  </div>
+</div>
+    <nav class="sidenav">
+      <app-side-bar (emitter)="changeView($event)" [settings]="(sideBar$ | async)?.menus"></app-side-bar>
+    </nav>
+</div>
