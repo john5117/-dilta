@@ -1,5 +1,6 @@
 import { Setting } from '@dilta/models';
 import { uniq } from 'lodash';
+import * as moment from 'moment';
 import * as uuidRandom from 'uuid/v4';
 
 /**
@@ -192,6 +193,9 @@ export const schoolPresetBios: SchoolPreset = {
   nusery_primary: nuseryPrimarySchool
 };
 
+/** school categories supported */
+export const schoolCategories = Object.keys(schoolPresetBios);
+
 /**
  * school dictonary interface after transformations
  *
@@ -264,6 +268,16 @@ export function dictPermision(permsions: Permission[] = []) {
   return _dict;
 }
 
+/**
+ * Types of settings configuration either school or user
+ *
+ * @export
+ * @enum {number}
+ */
+export enum SettingTypes {
+  school = 'school',
+  user = 'user'
+}
 
 /**
  * Creates an inital presets dynamically for the school
@@ -273,8 +287,11 @@ export function dictPermision(permsions: Permission[] = []) {
  * @param {string} owner
  * @returns {Setting}
  */
-export function InitalBusaryPreset(category: keyof SchoolPreset, owner: string ): Setting {
-  const inputs = dictSchool(category).classes.map(e => {
+export function InitalBusaryPreset(
+  category: keyof SchoolPreset,
+  owner: string
+): Setting {
+  const memberclassesInputs = dictSchool(category).classes.map(e => {
     const _obj = {};
     _obj[e] = '';
     return _obj;
@@ -282,12 +299,14 @@ export function InitalBusaryPreset(category: keyof SchoolPreset, owner: string )
   return {
     owner,
     school: owner,
-    settings: busarySetting(inputs),
+    type: SettingTypes.school,
+    settings: busarySetting({ memberclassesInputs }),
     id: uuidRandom(),
-    type: category
+    defaultView: 'revenue:schoolFee',
+    hash: `${Date.now()}:{uuidRandom()}`,
+    createdAt: moment(new Date()).unix()
   };
 }
-
 
 /**
  * Function to return Busary Preference
@@ -295,7 +314,8 @@ export function InitalBusaryPreset(category: keyof SchoolPreset, owner: string )
  * @param {*} inputs
  * @returns
  */
-function busarySetting(inputs) {
+function busarySetting({ memberclassesInputs }) {
+  const today = moment();
   return {
     revenue: {
       name: 'Revenue',
@@ -306,34 +326,64 @@ function busarySetting(inputs) {
           enabled: true,
           name: 'schoolFee',
           link: 'revenue:schoolFee',
-          inputs
+          inputs: memberclassesInputs
         },
         uniform: {
           enabled: true,
           name: 'uniform',
           link: 'revenue:uniform',
-          inputs
+          inputs: memberclassesInputs
         },
         transportation: {
           enabled: true,
           name: 'transportation',
           link: 'revenue:transportation',
-          inputs
+          inputs: memberclassesInputs
         }
       }
     },
     expenses: {
       name: 'Expenses',
-      link: 'Expenses',
+      link: 'expenses',
+      enabled: true,
+      inputs: [
+        { name: 'Stationaries' },
+        { name: 'Transportation' },
+        { name: 'Miscelious' }
+      ]
+    },
+    others: {
+      name: 'Others',
+      link: 'others',
       submenus: {
-        'link 1': {
-          enabled: false,
-          name: 'link 1',
-          link: 'link 1'
+        termList: {
+          enabled: true,
+          name: 'TermList',
+          link: 'others:termList',
+          inputs: [
+            { name: 'First Term' },
+            { name: 'Second Term' },
+            { name: 'Third Term' }
+          ]
         },
-        'link 2': {
-          name: 'link 2',
-          link: 'link 2'
+        sessionList: {
+          enabled: true,
+          name: 'SessionList',
+          link: 'others:sessionList',
+          inputs: [
+            { name: `${today.year()}\\${today.add('1', 'y').year()}` },
+            { name: `${today.subtract('1', 'y').year()}\\${today.year()}` },
+            {
+              name: `${today.subtract('2', 'y').year()}\\${today
+                .subtract('1', 'y')
+                .year()}`
+            },
+            {
+              name: `${today.subtract('3', 'y').year()}\\${today
+                .subtract('2', 'y')
+                .year()}`
+            }
+          ]
         }
       }
     }

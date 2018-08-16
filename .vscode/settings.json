@@ -14,7 +14,7 @@
     "source.organizeImports": true
   },
   "typescript.implementationsCodeLens.enabled": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "C:\\Users\\AbiZeus\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -37,20 +37,31 @@
     ".vscode": true,
     "libs/abstract-imp": true,
     "libs/auth-module": true,
-    "libs/commonwebui": true,
     "libs/electron": false,
-    "libs/generator": true,
+    "libs/generator": false,
     "libs/models": false,
-    "libs/offlinedatabase": true,
-    "libs/presets": true,
-    "libs/process": false,
-    "libs/screwbox": true,
+    "libs/offlinedatabase": false,
+    "libs/presets": false,
+    "libs/process": true,
+    "libs/screwbox": false,
     "libs/security": false,
     "libs/store": true,
-    "libs/util": false,
+    "libs/util": true,
+    "libs/common-ui": false,
+    "libs/commonwebui": true,
     "libs/busar": true,
+    "libs/busar-base": false,
   },
   "typescript.format.insertSpaceAfterTypeAssertion": true,
   "typescript.preferences.quoteStyle": "single",
-  "typescript.preferences.importModuleSpecifier": "auto"
+  "typescript.preferences.importModuleSpecifier": "auto",
+  "line-counter.excludes": [
+    "**/.vscode/**",
+    "**/libs/presets/src/lib/nigeria.states.ts"
+  ],
+  "line-counter.includes": [
+    "**/apps/**",
+    "**/libs/**",
+    "main.ts"
+  ]
 }

@@ -1,5 +1,6 @@
-import { logger } from '../localScope';
-import { decrypt, encrypt } from './crypto';
+import { logger } from '@dilta/security/src/lib/localScope';
+import { decrypt, encrypt } from '@dilta/security/src/lib/liensce/crypto';
+
 /**
  * interface for the encrypted data in the database
  *
@@ -52,7 +53,10 @@ export interface SchoolEncryptedData {
  * @returns
  */
 export function encryptLiensce(target: SchoolEncryptedData) {
-  logger.debug({ message: `encrypting liensce key`, trace: 'liensce::encryptLiensce' });
+  logger.debug({
+    message: `encrypting liensce key`,
+    trace: 'liensce::encryptLiensce'
+  });
   if (typeof target !== 'object') {
     throw missingEncryptedSchoolData;
   }
@@ -67,7 +71,10 @@ export function encryptLiensce(target: SchoolEncryptedData) {
  * @returns
  */
 export function decryptLiensce(token: string): SchoolEncryptedData {
-  logger.debug({ message: `decrypting liensce key`, trace: 'liensce::decryptLiensce' });
+  logger.debug({
+    message: `decrypting liensce key`,
+    trace: 'liensce::decryptLiensce'
+  });
   if (typeof token !== 'string') {
     throw tokenRequired;
   }

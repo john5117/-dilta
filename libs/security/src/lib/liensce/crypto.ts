@@ -1,6 +1,5 @@
 require('dotenv').config();
-import { readFileSync } from 'fs';
-import { LiensceGenerator } from '../scripts/liensce';
+import { LiensceGenerator } from '@dilta/security/src/lib/scripts/liensce';
 
 /** private key for liensce encryption  */
 

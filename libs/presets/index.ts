@@ -1,2 +1,1 @@
-export * from './src/lib';
-
+export * from '@dilta/presets/src/lib';

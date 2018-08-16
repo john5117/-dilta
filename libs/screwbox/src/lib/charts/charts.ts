@@ -1,5 +1,5 @@
 import { groupBy, keys, isArray } from 'lodash';
-import { errorInvalidArray } from './../sub.compose';
+import { errorInvalidArray } from '@dilta/screwbox/src/lib/sub.compose';
 
 /**
  * configuration interface for single data

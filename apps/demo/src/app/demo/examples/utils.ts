@@ -2,7 +2,6 @@ import * as Faked from '@dilta/generator';
 import { KeysConfig } from '@dilta/commonwebui/src/dynamic-datagrid';
 
 export namespace Utils {
-
   /**
    * ExampleUtils contains most used attributes and genric functions
    *
@@ -10,7 +9,6 @@ export namespace Utils {
    * @class ExampleUtils
    */
   export class ExampleUtils {
-
     // authorization levels
     public static levels = Faked.levels;
 
@@ -41,9 +39,8 @@ export namespace Utils {
     // return a single err message
     public static err = `an an error message`;
 
-    public static bindEmitter<T extends Event>($event: T) { }
+    public static bindEmitter<T extends Event>($event: T) {}
   }
-
 
   /**
    * ReceiptEditorComponent example generator
@@ -52,15 +49,12 @@ export namespace Utils {
    * @class ReceiptEditorComponentExample
    */
   export class ReceiptEditorComponentExample {
-
     public static teacher = ExampleUtils.teacher;
 
     public static sessionList = ExampleUtils.sessions;
 
     public static termsList = ExampleUtils.terms;
 
-    evntEmitter<T extends Event>($event: T) { }
-
+    evntEmitter<T extends Event>($event: T) {}
   }
-
 }

@@ -1,2 +1,2 @@
-export * from './crypto';
-export * from './liensce';
+export * from '@dilta/security/src/lib/liensce/crypto';
+export * from '@dilta/security/src/lib/liensce/liensce';

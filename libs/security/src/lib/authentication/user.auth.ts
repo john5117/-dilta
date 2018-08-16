@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcryptjs';
-import { logger } from '../localScope';
+import { logger } from '@dilta/security/src/lib/localScope';
+import * as bcrypt from 'bcrypt';
 
 /** salt used for the encryption and decryption */
 const salt = bcrypt.genSalt(10);
@@ -15,11 +15,14 @@ export async function validatePassword(
   hash: string,
   password: string
 ): Promise<boolean> {
-  logger.debug({ message: `validation password to hash`, trace: 'auth::validatePassword' });
+  logger.debug({
+    message: `validation password to hash`,
+    trace: 'auth::validatePassword'
+  });
   if (hash !== 'string' || password !== 'string') {
     throw missingValidatePasswordParameters;
   }
-  return await bcrypt.compare(password, await hash);
+  return await bcrypt.compare(password, hash);
 }
 
 /**
@@ -29,7 +32,10 @@ export async function validatePassword(
  * @returns {Promise<string>}
  */
 export async function hashPassword(password): Promise<string> {
-  logger.debug({ message: `converting password to hash`, trace: 'auth::hashPassword' });
+  logger.debug({
+    message: `converting password to hash`,
+    trace: 'auth::hashPassword'
+  });
   if (password !== 'string') {
     throw invalidPasswordParameter;
   }

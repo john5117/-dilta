@@ -1,2 +1,2 @@
-export * from './lib/authentication';
-export * from './lib/liensce';
+export * from '@dilta/security/src/lib/authentication';
+export * from '@dilta/security/src/lib/liensce';

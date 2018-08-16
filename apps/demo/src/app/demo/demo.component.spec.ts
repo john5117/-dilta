@@ -8,13 +8,14 @@ describe('DemoComponent', () => {
   let component: DemoComponent;
   let fixture: ComponentFixture<DemoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DemoComponent],
-      imports: [ClarityModule, SubComponentsModule]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [DemoComponent],
+        imports: [ClarityModule, SubComponentsModule]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DemoComponent);
@@ -25,5 +26,4 @@ describe('DemoComponent', () => {
   xit('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

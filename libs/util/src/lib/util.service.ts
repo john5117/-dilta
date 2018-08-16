@@ -35,8 +35,7 @@ export class UtilService {
    * @memberof UtilService
    */
   wrapTo<T>(qu: Promise<[Error, T]>) {
-    return fromPromise(qu)
-    .pipe(map(res => this.cleanErrorValue<T>(res)));
+    return fromPromise(qu).pipe(map(res => this.cleanErrorValue<T>(res)));
   }
 
   /**
@@ -48,6 +47,7 @@ export class UtilService {
    * @memberof UtilService
    */
   cleanErrorValue<T>([err, value]: [Error, T]) {
+    console.log({ err, value });
     if (err) {
       throw err;
     }
@@ -65,7 +65,6 @@ export class UtilService {
     console.log('this.err', this['err']);
   }
 
-
   /**
    * generates a random uuid string
    *
@@ -75,5 +74,4 @@ export class UtilService {
   randomuuid() {
     return uuidRandom();
   }
-
 }
