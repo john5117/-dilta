@@ -1,6 +1,16 @@
 import { InjectionToken } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { AuthDBService, ExpenseDBService, ManagerDBService, ReceiptDBService, SchoolDBService, ScoreDBService, SettingDBService, StudentDBService, UserDBService } from './database.service';
+import {
+  AuthDBService,
+  ExpenseDBService,
+  ManagerDBService,
+  ReceiptDBService,
+  SchoolDBService,
+  ScoreDBService,
+  SettingDBService,
+  StudentDBService,
+  UserDBService
+} from '@dilta/offlinedatabase/src/lib/database.service';
 
 export const AuthModel = new InjectionToken<AuthDBService>('AuthModel');
 export const ManagerModel = new InjectionToken<ManagerDBService>(

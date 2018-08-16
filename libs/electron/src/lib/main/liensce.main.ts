@@ -1,7 +1,7 @@
 import { errorInvalidArray } from '@dilta/screwbox';
 import { BrowserWindow } from 'electron';
-import { addExtension } from './extensions';
-
+import { addExtension } from '@dilta/electron/src/lib/main/extensions';
+import { logger } from '@dilta/electron/src/lib/main/localscope';
 /**
  * customized events configuration for the window object created
  *
@@ -50,6 +50,10 @@ export function createLiensceWindow({
 
   // loading events
   if (events) {
+    logger.debug({
+      message: `Adding events to liensceWindow`,
+      trace: 'liensce::createLiensceWindow'
+    });
     // throws error if the events is not an array
     errorInvalidArray(events);
     events.forEach(e => {
@@ -69,6 +73,10 @@ export function createLiensceWindow({
   }
 
   liensceWindow.loadURL(`http://localhost:4200`);
+  logger.debug({
+    message: `loading liensce window url ${liensceWindow.webContents.getURL()}`,
+    trace: 'liensce::createLiensceWindow'
+  });
   // liensceWindow.loadURL(`file://${path.join(__dirname, '..', 'dist', '/index.html')}`);
 
   // returning the instantiated lienscewindow
