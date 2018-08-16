@@ -1,8 +1,18 @@
 /* tslint:disable:no-unused-variable */
 import { Injectable } from '@angular/core';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  async,
+  fakeAsync,
+  tick
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgrxDataModule, EntityServiceFactory, EntityServiceBase } from 'ngrx-data';
+import {
+  NgrxDataModule,
+  EntityServiceFactory,
+  EntityServiceBase
+} from 'ngrx-data';
 
 import { CommonwebuiModule } from '@dilta/commonwebui';
 import { Auth } from '@dilta/models';
@@ -37,7 +47,7 @@ describe('AdminSignupComponent', () => {
           CommonwebuiModule,
           NgrxDataModule.forRoot({ entityMetadata: { Auth: {} } })
         ],
-        providers: [ UtilService, AuthService ]
+        providers: [UtilService, AuthService]
       }).compileComponents();
     })
   );
@@ -71,7 +81,7 @@ describe('AdminSignupComponent', () => {
 
   it('should change route for valid auth', () => {
     const navigateSpy = spyOn(router, 'navigate');
-    const auth = { username: 'myusername', id: 'auth_id'};
+    const auth = { username: 'myusername', id: 'auth_id' };
     component.changeRoute(auth as any);
     fixture.detectChanges();
     expect(navigateSpy).toHaveBeenCalledWith(`/biodata/${auth.id}`);
@@ -86,15 +96,18 @@ describe('AdminSignupComponent', () => {
     (expect(subscription) as any).toHaveSubscriptions();
   });
 
-  it('should display & send error and later nullify the error', fakeAsync(() => {
-    const nextSpy = spyOn(component.err$, 'next');
-    const error = new Error('the new display error');
-    component.sendError(error);
-    fixture.detectChanges();
-    expect(nextSpy).toHaveBeenCalledWith(error.message);
-    tick(3001);
-    expect(nextSpy).toHaveBeenCalledWith(undefined);
-  }));
+  it(
+    'should display & send error and later nullify the error',
+    fakeAsync(() => {
+      const nextSpy = spyOn(component.err$, 'next');
+      const error = new Error('the new display error');
+      component.sendError(error);
+      fixture.detectChanges();
+      expect(nextSpy).toHaveBeenCalledWith(error.message);
+      tick(3001);
+      expect(nextSpy).toHaveBeenCalledWith(undefined);
+    })
+  );
 
   it('should call display error onError ', () => {
     const displayErrorSpy = spyOn(component, 'sendError');
@@ -135,5 +148,4 @@ describe('AdminSignupComponent', () => {
     expect(randSpy).toHaveBeenCalled();
     expect(addSpy).toHaveBeenCalled();
   });
-
 });
