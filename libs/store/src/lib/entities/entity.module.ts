@@ -1,13 +1,34 @@
 import { NgModule } from '@angular/core';
 import { EntityDataService, EntityMetadataMap } from 'ngrx-data';
-import { AuthDataService, AuthService } from './auth.service';
-import { DataServicesModule } from './data.module';
-import { ExpenseDataService, ExpenseService } from './expense.service';
-import { ManagerDataService, ManagerService } from './manager.service';
-import { ReceiptDataService, ReceiptService } from './reciept.service';
-import { SchoolDataService, SchoolService } from './school.service';
-import { SettingDataService, SettingService } from './setting.service';
-import { UserDataService, UserService } from './users.service';
+import {
+  AuthDataService,
+  AuthService
+} from '@dilta/store/src/lib/entities/auth.service';
+import { DataServicesModule } from '@dilta/store/src/lib/entities/data.module';
+import {
+  ExpenseDataService,
+  ExpenseService
+} from '@dilta/store/src/lib/entities/expense.service';
+import {
+  ManagerDataService,
+  ManagerService
+} from '@dilta/store/src/lib/entities/manager.service';
+import {
+  ReceiptDataService,
+  ReceiptService
+} from '@dilta/store/src/lib/entities/reciept.service';
+import {
+  SchoolDataService,
+  SchoolService
+} from '@dilta/store/src/lib/entities/school.service';
+import {
+  SettingDataService,
+  SettingService
+} from '@dilta/store/src/lib/entities/setting.service';
+import {
+  UserDataService,
+  UserService
+} from '@dilta/store/src/lib/entities/users.service';
 
 export const entityMetadata: EntityMetadataMap = {
   user: {},

@@ -4,10 +4,8 @@ import { User } from '@dilta/models';
 import { UserModel } from '@dilta/offlinedatabase/src/lib/model.tokens';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
 import { map } from 'rxjs/operators';
-import { EntityNames } from './constants';
-import { EntityDataBase } from './entitybase';
-
-
+import { EntityNames } from '@dilta/store/src/lib/entities/constants';
+import { EntityDataBase } from '@dilta/store/src/lib/entities/entitybase';
 
 /**
  * Service thst instantite both the creation of the entity
@@ -23,7 +21,6 @@ export class UserDataService extends EntityDataBase<User> {
     super(EntityNames.User, service);
   }
 
-
   /**
    * retrieves the user details with authId
    *
@@ -32,8 +29,7 @@ export class UserDataService extends EntityDataBase<User> {
    * @memberof UserDataService
    */
   getWithAuthId(authId: string) {
-    return this.getWithQuery({ authId })
-    .pipe(map(auths => auths[0]));
+    return this.getWithQuery({ authId }).pipe(map(auths => auths[0]));
   }
 }
 
