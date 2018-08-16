@@ -1,1 +1,1 @@
-export * from './charts';
+export * from '@dilta/screwbox/src/lib/charts/charts';

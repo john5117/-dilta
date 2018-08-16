@@ -1,4 +1,2 @@
-export * from './models';
-export * from './setup.mainframe';
-
-
+export * from '@dilta/models/src/rxdb/models';
+export * from '@dilta/models/src/rxdb/setup.mainframe';

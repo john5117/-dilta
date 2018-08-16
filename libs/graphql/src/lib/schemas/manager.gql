@@ -1,0 +1,14 @@
+type Manager {
+  id: ID!
+  createdAt: Int!
+  hash: String!
+  motto: String!
+  propEmail: String
+  propName: String!
+  propPhone: String!
+  school: School!
+  sMEmail: String
+  sMName: String!
+  sMPhone: String!
+  updatedAt: Int!
+}

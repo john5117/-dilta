@@ -15,6 +15,10 @@ import { NgrxDataModule } from 'ngrx-data';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { DreamstackRoutingModule } from './app.routing.module';
+import { LoggerService } from '@dilta/util';
+import { RouterState } from '@dilta/common-ui';
+
+const logger = new LoggerService('@dilta/installation', 'info');
 
 @NgModule({
   declarations: [AppComponent, BusarAppModule.RootComponent],
@@ -37,9 +41,13 @@ import { DreamstackRoutingModule } from './app.routing.module';
     BusarAppModule,
     AuthPagesModule,
     AuthenticationFeatureNgrxModule,
-    DreamstackRoutingModule,
+    DreamstackRoutingModule
   ],
-  providers: [],
+  providers: [{ useValue: logger, provide: LoggerService }, RouterState],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(routingState: RouterState) {
+    routingState.loadRouting();
+  }
+}

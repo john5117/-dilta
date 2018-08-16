@@ -13,6 +13,6 @@ export enum EntityNames {
   Score = 'score',
   Student = 'student',
   Receipt = 'receipt',
-  Setting = 'setting',
-  Expense = 'expense',
+  Setting = 'preference',
+  Expense = 'expense'
 }

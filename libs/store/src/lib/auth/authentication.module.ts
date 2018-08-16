@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { AuthEffects } from './auth.effect';
-import { authReducer } from './auth.reducer';
+import { AuthEffects } from '@dilta/store/src/lib/auth/auth.effect';
+import { authReducer } from '@dilta/store/src/lib/auth/auth.reducer';
 
 export const AuthenticationFeatureName = 'Auth';
 

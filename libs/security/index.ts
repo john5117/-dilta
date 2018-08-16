@@ -1,1 +1,1 @@
-export * from './src';
+export * from '@dilta/security/src';

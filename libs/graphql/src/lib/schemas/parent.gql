@@ -1,0 +1,17 @@
+type Parent {
+  id: ID!
+  createdAt: Int!
+  email: String
+  hash: String!
+  homeAddress: String!
+  name: String!
+  phoneNo: String!
+  profession: String!
+  relationship: String!
+  school: School!
+  state: String!
+  town: String!
+  updatedAt: Int!
+  workAddress: String
+  workcategory: String!
+}

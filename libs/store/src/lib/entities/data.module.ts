@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { OfflinedatabaseModule } from '@dilta/offlinedatabase/src/lib/offlinedatabase.module';
-import { AuthDataService } from './auth.service';
-import { ExpenseDataService } from './expense.service';
-import { ManagerDataService } from './manager.service';
-import { ReceiptDataService } from './reciept.service';
-import { SchoolDataService } from './school.service';
-import { SettingDataService } from './setting.service';
-import { UserDataService } from './users.service';
+import { AuthDataService } from '@dilta/store/src/lib/entities/auth.service';
+import { ExpenseDataService } from '@dilta/store/src/lib/entities/expense.service';
+import { ManagerDataService } from '@dilta/store/src/lib/entities/manager.service';
+import { ReceiptDataService } from '@dilta/store/src/lib/entities/reciept.service';
+import { SchoolDataService } from '@dilta/store/src/lib/entities/school.service';
+import { SettingDataService } from '@dilta/store/src/lib/entities/setting.service';
+import { UserDataService } from '@dilta/store/src/lib/entities/users.service';
 
 const providers = [
   UserDataService,

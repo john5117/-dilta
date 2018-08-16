@@ -3,9 +3,8 @@ import { Model } from '@dilta/abstract-imp';
 import { Setting } from '@dilta/models';
 import { SettingModel } from '@dilta/offlinedatabase/src/lib/model.tokens';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
-import { EntityNames } from './constants';
-import { EntityDataBase } from './entitybase';
-
+import { EntityNames } from '@dilta/store/src/lib/entities/constants';
+import { EntityDataBase } from '@dilta/store/src/lib/entities/entitybase';
 
 @Injectable()
 export class SettingDataService extends EntityDataBase<Setting> {

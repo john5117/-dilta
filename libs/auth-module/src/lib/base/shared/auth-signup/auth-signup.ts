@@ -7,7 +7,6 @@ export interface Signup {
   level: string;
 }
 
-
 export class AuthSignupFormBase implements OnInit {
   @Input() public err: string;
   @Input() public levels: string[] = [];
@@ -15,7 +14,7 @@ export class AuthSignupFormBase implements OnInit {
 
   public signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
   emit(value) {
     delete value.clogin_password;

@@ -1,26 +1,34 @@
+import { authModel } from '@dilta/models/src/rxdb/auth.model';
+import { ExpenseModel } from '@dilta/models/src/rxdb/expense.model';
+import { managerModel } from '@dilta/models/src/rxdb/manager.model';
+import {
+  Auth,
+  Manager,
+  Parent,
+  Receipt,
+  School,
+  Score,
+  Settings,
+  Student,
+  User
+} from '@dilta/models/src/rxdb/models';
+import { parentModel } from '@dilta/models/src/rxdb/parent.model';
+import { receiptModel } from '@dilta/models/src/rxdb/receipt.model';
+import { schoolModel } from '@dilta/models/src/rxdb/school.model';
 import { SettingModel } from '@dilta/models/src/rxdb/setting.model';
+import { studentModel } from '@dilta/models/src/rxdb/student.model';
+import { subjectModel } from '@dilta/models/src/rxdb/subject.model';
+import { userModel } from '@dilta/models/src/rxdb/user.model';
 import { throwError } from '@dilta/screwbox';
 import { LoggerService } from '@dilta/util';
 import { to } from 'await-to-js';
 import * as RxDB from 'rxdb';
 import { RxCollection, RxDatabase, RxSchema } from 'rxdb';
-import { authModel } from './auth.model';
-import { ExpenseModel } from './expense.model';
-import { managerModel } from './manager.model';
-import { Auth, Manager, Parent, Receipt, School, Score, Settings, Student, User } from './models';
-import { parentModel } from './parent.model';
-import { receiptModel } from './receipt.model';
-import { schoolModel } from './school.model';
-import { studentModel } from './student.model';
-import { subjectModel } from './subject.model';
-import { userModel } from './user.model';
 
-
-const { debug, info } = new LoggerService('@dilta/models');
-
+/** Logger For Database Scope */
+export const logger = new LoggerService('@dilta/electron:rxdb::models');
 /** the database name for rxdb */
 const DB_NAME = 'carddemodb';
-
 
 /** collection configurations to be created on the database */
 export const Kollections = [
@@ -62,7 +70,11 @@ export interface DBKollections extends RxDatabase {
  * @param {any[]} [plugins] Arrays of pouchdb plugins
  * @returns {Promise<DBKollections>}
  */
-export async function mainframe(DB_ADAPTER: string, options = {}, plugins?: any[]): Promise<DBKollections> {
+export async function mainframe(
+  DB_ADAPTER: string,
+  options = {},
+  plugins?: any[]
+): Promise<DBKollections> {
   applyPlugins(plugins);
   let db: RxDatabase, err: Error;
   [err, db] = await to<RxDatabase, Error>(
@@ -73,7 +85,7 @@ export async function mainframe(DB_ADAPTER: string, options = {}, plugins?: any[
     })
   );
   throwError(err);
-  debug({ message: `finshed intializing the database`, trace: 'setup::mainframe'  });
+  // logger.debug({ message: `finshed intializing the database`, trace: 'setup::mainframe'  });
   [err] = await to(initalizeKolls(db, Kollections));
   throwError(err);
   return db as any;
@@ -133,7 +145,7 @@ export async function initalizeKolls(
       })
     );
     throwError(err);
-    debug({ message: `added ${config.name} collection to the database`, trace: 'setup::initalizeKolls'  });
+    // logger.debug({ message: `added ${config.name} collection to the database`, trace: 'setup::initalizeKolls'  });
   }
 }
 
@@ -141,7 +153,10 @@ export function applyPlugins(plugins: any[]) {
   if (plugins) {
     plugins.forEach(RxDB.plugin);
   }
-  info({ message: `setup:::mainframe: intialize rxdb plugins`, trace: 'setup::applyPlugins'  });
+  logger.info({
+    message: `setup:::mainframe: intialize rxdb plugins`,
+    trace: 'setup::applyPlugins'
+  });
 }
 
 /** throws error for empty of undefined config */

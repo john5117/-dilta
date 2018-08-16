@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@dilta/store';
 import { UtilService } from '@dilta/util';
 import { AuthUserSignupBase } from '../../../base/pages';
-
 
 /**
  * ui for signing up adminstartaions for login

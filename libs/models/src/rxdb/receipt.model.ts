@@ -1,5 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
 
@@ -12,20 +13,12 @@ export const receiptSchema = {
   description: 'stores users payments receipt schema',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     name: {
       type: 'string',
       unique: true,
       final: true
     },
     date: {
-      type: 'string',
-      final: true
-    },
-    amount: {
       type: 'number',
       final: true
     },
@@ -33,15 +26,7 @@ export const receiptSchema = {
       type: 'string',
       final: true
     },
-    teacherName: {
-      type: 'string',
-      final: true
-    },
     studentId: {
-      type: 'string',
-      final: true
-    },
-    universalId: {
       type: 'string',
       final: true
     },
@@ -57,20 +42,9 @@ export const receiptSchema = {
       type: 'string',
       final: true
     },
-    createdAt: {
-      type: 'string',
-      final: true
-    },
-    updatedAt: {
-      type: 'string'
-    },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['school']
+  required: [...baseModel.required]
 };
 
 export const receiptModel: CollectionConfig<typeof receiptSchema> = {

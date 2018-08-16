@@ -3,9 +3,9 @@ import { Model } from '@dilta/abstract-imp';
 import { Auth } from '@dilta/models';
 import { AuthModel } from '@dilta/offlinedatabase/src/lib/model.tokens';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
-import { Login } from '../auth';
-import { EntityNames } from './constants';
-import { EntityDataBase } from './entitybase';
+import { Login } from '@dilta/store/src/lib/auth';
+import { EntityNames } from '@dilta/store/src/lib/entities/constants';
+import { EntityDataBase } from '@dilta/store/src/lib/entities/entitybase';
 
 /**
  * Service responsible rest api implementations
@@ -28,7 +28,6 @@ export class AuthDataService extends EntityDataBase<Auth> {
   }
 }
 
-
 /**
  * Service responsible for creating Auth Entity
  *
@@ -41,7 +40,6 @@ export class AuthService extends EntityServiceBase<Auth> {
   constructor(entityServiceFactory: EntityServiceFactory) {
     super(EntityNames.Auth, entityServiceFactory);
   }
-
 }
 
 // TODO:: Setup The down errors.

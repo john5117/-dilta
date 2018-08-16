@@ -9,12 +9,13 @@ describe('AdminLoginComponent', () => {
   let component: AdminLoginComponent;
   let fixture: ComponentFixture<AdminLoginComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AdminLoginComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [AdminLoginComponent]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminLoginComponent);

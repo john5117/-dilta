@@ -1,0 +1,15 @@
+type Receipt {
+  name: String!
+  date: Int!
+  items: [Item]!
+  teacherId: User!
+  studentId: Student!
+  session: String!
+  term: String!
+  class: String!
+  id: ID!
+  hash: String!
+  createdAt: Int!
+  updatedAt: Int!
+  school: String!
+}

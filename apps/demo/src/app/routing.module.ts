@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReportCardComponent } from './demo/ReportCard/ReportCard.component';
 import { DemoComponent } from './demo/demo.component';
 
-
 const routes: Routes = [
   { path: '', component: DemoComponent },
   { path: 'demo/exam', component: ReportCardComponent }

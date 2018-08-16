@@ -1,7 +1,6 @@
 import { createLiensceWindow, mainframeIPC } from '@dilta/electron';
 import { logger } from '@dilta/electron/src/lib/main/localscope';
 import { app, BrowserWindow, ipcMain, screen } from 'electron';
-const { debug } = logger;
 
 
 let win, serve;
@@ -30,8 +29,8 @@ function createMainWindow() {
 }
 
 async function createWindow() {
-  debug({
-    message: 'window ready event triggered',
+  logger.debug({
+   message: 'window ready event triggered',
     trace: 'main::createWindow'
   });
   await mainframeIPC(ipcMain);
@@ -47,7 +46,7 @@ try {
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
-    debug({
+    logger.debug({
       message: 'window-all-closed event triggered',
       trace: 'main::close-window'
     });
@@ -59,7 +58,7 @@ try {
   });
 
   app.on('activate', () => {
-    debug({
+    logger.debug({
       message: 'window activate event triggered',
       trace: 'main::close-window'
     });

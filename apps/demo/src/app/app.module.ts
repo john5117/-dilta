@@ -9,7 +9,13 @@ import { DemoRoutingModule } from './routing.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [BrowserModule, NxModule.forRoot(), FormsModule,  CommonwebuiModule, DemoRoutingModule],
+  imports: [
+    BrowserModule,
+    NxModule.forRoot(),
+    FormsModule,
+    CommonwebuiModule,
+    DemoRoutingModule
+  ],
   declarations: [AppComponent, DemoComponent, ReportCardComponent],
   bootstrap: [AppComponent]
 })

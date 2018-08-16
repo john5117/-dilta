@@ -1,8 +1,10 @@
-import { Injectable, Optional } from '@angular/core';
+import { FactoryProvider } from '@angular/core';
 import { Log, LoggerBase } from '@dilta/abstract-imp';
 // TODO: Provide optional logger and config
 import * as pino from 'pino';
 import { Level, Logger } from 'pino';
+
+export type logNameSpace = 'default' | string;
 
 /**
  * a wrapper along js logger
@@ -10,18 +12,16 @@ import { Level, Logger } from 'pino';
  * @export
  * @class LoggerService
  */
-@Injectable()
+// @Injectable()
 export class LoggerService extends LoggerBase implements LoggerBase {
   private logger: Logger;
 
-  constructor(
-    @Optional() public loggerNameSpace: string = 'default',
-    @Optional() loglevel?: Level,
-  ) {
+  constructor(public loggerNameSpace: string, loglevel?: string) {
     super();
-    this.logger = pino({ name: loggerNameSpace });
-    this.logger.level = loglevel || this.logger.level;
+    this.logger = pino({ name: loggerNameSpace, prettyPrint: true } as any);
+    this.logger.level = (loglevel as any) || this.logger.level;
   }
+
   /**
    * wrapper for a cross platform logger
    *
@@ -29,6 +29,7 @@ export class LoggerService extends LoggerBase implements LoggerBase {
    * @memberof LoggerService
    */
   debug(customLog: Log, ...other: any[]) {
+    // return this.info(customLog, ...other);
     this.validate(customLog);
     this.logger.debug(
       `${this.loggerNameSpace}:::${customLog.trace}:::${customLog.message}::${Date()}}`,
@@ -101,4 +102,23 @@ export class LoggerService extends LoggerBase implements LoggerBase {
       data
     );
   }
+}
+
+/**
+ * dynamically creates logger with data
+ *
+ * @export
+ * @param {string} [name='default']
+ * @param {Level} [loglevel='info']
+ * @returns
+ */
+export function loggerServiceFactory(
+  name: string = 'default',
+  loglevel: Level = 'info'
+): FactoryProvider {
+  const logger = () => new LoggerService(name, loglevel);
+  return {
+    provide: LoggerService,
+    useFactory: logger
+  };
 }

@@ -9,12 +9,13 @@ describe('ReportCardComponent', () => {
   let component: ReportCardComponent;
   let fixture: ComponentFixture<ReportCardComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ReportCardComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ReportCardComponent]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportCardComponent);
