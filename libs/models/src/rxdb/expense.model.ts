@@ -1,5 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { baseModel } from '@dilta/models/src/rxdb/shared.model';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
 
 /** key to retrieve the collection form the db intialize object */
 
@@ -12,10 +13,6 @@ export const ExpenseSchema = {
   description: 'stores users expense schema',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     name: {
       type: 'string',
       unique: true,
@@ -42,10 +39,6 @@ export const ExpenseSchema = {
     category: {
       type: 'string'
     },
-    universalId: {
-      type: 'string',
-      final: true
-    },
     session: {
       type: 'string',
       final: true
@@ -64,11 +57,7 @@ export const ExpenseSchema = {
     capital: {
       type: 'boolean'
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
   required: [
     'busarId',
@@ -76,9 +65,7 @@ export const ExpenseSchema = {
     'amount',
     'session',
     'term',
-    'universalId',
-    'school',
-    'createdAt'
+    ...baseModel.required
   ]
 };
 

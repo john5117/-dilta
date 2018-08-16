@@ -1,6 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
-
+import { baseModel } from './shared.model';
 /** key to retrieve the collection form the db intialize object */
 
 /**
@@ -12,10 +12,6 @@ export const settingSchema = {
   description: 'stores schools and user settings configuration and properties',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     owner: {
       type: 'string',
       final: true
@@ -26,20 +22,14 @@ export const settingSchema = {
     settings: {
       type: 'object',
       properties: {},
-      additionalProperties: false
+      additionalProperties: true
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    defaultView: {
+      type: 'string'
+    },
+    ...baseModel.schema
   },
-  required: [
-    'owner',
-    'type',
-    'school',
-    'settings'
-  ],
+  required: ['owner', 'type', 'defaultView', 'settings', ...baseModel.required],
   additionalProperties: true
 };
 

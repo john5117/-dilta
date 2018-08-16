@@ -1,5 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
 
@@ -12,10 +13,6 @@ export const subjectSchema = {
   description: 'stores student subject records and scores',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     subject: {
       type: 'string',
       final: true
@@ -60,11 +57,7 @@ export const subjectSchema = {
       type: 'string',
       final: true
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
   required: [
     'subject',
@@ -73,7 +66,7 @@ export const subjectSchema = {
     'session',
     'term',
     'studentId',
-    'school'
+    ...baseModel.required
   ]
 };
 

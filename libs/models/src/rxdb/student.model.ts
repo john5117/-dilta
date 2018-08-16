@@ -1,5 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
 
@@ -12,10 +13,6 @@ export const studentSchema = {
   description: 'stores student biodata records',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     name: {
       type: 'string'
     },
@@ -26,7 +23,7 @@ export const studentSchema = {
       type: 'string'
     },
     dob: {
-      type: 'string'
+      type: 'number'
     },
     bloodgroup: {
       type: 'string'
@@ -35,17 +32,19 @@ export const studentSchema = {
       type: 'string'
     },
     parentPhone: {
-      ref: 'parent',
       type: 'string',
       final: true
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['name', 'class', 'dob', 'gender', 'parentPhone', 'school']
+  required: [
+    'name',
+    'class',
+    'dob',
+    'gender',
+    'parentPhone',
+    ...baseModel.required
+  ]
 };
 
 export const studentModel: CollectionConfig<typeof studentSchema> = {

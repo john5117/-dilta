@@ -1,5 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
 
@@ -14,13 +15,8 @@ export const managerSchema = {
     and properiotes name and contact`,
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     propName: {
       type: 'string',
-      unique: true,
       final: true
     },
     propPhone: {
@@ -41,13 +37,16 @@ export const managerSchema = {
     motto: {
       type: 'string'
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['propName', 'propPhone', 'sMName', 'sMPhone', 'motto', 'school']
+  required: [
+    'propName',
+    'propPhone',
+    'sMName',
+    'sMPhone',
+    'motto',
+    ...baseModel.required
+  ]
 };
 
 export const managerModel: CollectionConfig<typeof managerSchema> = {

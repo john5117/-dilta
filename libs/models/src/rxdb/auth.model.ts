@@ -1,5 +1,7 @@
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { baseModel } from './shared.model';
+
 /** key to retrieve the collection form the db intialize object */
 
 /**
@@ -11,10 +13,6 @@ export const authSchema = {
   description: 'stores users authorization info and level',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     username: {
       type: 'string',
       final: true
@@ -25,13 +23,9 @@ export const authSchema = {
     level: {
       type: 'string'
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
-  required: ['username', 'password', 'level', 'school']
+  required: ['username', 'password', 'level', ...baseModel.required]
 };
 
 export const authModel: CollectionConfig<typeof authSchema> = {

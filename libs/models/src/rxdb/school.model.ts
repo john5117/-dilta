@@ -1,8 +1,10 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
-
+import { baseModel } from './shared.model';
 /** key to retrieve the collection form the db intialize object */
 const SCHOOL_NAME = 'school';
+
+const { school, ...others } = baseModel.schema;
 
 /**
  * the student biodata schema configuration and properties
@@ -13,10 +15,6 @@ export const schoolSchema = {
   description: 'stores the school biodata information',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     name: {
       type: 'string',
       unique: true,
@@ -42,11 +40,18 @@ export const schoolSchema = {
     },
     logo: {
       type: 'string'
-    }
+    },
+    ...others
   },
-  required: []
-  // ['name', 'description', 'address',
-  //     'category', 'town', 'state']
+  required: [
+    'name',
+    'description',
+    'address',
+    'category',
+    'town',
+    'state',
+    ...baseModel.required.filter(k => k !== 'school')
+  ]
 };
 
 export const schoolModel: CollectionConfig<typeof schoolSchema> = {

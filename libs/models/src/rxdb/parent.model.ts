@@ -1,5 +1,6 @@
+import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
 import { EntityNames } from '@dilta/store';
-import { CollectionConfig } from './setup.mainframe';
+import { baseModel } from './shared.model';
 
 /** key to retrieve the collection form the db intialize object */
 
@@ -12,10 +13,6 @@ export const parentSchema = {
   description: 'stores student parents biodata information',
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      primary: true
-    },
     phoneNo: {
       type: 'string',
       unique: true,
@@ -48,11 +45,7 @@ export const parentSchema = {
     state: {
       type: 'string'
     },
-    school: {
-      ref: 'school',
-      type: 'string',
-      final: true
-    }
+    ...baseModel.schema
   },
   required: [
     'phoneNo',
@@ -61,7 +54,7 @@ export const parentSchema = {
     'homeAddress',
     'town',
     'state',
-    'school'
+    ...baseModel.required
   ]
 };
 
