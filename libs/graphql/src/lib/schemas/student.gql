@@ -1,0 +1,14 @@
+type Student {
+  name: String!
+  class: String!
+  gender: String!
+  dob: Int!
+  bloodgroup: String
+  prevschool: String
+  parentPhone: Parent!
+  id: ID!
+  hash: String!
+  createdAt: Int!
+  updatedAt: Int!
+  school: String!
+}

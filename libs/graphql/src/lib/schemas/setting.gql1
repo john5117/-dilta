@@ -1,0 +1,32 @@
+type Setting {
+  # unique id of setting
+  id: String!
+  # owner id of settings
+  owner: String!
+  # type of owner of setting either school or user
+  type: String!
+  # view to initalize with
+  defaultView: String!
+  # settings configurations
+  settings: Object!
+}
+
+# type Settings {
+#   revenue: SettingPreference Settings
+#   expense: SettingPreference
+#   others: SettingPreference
+# }
+
+
+# type SettingPreference {
+#   # that url is clickable
+#   enabled: Boolean
+#   # nested Submenus
+#   submenus: Object
+#   # Url Link to route to
+#   link: String!
+#   # name of the current menu
+#   name: String!
+#   # Inputs to be added to child view
+#   inputs: [Object]
+# }

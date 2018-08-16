@@ -1,0 +1,16 @@
+type Score {
+  subject: String!
+  teacherId: User!
+  class: String!
+  session: String!
+  term: String!
+  firstCa: Int!
+  secondCa: Int!
+  exam: Int!
+  studentId: User!
+  id: ID!
+  hash: String!
+  createdAt: Int!
+  updatedAt: Int!
+  school: School!
+}

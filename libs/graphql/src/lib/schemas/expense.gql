@@ -1,0 +1,16 @@
+type Expense {
+  amount: Int!
+  busarId: User!
+  capital: Boolean!
+  category: String!
+  createdAt: Int!
+  date: String!
+  hash: String!
+  id: ID!
+  name: String!
+  purpose: String!
+  school: School!
+  session: String!
+  term: String!
+  updatedAt: Int!
+}

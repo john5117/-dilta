@@ -1,0 +1,26 @@
+type Auth {
+  username: String!
+  password: String!
+  level: String!
+  biodata: User
+  id: ID!
+  hash: String!
+  createdAt: Int!
+  updatedAt: Int!
+  school: School!
+}
+
+
+# type Query {
+#   users: [User!]!
+#   user(id: ID!): User
+# }
+
+# type Mutation {
+#   createUser(name: String!): User!
+# }
+
+# type User {
+#   id: ID!
+#   name: String!
+# }
