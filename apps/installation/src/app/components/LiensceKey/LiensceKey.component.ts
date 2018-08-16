@@ -110,12 +110,14 @@ export class LiensceKeyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(processFeature).subscribe(store => {
-      console.log({ store });
-      if (store.error) {
-        return this.displayError(new Error(store.error.message));
+    this.store.select(processFeature).subscribe(({ error, schoolData }) => {
+      console.log({ error, schoolData });
+      if (error) {
+        return this.displayError(new Error(error.message));
       }
-      this.setupSchoolDetails(store.schoolId);
+      if (schoolData) {
+        this.setupSchoolDetails(schoolData.schoolId);
+      }
     });
   }
 
