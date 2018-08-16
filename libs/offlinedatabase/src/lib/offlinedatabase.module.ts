@@ -1,10 +1,31 @@
 import { CommonModule } from '@angular/common';
 import { forwardRef, NgModule } from '@angular/core';
-import { Database } from './Database';
+import { Database } from '@dilta/offlinedatabase/src/lib/Database';
 // tslint:disable-next-line:max-line-length
-import { AuthDBService, ExpenseDBService, ManagerDBService, ParentDBService, ReceiptDBService, SchoolDBService, ScoreDBService, SettingDBService, StudentDBService, UserDBService } from './database.service';
+import {
+  AuthDBService,
+  ExpenseDBService,
+  ManagerDBService,
+  ParentDBService,
+  ReceiptDBService,
+  SchoolDBService,
+  ScoreDBService,
+  SettingDBService,
+  StudentDBService,
+  UserDBService
+} from '@dilta/offlinedatabase/src/lib/database.service';
 // tslint:disable-next-line:max-line-length
-import { AuthModel, ExpenseModel, ManagerModel, RecieptModel, SchoolModel, ScoreModel, SettingModel, StudentModel, UserModel } from './model.tokens';
+import {
+  AuthModel,
+  ExpenseModel,
+  ManagerModel,
+  RecieptModel,
+  SchoolModel,
+  ScoreModel,
+  SettingModel,
+  StudentModel,
+  UserModel
+} from '@dilta/offlinedatabase/src/lib/model.tokens';
 
 const injectMappings = [
   {

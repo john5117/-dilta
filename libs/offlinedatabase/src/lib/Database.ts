@@ -21,7 +21,6 @@ export class Database {
     }
     this.db = this._db[1];
   }
-
 }
 
 function isElectron() {

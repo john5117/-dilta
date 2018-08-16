@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ProcessEffectBase } from '@dilta/abstract-imp';
 import * as IpcEvents from '@dilta/electron/src/lib/main/constants.ipc';
-import * as StoreActions from '@dilta/process/src/process.ngrx/process.actions';
+import * as StoreActions from '@dilta/process/src/ngrx/process.actions';
 import { SchoolEncryptedData } from '@dilta/security';
-import { UtilService } from '@dilta/util';
+import { LoggerService, UtilService } from '@dilta/util';
 import { Actions, Effect } from '@ngrx/effects';
 import { IpcRenderer } from 'electron';
 import { ElectronService } from 'ngx-electron';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
 // destructuring and mapping out customType
 const { ProcessStoreEvents } = StoreActions;
@@ -28,13 +28,8 @@ export class ProcessEffectService implements ProcessEffectBase {
   @Effect()
   getliensceKey$ = this.actions$
     .ofType<StoreActions.GetLiensceKey>(ProcessStoreEvents.GET_LIENSCE_KEY)
-    .pipe(
-      tap(() => this.ipcEmit(IpcEvents.GET_LIENSCE_KEY)),
-      switchMap(() => this.onIpc$(IpcEvents.RETRIEVED_LIENSCE_kEY)),
-      map((res: [Error, SchoolEncryptedData]) => this.util.cleanErrorValue(res)),
-      map(res => new StoreActions.VerifiedLiensceKeySuccess(res)),
-      catchError((e: Error) => of(new StoreActions.LiensceKeyError(e)))
-    );
+    .pipe(switchMap(() => this.LiensceKey));
+
   /**
    * Effects for deleting the liensce key for electron application
    *
@@ -45,7 +40,7 @@ export class ProcessEffectService implements ProcessEffectBase {
     .ofType<StoreActions.DelLiensceKey>(ProcessStoreEvents.DELETE_LIENSCE_KEY)
     .pipe(
       tap(() => this.ipcEmit(IpcEvents.DELETE_LIENSCE_KEY)),
-      switchMap(() => this.onIpc$(IpcEvents.DELETED_LIENSCE_KEY)),
+      exhaustMap(() => this.onIpc$(IpcEvents.DELETED_LIENSCE_KEY)),
       map((res: [Error, boolean]) => this.util.cleanErrorValue(res)),
       map(() => new StoreActions.VerifiedLiensceKeySuccess({} as any)),
       catchError((e: Error) => of(new StoreActions.LiensceKeyError(e)))
@@ -63,8 +58,10 @@ export class ProcessEffectService implements ProcessEffectBase {
     )
     .pipe(
       tap(action => this.ipcEmit(IpcEvents.SET_LIENSCE_KEY, action.payload)),
-      switchMap(() => this.onIpc$<SchoolEncryptedData>(IpcEvents.SAVED_LIENSCE_KEY)),
-      map((res) => this.util.cleanErrorValue(res)),
+      exhaustMap(() =>
+        this.onIpc$<SchoolEncryptedData>(IpcEvents.SAVED_LIENSCE_KEY)
+      ),
+      map(res => this.util.cleanErrorValue(res)),
       map(res => new StoreActions.VerifiedLiensceKeySuccess(res)),
       catchError((err: Error) => of(new StoreActions.LiensceKeyError(err)))
     );
@@ -79,7 +76,7 @@ export class ProcessEffectService implements ProcessEffectBase {
     .ofType<StoreActions.GetSchoolId>(ProcessStoreEvents.GET_LIENSCE_KEY)
     .pipe(
       tap(() => this.ipcEmit(IpcEvents.GET_SCHOOL_ID)),
-      switchMap(() => this.onIpc$(IpcEvents.RETRIEVED_SCHOOL_ID).pipe()),
+      exhaustMap(() => this.onIpc$(IpcEvents.RETRIEVED_SCHOOL_ID)),
       map((res: [Error, string]) => this.util.cleanErrorValue(res)),
       map(res => new StoreActions.SaveSchoolId(res)),
       catchError(err => of(new StoreActions.SchoolIdError(err)))
@@ -95,7 +92,7 @@ export class ProcessEffectService implements ProcessEffectBase {
     .ofType<StoreActions.DelSchoolId>(ProcessStoreEvents.DELETE_SCHOOL_ID)
     .pipe(
       tap(action => this.ipcEmit(IpcEvents.DELETED_SCHOOL_ID)),
-      switchMap(() => this.onIpc$(IpcEvents.DELETED_SCHOOL_ID)),
+      exhaustMap(() => this.onIpc$(IpcEvents.DELETED_SCHOOL_ID)),
       map((res: [Error, boolean]) => this.util.cleanErrorValue(res)),
       map(() => new StoreActions.SaveSchoolId(undefined)),
       catchError((err: Error) => of(new StoreActions.SchoolIdError(err)))
@@ -111,7 +108,7 @@ export class ProcessEffectService implements ProcessEffectBase {
     .ofType<StoreActions.UpdateSchoolId>(ProcessStoreEvents.UPDATE_SCHOOL_ID)
     .pipe(
       tap(action => this.ipcEmit(IpcEvents.SET_SCHOOL_ID, action.payload)),
-      switchMap(() => this.onIpc$(IpcEvents.SAVED_SCHOOL_ID)),
+      exhaustMap(() => this.onIpc$(IpcEvents.SAVED_SCHOOL_ID)),
       map((res: [Error, string]) => this.util.cleanErrorValue(res)),
       map(res => new StoreActions.SaveSchoolId(res)),
       catchError((err: Error) => of(new StoreActions.SchoolIdError(err)))
@@ -124,13 +121,12 @@ export class ProcessEffectService implements ProcessEffectBase {
    */
   @Effect()
   verifyLiensceKey$ = this.actions$
-    .ofType<StoreActions.VerifyLiensceKey>(ProcessStoreEvents.VERITY_LIENSCE_KEY)
+    .ofType<StoreActions.VerifyLiensceKey>(
+      ProcessStoreEvents.VERITY_LIENSCE_KEY
+    )
     .pipe(
       tap(action => this.decryptLiensceKey(action.payload)),
-      switchMap(() => this.onDecryptLiensceKey),
-      tap(console.log),
-      map((school: SchoolEncryptedData) => new StoreActions.UpdateLiensceKey(school)),
-      catchError((err: Error) => of(new StoreActions.VerifyLiensceKeyFailure(err)))
+      exhaustMap(() => this.onDecryptLiensceKey)
     );
 
   /**
@@ -140,7 +136,8 @@ export class ProcessEffectService implements ProcessEffectBase {
   constructor(
     private electron: ElectronService,
     private actions$: Actions,
-    private util: UtilService
+    private util: UtilService,
+    private logger: LoggerService
   ) {
     if (!this.electron.isElectronApp) {
       throw NotElectronError;
@@ -155,9 +152,12 @@ export class ProcessEffectService implements ProcessEffectBase {
    * @memberof ProcessService
    */
   onIpc$<T>(event: string) {
-    const promise: Promise<[Error, T]> = new Promise((resolve ) => {
+    const promise: Promise<[Error, T]> = new Promise(resolve => {
       this.electron.ipcRenderer.on(event, (sender: IpcRenderer, response) => {
-        console.log({ response });
+        this.logger.debug({
+          message: `recieved from IpcEvent::: ${event}`,
+          trace: 'Process::service::onIpc$'
+        });
         resolve(response);
       });
     });
@@ -172,6 +172,10 @@ export class ProcessEffectService implements ProcessEffectBase {
    * @memberof ProcessService
    */
   ipcEmit<T>(eventName: string, payload?: T) {
+    this.logger.debug({
+      message: `emitting IpcEvent::: ${eventName}`,
+      trace: 'Process::service::ipcEmit$'
+    });
     return this.electron.ipcRenderer.send(eventName, payload);
   }
 
@@ -183,6 +187,10 @@ export class ProcessEffectService implements ProcessEffectBase {
    * @memberof ProcessService
    */
   decryptLiensceKey(token: string) {
+    this.logger.debug({
+      message: `emitting IpcEvent::: to decryt liensce token`,
+      trace: 'Process::service::decryptLiensceKey$'
+    });
     this.ipcEmit(IpcEvents.VERIFY_LIENSCE_KEY_FILE, { token });
   }
 
@@ -194,16 +202,40 @@ export class ProcessEffectService implements ProcessEffectBase {
    */
   get onDecryptLiensceKey() {
     return this.onIpc$(IpcEvents.VERIFYED_LIENSCE_KEY_FILE).pipe(
-      tap(res => console.log(res)),
       map((res: [Error, SchoolEncryptedData]) =>
-        this.util.cleanErrorValue(res)
+        this.util.cleanErrorValue(res as any)
       ),
       map(res => {
         if (!res) {
           throw invalidLiensceKeyPassed;
         }
         return res;
-      })
+      }),
+      map(
+        (school: SchoolEncryptedData) =>
+          new StoreActions.UpdateLiensceKey(school)
+      ),
+      catchError((err: Error) =>
+        of(new StoreActions.VerifyLiensceKeyFailure(err))
+      )
+    );
+  }
+
+  /**
+   * Dispatches an action and recieves the lienscekey
+   *
+   * @returns
+   * @memberof ProcessEffectService
+   */
+  get LiensceKey() {
+    return of(null).pipe(
+      tap(() => this.ipcEmit(IpcEvents.GET_LIENSCE_KEY)),
+      exhaustMap(() => this.onIpc$(IpcEvents.RETRIEVED_LIENSCE_kEY)),
+      map((res: [Error, SchoolEncryptedData]) =>
+        this.util.cleanErrorValue(res)
+      ),
+      map(res => new StoreActions.VerifiedLiensceKeySuccess(res)),
+      catchError((e: Error) => of(new StoreActions.LiensceKeyError(e)))
     );
   }
 }

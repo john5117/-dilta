@@ -9,12 +9,13 @@ xdescribe('SetupDoneComponent', () => {
   let component: SetupDoneComponent;
   let fixture: ComponentFixture<SetupDoneComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SetupDoneComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [SetupDoneComponent]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SetupDoneComponent);

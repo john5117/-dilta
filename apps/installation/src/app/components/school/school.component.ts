@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { School } from '@dilta/models';
 import { SchoolService } from '@dilta/store';
-import { UtilService } from '@dilta/util';
+import { LoggerService } from '@dilta/util';
+import { states, schoolCategories, localGovts } from '@dilta/presets';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -35,10 +36,32 @@ export class SchoolComponent implements OnInit {
 
   public localSubscriptions: Subscription[] = [];
 
+  /**
+   * list of nigerian states
+   *
+   * @public
+   * @memberof SchoolComponent
+   */
+  public states = states();
+
+  /**
+   * list of local Govts in nigeria
+   *
+   * @memberof SchoolComponent
+   */
+  public lgas = localGovts();
+
+  /**
+   * list of school categories suported
+   *
+   * @memberof SchoolComponent
+   */
+  public schoolCategories = schoolCategories;
+
   constructor(
     private actRoute: ActivatedRoute,
     private route: Router,
-    private util: UtilService,
+    private logger: LoggerService,
     private school: SchoolService
   ) {}
 
@@ -49,6 +72,10 @@ export class SchoolComponent implements OnInit {
    * @memberof SchoolComponent
    */
   onSubmit($event: School | Partial<School>) {
+    this.logger.debug({
+      message: `submiting school data`,
+      trace: `SchoolComponent::onSubmit`
+    });
     this.school.add({ ...$event, id: this.schoolId } as School);
   }
 
@@ -58,6 +85,10 @@ export class SchoolComponent implements OnInit {
    * @memberof SchoolComponent
    */
   listenStore() {
+    this.logger.debug({
+      message: `listening to store changes`,
+      trace: `SchoolComponent::listenStore`
+    });
     this.localSubscriptions.push(this.onError(), this.onValue());
   }
 
@@ -79,6 +110,10 @@ export class SchoolComponent implements OnInit {
    * @memberof SchoolComponent
    */
   displayErr(err: Error) {
+    this.logger.error({
+      message: `displaying error:: ${err.message}`,
+      trace: `SchoolComponent::displayErr`
+    });
     this.err = err.message;
     setTimeout(() => {
       this.err = undefined;
@@ -92,9 +127,7 @@ export class SchoolComponent implements OnInit {
    * @memberof SchoolComponent
    */
   onValue() {
-    return this.school.entities$
-    .pipe(map(e => e[0]))
-    .subscribe(val => {
+    return this.school.entities$.pipe(map(e => e[0])).subscribe(val => {
       if (val) {
         this.changeRoute(val.id);
       }
@@ -112,7 +145,10 @@ export class SchoolComponent implements OnInit {
     if (!globalId) {
       return;
     }
-    console.log('changing route', globalId);
+    this.logger.debug({
+      message: `changing route to admin/${globalId}`,
+      trace: `SchoolComponent::changeRoute`
+    });
     this.route.navigate(['admin', globalId]);
   }
 

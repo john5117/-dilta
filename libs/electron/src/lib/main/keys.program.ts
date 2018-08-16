@@ -2,10 +2,8 @@ import { PlatformMetaData } from '@dilta/screwbox';
 import { SchoolEncryptedData } from '@dilta/security';
 import { to } from 'await-to-js';
 import { deletePassword, getPassword, setPassword } from 'keytar';
-import { logger } from './localscope';
+import { logger } from '@dilta/electron/src/lib/main/localscope';
 
-
-const { debug } = logger;
 /** specific platform configuration and metadata */
 const platformInfo: PlatformMetaData = {
   accountName: process.env.DILTA || 'dilta',
@@ -27,10 +25,17 @@ export const APPLICATION_SCHOOL_KEY = `${APPLICATION_NAME}:SCHOOL:LIENSCEKEY`;
  * @param {SchoolEncryptedData} key encrypted liensce key for the application
  * @returns
  */
-export async function saveLiensceKey(key: SchoolEncryptedData): Promise<[Error, SchoolEncryptedData]> {
+export async function saveLiensceKey(
+  key: SchoolEncryptedData
+): Promise<[Error, SchoolEncryptedData]> {
   try {
-    debug({ message: `saveLiensceKey(key): saving program liensce key to os keystore`, trace: 'keys::saveLiensceKey' });
-    await to(setPassword(APPLICATION_NAME, APPLICATION_SCHOOL_KEY, JSON.stringify(key)));
+    logger.debug({
+      message: `saveLiensceKey(key): saving program liensce key to os keystore`,
+      trace: 'keys::saveLiensceKey'
+    });
+    await to(
+      setPassword(APPLICATION_NAME, APPLICATION_SCHOOL_KEY, JSON.stringify(key))
+    );
     return [null, key];
   } catch (error) {
     return [error, null];
@@ -48,7 +53,10 @@ export const SavingLiensceKeyError = new Error(
  * @returns
  */
 export async function liensceKey() {
-  debug({ message: `retriving the program liensce key`, trace: 'keys::liensceKey' });
+  logger.debug({
+    message: `retriving the program liensce key`,
+    trace: 'keys::liensceKey'
+  });
   return <SchoolEncryptedData>JSON.parse(
     await getPassword(APPLICATION_NAME, APPLICATION_SCHOOL_KEY)
   );
@@ -61,7 +69,10 @@ export async function liensceKey() {
  * @returns
  */
 export function deleteLiensceKey() {
-  debug({ message: `deleting the liensceKey from the keystore`, trace: 'keys::deleteLiensceKey' });
+  logger.debug({
+    message: `deleting the liensceKey from the keystore`,
+    trace: 'keys::deleteLiensceKey'
+  });
   return deletePassword(APPLICATION_NAME, APPLICATION_SCHOOL_KEY);
 }
 
@@ -75,7 +86,10 @@ const APPLICATION_SCHOOL_ID = `${APPLICATION_NAME}:SCHOOL_ID`;
  * @returns
  */
 export async function saveSchoolId(id: string) {
-  debug({ message: `saving the unique school id to the key store`, trace: 'keys::saveSchoolId' });
+  logger.debug({
+    message: `saving the unique school id to the key store`,
+    trace: 'keys::saveSchoolId'
+  });
   return await setPassword(APPLICATION_NAME, APPLICATION_SCHOOL_ID, id);
 }
 
@@ -86,7 +100,10 @@ export async function saveSchoolId(id: string) {
  * @returns
  */
 export async function schoolId() {
-  debug({ message: `retrieving the school id from the keystore`, trace: 'keys::schoolId' });
+  logger.debug({
+    message: `retrieving the school id from the keystore`,
+    trace: 'keys::schoolId'
+  });
   return await getPassword(APPLICATION_NAME, APPLICATION_SCHOOL_ID);
 }
 
@@ -97,7 +114,10 @@ export async function schoolId() {
  * @returns
  */
 export function deleteSchoolId() {
-  debug({ message: `removing the school id from the keystore`, trace: 'keys::deleteSchoolId' });
+  logger.debug({
+    message: `removing the school id from the keystore`,
+    trace: 'keys::deleteSchoolId'
+  });
   return deletePassword(APPLICATION_NAME, APPLICATION_SCHOOL_ID);
 }
 

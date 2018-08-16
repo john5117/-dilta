@@ -8,10 +8,7 @@ import { animations } from '../animations';
   styleUrls: ['./setup-done.component.scss']
 })
 export class SetupDoneComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

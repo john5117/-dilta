@@ -1,15 +1,24 @@
 /* tslint:disable:no-unused-variable */
 import { Injectable } from '@angular/core';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  async,
+  fakeAsync,
+  tick
+} from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonwebuiModule } from '@dilta/commonwebui';
 import { School } from '@dilta/models';
 import { UtilService } from '@dilta/util';
 import { cold } from 'jasmine-marbles';
-import { EntityServiceBase, EntityServiceFactory, NgrxDataModule } from 'ngrx-data';
+import {
+  EntityServiceBase,
+  EntityServiceFactory,
+  NgrxDataModule
+} from 'ngrx-data';
 import { SchoolComponent } from './school.component';
-
 
 @Injectable()
 class SchoolService extends EntityServiceBase<School> {
@@ -80,7 +89,9 @@ describe('SchoolComponent', () => {
   it('should call displayErr when onError is subscribed', () => {
     const error = new Error('school Error');
     const displaySpy = spyOn(component, 'displayErr');
-    const onErrSpy = schoolSvc.errors$ = cold('-a', { a: { payload: { error }} }) as any;
+    const onErrSpy = (schoolSvc.errors$ = cold('-a', {
+      a: { payload: { error } }
+    }) as any);
     const subscription = component.onError();
     fixture.detectChanges();
     (expect(subscription) as any).toHaveSubscriptions();
@@ -114,12 +125,11 @@ describe('SchoolComponent', () => {
     const school = { id: 'schoolId' };
     const changeRouteSpy = spyOn(component, 'changeRoute');
     schoolSvc.entities$ = cold('-a', {
-      a: [ school ]
+      a: [school]
     });
     const subscription = component.onValue();
     fixture.detectChanges();
     (expect(subscription) as any).toHaveSubscriptions();
     expect(changeRouteSpy).toHaveBeenCalledWith(school);
   });
-
 });

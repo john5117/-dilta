@@ -13,9 +13,6 @@ import { LiensceKeyComponent } from './LiensceKey';
 import { SchoolComponent } from './school';
 import { SetupDoneComponent } from './setup-done/setup-done.component';
 
-
-
-
 const _comps = [
   AdminSetupComponent,
   LiensceKeyComponent,
