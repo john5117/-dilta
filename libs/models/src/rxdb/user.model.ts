@@ -1,4 +1,4 @@
-import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
+import { CollectionConfig } from '@dilta/models/src/rxdb/shared.model';
 import { EntityNames } from '@dilta/store';
 import { baseModel } from './shared.model';
 
