@@ -1,21 +1,12 @@
 import { authModel } from '@dilta/models/src/rxdb/auth.model';
 import { ExpenseModel } from '@dilta/models/src/rxdb/expense.model';
 import { managerModel } from '@dilta/models/src/rxdb/manager.model';
-import {
-  Auth,
-  Manager,
-  Parent,
-  Receipt,
-  School,
-  Score,
-  Settings,
-  Student,
-  User
-} from '@dilta/models/src/rxdb/models';
+import { Auth, Manager, Parent, Receipt, School, Score, Settings, Student, User } from '@dilta/models/src/rxdb/models';
 import { parentModel } from '@dilta/models/src/rxdb/parent.model';
 import { receiptModel } from '@dilta/models/src/rxdb/receipt.model';
 import { schoolModel } from '@dilta/models/src/rxdb/school.model';
 import { SettingModel } from '@dilta/models/src/rxdb/setting.model';
+import { CollectionConfig, defaultModelMiddleWare } from '@dilta/models/src/rxdb/shared.model';
 import { studentModel } from '@dilta/models/src/rxdb/student.model';
 import { subjectModel } from '@dilta/models/src/rxdb/subject.model';
 import { userModel } from '@dilta/models/src/rxdb/user.model';
@@ -23,7 +14,7 @@ import { throwError } from '@dilta/screwbox';
 import { LoggerService } from '@dilta/util';
 import { to } from 'await-to-js';
 import * as RxDB from 'rxdb';
-import { RxCollection, RxDatabase, RxSchema } from 'rxdb';
+import { RxCollection, RxDatabase } from 'rxdb';
 
 /** Logger For Database Scope */
 export const logger = new LoggerService('@dilta/electron:rxdb::models');
@@ -91,36 +82,6 @@ export async function mainframe(
   return db as any;
 }
 
-/**
- * the configuration interface for creating collections on the database
- *
- * @export
- * @interface CollectionConfig
- */
-export interface CollectionConfig<T> {
-  /**
-   * the name of the collection is key
-   *
-   * @type {string}
-   * @memberof CollectionConfig
-   */
-  name: string;
-  /**
-   * the optional collection name in the database
-   * defaulted to name if ommitted
-   *
-   * @type {string}
-   * @memberof CollectionConfig
-   */
-  collection?: string;
-  /**
-   * the schema of the collection to be created
-   *
-   * @type {RxSchema}
-   * @memberof CollectionConfig
-   */
-  schema: T;
-}
 
 /**
  * it creates new collections from the array of configurations given
@@ -138,7 +99,8 @@ export async function initalizeKolls(
     throw configsError;
   }
   for (const config of configs) {
-    const [err] = await to(
+    const options = config.options || defaultModelMiddleWare;
+    const [err, collection] = await to(
       db.collection({
         name: config.collection || config.name,
         schema: config.schema
@@ -146,6 +108,9 @@ export async function initalizeKolls(
     );
     throwError(err);
     // logger.debug({ message: `added ${config.name} collection to the database`, trace: 'setup::initalizeKolls'  });
+    Object.keys(options).forEach(key => {
+      collection[key](options[key], true);
+    });
   }
 }
 

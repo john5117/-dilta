@@ -1,5 +1,4 @@
-import { CollectionConfig } from '@dilta/models/src/rxdb/setup.mainframe';
-import { baseModel } from '@dilta/models/src/rxdb/shared.model';
+import { baseModel, CollectionConfig } from '@dilta/models/src/rxdb/shared.model';
 import { EntityNames } from '@dilta/store';
 
 /** key to retrieve the collection form the db intialize object */

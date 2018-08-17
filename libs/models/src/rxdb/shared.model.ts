@@ -57,3 +57,75 @@ function generateBase<T extends BaseModel>(doc: T): BaseModel {
     school: doc.school
   };
 }
+
+/**
+ * the configuration interface for creating collections on the database
+ *
+ * @export
+ * @interface CollectionConfig
+ */
+
+export interface CollectionConfig<T> {
+  /**
+   * the name of the collection is key
+   *
+   * @type {string}
+   * @memberof CollectionConfig
+   */
+  name: string;
+  /**
+   * the optional collection name in the database
+   * defaulted to name if ommitted
+   *
+   * @type {string}
+   * @memberof CollectionConfig
+   */
+  collection?: string;
+  /**
+   * the schema of the collection to be created
+   *
+   * @type {RxSchema}
+   * @memberof CollectionConfig
+   */
+  schema: T;
+
+  /**
+   * options provided has configurations
+   *
+   * @type {object}
+   * @memberof CollectionConfig
+   */
+  options?: object;
+}
+
+
+/**
+ * function called for setting default schema requirements before saving
+ *
+ * @export
+ * @template T
+ * @param {*} doc
+ * @returns {T}
+ */
+export function defaultPreInsert<T extends BaseModel>(doc: any): T {
+  return { ...doc, ...generateBase(doc) };
+}
+
+
+/**
+ * function called for updating default schema requirement after saving
+ *
+ * @export
+ * @template T
+ * @param {*} doc
+ * @returns {T}
+ */
+export function defaultPreSave<T extends BaseModel>(doc: any): T {
+  return { ...doc, updatedAt: Date.now() };
+}
+
+/** default middlewareoptinons */
+export const defaultModelMiddleWare = {
+  preInsert: defaultPreInsert,
+  preSave: defaultPreSave
+};
