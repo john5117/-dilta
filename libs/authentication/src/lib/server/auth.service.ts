@@ -1,4 +1,3 @@
-import { AUDIENCE, BCRYPT_HASH_ROUND, ENCRYPTION_KEY, JWT_ALGORITHM } from '@dilta/authentication/src/lib/server/constants';
 import { successResponse } from '@dilta/authentication/src/lib/shared';
 import { AuthService } from '@dilta/embededdb';
 import { Auth } from '@dilta/models';
@@ -8,7 +7,9 @@ import { to } from 'await-to-js';
 import { compare, genSalt, hash } from 'bcrypt';
 import { autobind } from 'core-decorators';
 import { sign, verify } from 'jsonwebtoken';
+import { AUDIENCE, BCRYPT_HASH_ROUND, ENCRYPTION_KEY, JWT_ALGORITHM } from './constants';
 
+// TODO: implement expirey date
 const JWT_OPTIONS = {
   audience: AUDIENCE,
   issuer: AUDIENCE
@@ -64,43 +65,31 @@ export class ClientAuthService {
 
   /** creates token for the user */
   async createToken(auth: Auth) {
+    const config = {
+      algorithm: JWT_ALGORITHM
+    };
     return new Promise<string>((resolve, reject) => {
-      sign(
-        this.auth.santizeAuth(auth),
-        ENCRYPTION_KEY,
-        {
-          algorithm: JWT_ALGORITHM,
-          expiresIn: '7d',
-          ...JWT_OPTIONS
-        },
-        (err, token) => {
-          if (err) {
-            return reject(err);
-          }
-          resolve(token);
+      sign(auth, ENCRYPTION_KEY, config, (err, token) => {
+        if (err) {
+          return reject(err);
         }
-      );
+        resolve(token);
+      });
     });
   }
 
   /** decodes the token to vaild Auth Object */
   decryptToken(token: string) {
+    const config = {
+      algorithms: JWT_ALGORITHM
+    } as any;
     return new Promise((resolve, reject) => {
-      verify(
-        token,
-        ENCRYPTION_KEY,
-        {
-          algorithms: JWT_ALGORITHM,
-          ignoreExpiration: false,
-          ...JWT_OPTIONS
-        } as any,
-        (err, value) => {
-          if (err) {
-            return reject(err);
-          }
-          resolve((value as any) as Partial<Auth>);
+      verify(token, ENCRYPTION_KEY, config, (err, value) => {
+        if (err) {
+          return reject(err);
         }
-      );
+        resolve((value as any) as Partial<Auth>);
+      });
     });
   }
 }
