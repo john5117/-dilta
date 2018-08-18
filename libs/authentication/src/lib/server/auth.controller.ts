@@ -53,16 +53,11 @@ export class AuthController {
    */
   @Post('signup')
   async signUp(@Body() auth: Partial<Auth>) {
-    const { cleanAndGenerateToken } = this.cAuth;
-    const { create$ } = this.auth;
+    const { cleanAndGenerateToken, save } = this.cAuth;
     try {
       let err: Error;
       let response: any;
-      let { password } = auth;
-      [err, password] = await to(this.cAuth.createHash(password));
-      throwError(err);
-      auth.password = password;
-      [err, auth] = await to(create$(auth));
+      [err, auth] = await to(save(auth as any));
       throwError(err);
       [err, response] = await to(cleanAndGenerateToken(auth as any));
       throwError(err);
