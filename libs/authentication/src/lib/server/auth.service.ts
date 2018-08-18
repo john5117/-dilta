@@ -1,10 +1,11 @@
 import { AUDIENCE, BCRYPT_HASH_ROUND, ENCRYPTION_KEY, JWT_ALGORITHM } from '@dilta/authentication/src/lib/server/constants';
+import { successResponse } from '@dilta/authentication/src/lib/shared';
 import { AuthService } from '@dilta/embededdb';
 import { Auth } from '@dilta/models';
 import { throwError } from '@dilta/screwbox';
 import { Injectable } from '@nestjs/common';
 import { to } from 'await-to-js';
-import { compare, hash } from 'bcrypt';
+import { compare, genSalt, hash } from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
 
 const JWT_OPTIONS = {
@@ -15,6 +16,21 @@ const JWT_OPTIONS = {
 @Injectable()
 export class ClientAuthService {
   constructor(public auth: AuthService) {}
+
+  /**
+   * clean the auth details and generate jwt token
+   *
+   * @param {Auth} details
+   * @returns
+   * @memberof ClientAuthService
+   */
+  async cleanAndGenerateToken(details: Auth) {
+    const { santizeAuth } = this.auth;
+    details = santizeAuth(details) as any as Auth;
+    const [err, token] = await to(this.createToken(details));
+    throwError(err);
+    return successResponse({ token, details } as any);
+  }
 
   /** saves the user authentication */
   async save(auth: Auth) {
@@ -30,7 +46,9 @@ export class ClientAuthService {
 
   /** create hash for the password */
   async createHash(password: string) {
-    const [err, hashes] = await to(hash(password, BCRYPT_HASH_ROUND));
+    const [err, hashes] = await to(
+      hash(password, await genSalt(BCRYPT_HASH_ROUND))
+    );
     throwError(err);
     return hashes;
   }
@@ -44,7 +62,7 @@ export class ClientAuthService {
 
   /** creates token for the user */
   async createToken(auth: Auth) {
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       sign(
         this.auth.santizeAuth(auth),
         ENCRYPTION_KEY,
@@ -84,5 +102,4 @@ export class ClientAuthService {
     });
   }
 
-  async validate(payload: string) {}
 }

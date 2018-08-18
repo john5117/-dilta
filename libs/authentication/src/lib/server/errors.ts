@@ -49,3 +49,24 @@ export class InValidPasswordError extends Error {
     return errFormater.call(this);
   }
 }
+
+
+
+/**
+ * Error thrown when the Authentication details requested not found
+ *
+ * @class AuthDetailsNotFondError
+ * @extends {Error}
+ */
+export class AuthDetailsNotFondError extends Error {
+  public static message = 'Authentication details missing for the username | data';
+  public name = 'AuthDetailsNotFondError';
+
+  constructor() {
+    super(AuthDetailsNotFondError.message);
+  }
+
+  toString() {
+    return errFormater.call(this);
+  }
+}

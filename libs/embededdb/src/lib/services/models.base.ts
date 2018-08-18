@@ -1,4 +1,5 @@
 import { DBKollections, OfflineDB } from '@dilta/models';
+import { autobind } from 'core-decorators';
 import { RxCollection } from 'rxdb';
 import { DBModel } from './db-abstract';
 
@@ -10,14 +11,15 @@ import { DBModel } from './db-abstract';
  * @implements {Model<T>}
  * @template T
  */
+@autobind()
 export class ModelBase<T> implements DBModel<T> {
   public collection: RxCollection<T>;
 
   constructor(
     private collectionName: keyof OfflineDB,
-    database: DBKollections
+    public database: DBKollections
   ) {
-    this.collection = database[this.collectionName];
+    this.collection = this.database[this.collectionName];
   }
 
   /**
@@ -41,9 +43,9 @@ export class ModelBase<T> implements DBModel<T> {
    */
   find$(query: Partial<T>) {
     return this.collection
-      .find(query)
-      .exec()
-      .then(res => res.map(e => e.toJSON()));
+    .find(query)
+    .exec()
+    .then(res => res.map(e => e.toJSON()));
   }
 
   /**

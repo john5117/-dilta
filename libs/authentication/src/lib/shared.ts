@@ -57,6 +57,19 @@ export function successResponse<T>(details:  T) {
 }
 
 
+/**
+ * Authentication Data response interface
+ *
+ * @export
+ * @interface AuthDataResponse
+ * @template T
+ */
+export interface AuthDataResponse<T> {
+  token: string;
+  details: Partial<T>;
+}
+
+
 
 /**
  * formats failure response for authentication
