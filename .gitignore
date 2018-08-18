@@ -10,6 +10,9 @@
 # dependencies
 /node_modules
 
+# http request
+**/*.http
+
 # previous code base
 /backup_src
 
