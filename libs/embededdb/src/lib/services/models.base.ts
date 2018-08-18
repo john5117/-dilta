@@ -1,7 +1,12 @@
-import { DBKollections, OfflineDB } from '@dilta/models';
+import { EmbeddedRxDBError } from '@dilta/embededdb/src/lib/services/errors';
+import { BaseModel, DBKollections, OfflineDB } from '@dilta/models';
+import { defaultPreInsert, defaultPreSave } from '@dilta/models/src/rxdb/shared.model';
+import { throwError } from '@dilta/screwbox';
+import { to } from 'await-to-js';
 import { autobind } from 'core-decorators';
-import { RxCollection } from 'rxdb';
+import { RxCollection, RxError } from 'rxdb';
 import { DBModel } from './db-abstract';
+
 
 /**
  * base class for all model must adhere to has an interface for interaction
@@ -12,7 +17,7 @@ import { DBModel } from './db-abstract';
  * @template T
  */
 @autobind()
-export class ModelBase<T> implements DBModel<T> {
+export class ModelBase<T extends Partial<BaseModel>> implements DBModel<T> {
   public collection: RxCollection<T>;
 
   constructor(
@@ -55,8 +60,12 @@ export class ModelBase<T> implements DBModel<T> {
    * @returns
    * @memberof ModelBase
    */
-  update$(id: string, item: Partial<T>) {
-    return this.create$(item);
+  async update$(id: string, item: Partial<T>) {
+    // important due rxdb lifecycle hooks
+    item = defaultPreSave(item);
+    const [err, newItem] = await to(this.collection.upsert(item).then(res => res.toJSON()));
+    this.cleanError(err);
+    return newItem;
   }
 
   /**
@@ -66,8 +75,13 @@ export class ModelBase<T> implements DBModel<T> {
    * @returns
    * @memberof ModelBase
    */
-  create$(item: Partial<T>) {
-    return this.collection.upsert(item).then(res => res.toJSON());
+  async create$(item: Partial<T>) {
+    // important due rxdb lifecycle hooks
+    let err: RxError;
+    item = defaultPreInsert(item as any as T);
+    [err, item] = await to(this.collection.upsert(item).then(res => res.toJSON()));
+    this.cleanError(err);
+    return item as any as T;
   }
 
   /**
@@ -77,10 +91,24 @@ export class ModelBase<T> implements DBModel<T> {
    * @returns
    * @memberof ModelBase
    */
-  delete$(query: Partial<T>) {
-    return this.collection
+  async delete$(query: Partial<T>) {
+    const [err, success] = await to(this.collection
       .findOne(query)
       .exec()
-      .then(e => e.remove());
+      .then(e => e.remove()));
+      this.cleanError(err);
+    return success;
+  }
+
+  /**
+   * cleans and throwError
+   *
+   * @param {RxError} err
+   * @memberof ModelBase
+   */
+  cleanError(err: RxError) {
+    if (err) {
+      throwError(err.rxdb ? new EmbeddedRxDBError(err) : err );
+    }
   }
 }

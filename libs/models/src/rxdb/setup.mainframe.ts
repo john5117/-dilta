@@ -99,7 +99,7 @@ export async function initalizeKolls(
     throw configsError;
   }
   for (const config of configs) {
-    const options = config.options || defaultModelMiddleWare;
+    const options: any = config.options || defaultModelMiddleWare;
     const [err, collection] = await to(
       db.collection({
         name: config.collection || config.name,
@@ -109,7 +109,7 @@ export async function initalizeKolls(
     throwError(err);
     // logger.debug({ message: `added ${config.name} collection to the database`, trace: 'setup::initalizeKolls'  });
     Object.keys(options).forEach(key => {
-      collection[key](options[key], true);
+      collection[key](options[key], false);
     });
   }
 }

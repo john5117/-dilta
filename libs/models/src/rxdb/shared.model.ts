@@ -107,8 +107,8 @@ export interface CollectionConfig<T> {
  * @param {*} doc
  * @returns {T}
  */
-export function defaultPreInsert<T extends BaseModel>(doc: any): T {
-  return { ...doc, ...generateBase(doc) };
+export function defaultPreInsert<T extends Partial<BaseModel>>(doc: T): T {
+  return { ...doc as any, ...generateBase(doc as any)};
 }
 
 
@@ -120,8 +120,8 @@ export function defaultPreInsert<T extends BaseModel>(doc: any): T {
  * @param {*} doc
  * @returns {T}
  */
-export function defaultPreSave<T extends BaseModel>(doc: any): T {
-  return { ...doc, updatedAt: Date.now() };
+export function defaultPreSave<T extends Partial<BaseModel>>(doc: T): T {
+  return { ...doc as any, updatedAt: Date.now() };
 }
 
 /** default middlewareoptinons */
