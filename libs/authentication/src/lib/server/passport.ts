@@ -12,7 +12,6 @@ import * as passportJwt from 'passport-jwt';
 const {
   fromExtractors,
   fromBodyField,
-  fromAuthHeader,
   fromAuthHeaderAsBearerToken,
   fromHeader,
   fromUrlQueryParameter
@@ -32,7 +31,6 @@ const JWT_OPTIONS: passportJwt.StrategyOptions = {
   jwtFromRequest: fromExtractors([
     fromUrlQueryParameter(TOKEN_FIELD),
     fromBodyField(TOKEN_FIELD),
-    fromAuthHeader(),
     fromHeader(JWT_HEADER_FIELD),
     fromAuthHeaderAsBearerToken()
   ])

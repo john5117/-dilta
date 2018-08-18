@@ -6,6 +6,7 @@ import { throwError } from '@dilta/screwbox';
 import { Injectable } from '@nestjs/common';
 import { to } from 'await-to-js';
 import { compare, genSalt, hash } from 'bcrypt';
+import { autobind } from 'core-decorators';
 import { sign, verify } from 'jsonwebtoken';
 
 const JWT_OPTIONS = {
@@ -13,6 +14,7 @@ const JWT_OPTIONS = {
   issuer: AUDIENCE
 };
 
+@autobind()
 @Injectable()
 export class ClientAuthService {
   constructor(public auth: AuthService) {}
@@ -26,7 +28,7 @@ export class ClientAuthService {
    */
   async cleanAndGenerateToken(details: Auth) {
     const { santizeAuth } = this.auth;
-    details = santizeAuth(details) as any as Auth;
+    details = (santizeAuth(details) as any) as Auth;
     const [err, token] = await to(this.createToken(details));
     throwError(err);
     return successResponse({ token, details } as any);
@@ -41,14 +43,14 @@ export class ClientAuthService {
     auth.password = password;
     [err, auth] = await to(this.auth.create$(auth));
     throwError(err);
-    return this.auth.santizeAuth(auth);
+    return auth;
   }
 
   /** create hash for the password */
   async createHash(password: string) {
-    const [err, hashes] = await to(
-      hash(password, await genSalt(BCRYPT_HASH_ROUND))
-    );
+    const [saltErr, salt] = await to(genSalt(BCRYPT_HASH_ROUND));
+    throwError(saltErr);
+    const [err, hashes] = await to(hash(password, salt));
     throwError(err);
     return hashes;
   }
@@ -101,5 +103,4 @@ export class ClientAuthService {
       );
     });
   }
-
 }
