@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/libs/auth-base",
+    "outDir": "../../dist/out-tsc/libs/platform-config",
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",

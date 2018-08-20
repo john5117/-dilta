@@ -1,8 +1,9 @@
 import { OnInit } from '@angular/core';
+import { AuthFeature, Authsuccess } from '@dilta/auth-module/src/lib/ngrx';
 import { School, Setting, SettingPreference, User } from '@dilta/models';
 import { dictSchool } from '@dilta/presets';
 import { processFeature, ProcessState } from '@dilta/process';
-import { AuthFeature, Authsuccess, SchoolService } from '@dilta/store';
+import { SchoolService } from '@dilta/store';
 import { select, Store } from '@ngrx/store';
 import { isNil } from 'lodash';
 import { Observable } from 'rxjs/observable';

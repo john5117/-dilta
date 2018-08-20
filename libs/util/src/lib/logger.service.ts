@@ -1,8 +1,7 @@
 import { FactoryProvider } from '@angular/core';
 import { Log, LoggerBase } from '@dilta/abstract-imp';
-// TODO: Provide optional logger and config
-import * as pino from 'pino';
-import { Level, Logger } from 'pino';
+import { Level } from 'pino';
+
 
 export type logNameSpace = 'default' | string;
 
@@ -14,11 +13,11 @@ export type logNameSpace = 'default' | string;
  */
 // @Injectable()
 export class LoggerService extends LoggerBase implements LoggerBase {
-  private logger: Logger;
+  private logger; // : Logger;
 
   constructor(public loggerNameSpace: string, loglevel?: string) {
     super();
-    this.logger = pino({ name: loggerNameSpace, prettyPrint: true } as any);
+    this.logger =  console; // pino({ name: loggerNameSpace, prettyPrint: true } as any);
     this.logger.level = (loglevel as any) || this.logger.level;
   }
 

@@ -1,5 +1,6 @@
+import { Auth } from '@dilta/models';
 import { Action } from '@ngrx/store';
-import { Authsuccess } from '@dilta/store/src/lib/auth/auth.reducer';
+import { Authsuccess } from './auth.reducer';
 
 export enum Status {
   Pending = 'PENDING',
@@ -14,7 +15,9 @@ export enum Status {
 export enum AuthActionTypes {
   Login = '[Auth] [LOGIN]  REQUEST',
   LoginFailure = '[Auth] [LOGIN]  FAILURE',
-  Success = '[Auth] [LOGIN] SUCCESS',
+  SignUp = '[Auth] [SIGNUP]  REQUEST',
+  SignUpFailure = '[Auth] [SIGNUP]  FAILURE',
+  Success = '[Auth] [ANY] SUCCESS',
   LogOut = '[Auth] LOGOUT'
 }
 
@@ -68,6 +71,45 @@ export class AuthLoginFailure implements Action {
 
   constructor(public payload: Error) {}
 }
+/**
+ * Action dispatched to login a user into the program
+ *
+ * @export
+ * @class AuthLogin
+ * @implements {Action}
+ */
+export class AuthSignUp implements Action {
+  readonly type = AuthActionTypes.SignUp;
+
+  constructor(public payload: Partial<Auth>) {}
+}
+
+/**
+ * Action dispatched while an authentication is successfull
+ * to the store
+ *
+ * @export
+ * @class AuthSuccess
+ * @implements {Action}
+ */
+export class AuthSignUpSuccess implements Action {
+  readonly type = AuthActionTypes.Success;
+  constructor(public payload: Authsuccess) {}
+}
+
+/**
+ * Action disptached while an error occurs when a user attempts
+ * a login
+ *
+ * @export
+ * @class AuthLoginFailure
+ * @implements {Action}
+ */
+export class AuthSignUpFailure implements Action {
+  readonly type = AuthActionTypes.SignUpFailure;
+
+  constructor(public payload: Error) {}
+}
 
 /**
  * Action dispatched while a user wants to logout from the system
@@ -86,7 +128,7 @@ export class AuthLogOut implements Action {
  * so that reducers can easily compose action types
  */
 export type AuthActions =
-  | AuthLogin
-  | AuthLoginSuccess
-  | AuthLoginFailure
+  | AuthLogin | AuthSignUp
+  | AuthLoginSuccess | AuthSignUpSuccess
+  | AuthLoginFailure | AuthSignUpFailure
   | AuthLogOut;

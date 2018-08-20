@@ -86,6 +86,9 @@
       ],
       "@dilta/auth-base": [
         "libs/auth-base/src/index.ts"
+      ],
+      "@dilta/platform-config": [
+        "libs/platform-config/src/index.ts"
       ]
     },
     "baseUrl": "."
@@ -95,5 +98,8 @@
     "apps/demo",
     "**/*.spec.ts",
     "src/test.ts"
+  ],
+  "include": [
+    "**/*.ts"
   ]
 }

@@ -4,13 +4,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "auth",
+      "dilta",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "auth",
+      "dilta",
       "kebab-case"
     ]
   }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { ApiResponse } from '@dilta/authentication/src/lib/shared';
 import { dictSchool } from '@dilta/presets';
 import { formatError } from '@dilta/screwbox';
+import { ApiResponseError } from '@dilta/util/src/lib/error';
 import { RxError } from 'rxdb';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { map } from 'rxjs/operators';
@@ -74,4 +76,20 @@ export class UtilService {
   randomuuid() {
     return uuidRandom();
   }
+
+  /**
+   * cleans the apiError
+   *
+   * @template T
+   * @param {ApiResponse<T>} details
+   * @returns {T}
+   * @memberof UtilService
+   */
+  cleanApiResponse<T>(details: ApiResponse<T>): T {
+    if (details.error) {
+      throw new ApiResponseError(details);
+    }
+    return details.data;
+  }
+
 }

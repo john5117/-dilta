@@ -1,17 +1,17 @@
 
 import { async, TestBed } from '@angular/core/testing';
-import { AuthBaseModule } from './auth-base.module';
+import { PlatformConfigModule } from './platform-config.module';
 
-describe('AuthBaseModule', () => {
+describe('PlatformConfigModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ AuthBaseModule ]
+      imports: [ PlatformConfigModule ]
     })
     .compileComponents();
   }));
 
   it('should create', () => {
-    expect(AuthBaseModule).toBeDefined();
+    expect(PlatformConfigModule).toBeDefined();
   });
 });
       

@@ -1,28 +1,10 @@
 import { OnInit } from '@angular/core';
-import {
-  busarExpenseSummary,
-  busarRevenueSummary
-} from '@dilta/generator/src/lib/school.data';
-import {
-  Receipt,
-  Setting,
-  SettingPreference,
-  User,
-  School
-} from '@dilta/models';
-import { of } from 'rxjs/observable/of';
-import { Authsuccess, SchoolService, AuthFeature } from '@dilta/store';
-import { Store } from '@ngrx/store';
-import {
-  map,
-  skipUntil,
-  skipWhile,
-  tap,
-  combineLatest,
-  pluck
-} from 'rxjs/operators';
-
 import { Router } from '@angular/router';
+import { busarExpenseSummary, busarRevenueSummary } from '@dilta/generator/src/lib/school.data';
+import { SchoolService } from '@dilta/store';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs/observable/of';
+
 
 export class BusarDashBoardBase implements OnInit {
   revenueSummary$ = of(busarRevenueSummary());
