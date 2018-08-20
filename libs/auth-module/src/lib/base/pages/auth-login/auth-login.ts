@@ -1,15 +1,10 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AuthFeature,
-  AuthLogin,
-  Authsuccess,
-  Login
-} from '@dilta/store/src/lib/auth';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthFeature, AuthLogin, Authsuccess, Login } from '../../../ngrx';
 
 /**
  * Base class for authentication of the users.
@@ -46,7 +41,7 @@ export class AuthUserLoginBase implements OnInit {
    * @memberof AuthUserLoginBase
    */
   changeRoute(auth: Authsuccess) {
-    if (!auth.authId) {
+    if (!auth.details) {
       return;
     }
     this.route.navigateByUrl('*');

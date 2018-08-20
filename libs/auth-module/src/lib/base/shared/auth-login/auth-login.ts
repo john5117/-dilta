@@ -1,10 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Login } from '@dilta/auth-module';
 
-interface Login {
-  username: string;
-  password: string;
-}
 
 export class AuthLoginFormBase implements OnInit {
   /**

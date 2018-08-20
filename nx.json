@@ -81,6 +81,9 @@
     },
     "auth-base": {
       "tags": []
+    },
+    "platform-config": {
+      "tags": []
     }
   },
   "implicitDependencies": {

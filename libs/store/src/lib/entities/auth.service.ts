@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { Model } from '@dilta/abstract-imp';
+import { Login } from '@dilta/auth-module/src/lib/ngrx';
 import { Auth } from '@dilta/models';
 import { AuthModel } from '@dilta/offlinedatabase/src/lib/model.tokens';
-import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
-import { Login } from '@dilta/store/src/lib/auth';
 import { EntityNames } from '@dilta/store/src/lib/entities/constants';
 import { EntityDataBase } from '@dilta/store/src/lib/entities/entitybase';
+import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
 
 /**
  * Service responsible rest api implementations

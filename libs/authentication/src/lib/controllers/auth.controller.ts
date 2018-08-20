@@ -1,11 +1,11 @@
 import { AuthDetailsNotFondError, InValidPasswordError } from '@dilta/authentication/src';
-import { ClientAuthService } from '@dilta/authentication/src/lib/server/auth.service';
 import { ApiResponse, failureResponse } from '@dilta/authentication/src/lib/shared';
 import { AuthService } from '@dilta/embededdb/src';
 import { Auth } from '@dilta/models';
 import { throwError } from '@dilta/screwbox';
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import to from 'await-to-js';
+import { ClientAuthService } from '../services/auth.service';
 
 @Controller('auth')
 export class AuthController {

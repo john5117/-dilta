@@ -1,6 +1,4 @@
 import { AuthDetailsNotFondError } from '@dilta/authentication/src';
-import { ClientAuthService } from '@dilta/authentication/src/lib/server/auth.service';
-import { AUDIENCE, ENCRYPTION_KEY, JWT_ALGORITHM } from '@dilta/authentication/src/lib/server/constants';
 import { Auth } from '@dilta/models';
 import { Injectable } from '@nestjs/common';
 import { to } from 'await-to-js';
@@ -8,6 +6,8 @@ import { autobind } from 'core-decorators';
 import { NextFunction, Request, Response } from 'express';
 import * as passport from 'passport';
 import * as passportJwt from 'passport-jwt';
+import { AUDIENCE, ENCRYPTION_KEY, JWT_ALGORITHM } from '../constants';
+import { ClientAuthService } from './auth.service';
 
 const {
   fromExtractors,

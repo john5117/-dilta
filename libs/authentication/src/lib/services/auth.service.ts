@@ -7,7 +7,7 @@ import { to } from 'await-to-js';
 import { compare, genSalt, hash } from 'bcrypt';
 import { autobind } from 'core-decorators';
 import { sign, verify } from 'jsonwebtoken';
-import { AUDIENCE, BCRYPT_HASH_ROUND, ENCRYPTION_KEY, JWT_ALGORITHM } from './constants';
+import { AUDIENCE, BCRYPT_HASH_ROUND, ENCRYPTION_KEY, JWT_ALGORITHM } from '../constants';
 
 // TODO: implement expirey date
 const JWT_OPTIONS = {

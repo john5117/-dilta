@@ -1,27 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { AuthenticationFeatureNgrxModule } from '@dilta/auth-module/src/lib/ngrx';
+import { ClientAuthService } from '@dilta/auth-module/src/lib/services/auth.service';
+import { ClientAuthWebRoutingModule } from '@dilta/auth-module/src/lib/webcomponents/pages/auth.routing';
 import { CommonwebuiModule } from '@dilta/commonwebui';
-import { EntityServicesModule } from '@dilta/store';
 import { UtilModule } from '@dilta/util';
-import { NgUploaderModule } from 'ngx-uploader';
 import { AuthSharedModule } from '../shared/auth-shared.module';
 import { AuthUserLoginComponent } from './admin-login/admin-login.component';
-import { AuthUserSignupComponent } from './AdminSignup/AdminSignup.component';
+import { AuthUserSignupComponent } from './admin-signup/admin-signup.component';
 
 @NgModule({
   imports: [
     CommonModule,
     AuthSharedModule,
-    CommonwebuiModule,
     UtilModule,
-    NgUploaderModule,
-    ReactiveFormsModule,
-    RouterModule,
-    EntityServicesModule
+    ClientAuthWebRoutingModule,
+    AuthenticationFeatureNgrxModule
   ],
+  providers: [ClientAuthService],
   declarations: [AuthUserSignupComponent, AuthUserLoginComponent],
-  exports: [AuthSharedModule]
+  exports: [AuthSharedModule, CommonwebuiModule]
 })
 export class AuthPagesModule {}

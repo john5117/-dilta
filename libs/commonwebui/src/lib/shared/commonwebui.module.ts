@@ -38,6 +38,6 @@ const _comps = [
   ],
   declarations: _comps,
   providers: [],
-  exports: [..._comps, ClarityModule]
+  exports: [..._comps, ClarityModule, NgUploaderModule, ReactiveFormsModule]
 })
 export class CommonwebuiModule {}

@@ -1,10 +1,5 @@
-import { Auth, User } from '@dilta/models';
-import {
-  AuthActions,
-  AuthActionTypes,
-  Status
-} from '@dilta/store/src/lib/auth/auth.action';
-import { admin } from '@dilta/generator';
+import { Auth } from '@dilta/models';
+import { AuthActions, AuthActionTypes, Status } from './auth.action';
 
 /**
  * Interface for a successfull Authentication
@@ -25,7 +20,7 @@ export interface Authsuccess {
    * @type {string}
    * @memberof Authsuccess
    */
-  authId: string;
+  details: Auth;
   /**
    * timestamp for the successful authentication of the
    * login User
@@ -34,13 +29,6 @@ export interface Authsuccess {
    * @memberof Authsuccess
    */
   timeStamp: Date | string | number;
-  /**
-   * current user biodata information
-   *
-   * @type {User}
-   * @memberof Authsuccess
-   */
-  user: User;
 
   /**
    * Any Error thrown for the Auth
@@ -49,22 +37,12 @@ export interface Authsuccess {
    * @memberof Authsuccess
    */
   error?: Error;
-
-  /**
-   * the user's level
-   *
-   * @type {string}
-   * @memberof Authsuccess
-   */
-  level?: string;
 }
 
 export const authInitialState: Authsuccess = {
-  authId: null,
   status: Status.Pending,
   timeStamp: Date(),
-  user: admin(),
-  // user:  null,
+  details: null,
   error: null
 };
 
@@ -89,7 +67,17 @@ export function authReducer(
         ...action.payload,
         error: null,
         status: Status.Success,
-        timeStamp: Date()
+        timeStamp: Date.now()
+      };
+    }
+    case AuthActionTypes.LoginFailure:
+    case AuthActionTypes.SignUpFailure: {
+      return {
+        ...state,
+        error: action.payload,
+        details: null,
+        status: Status.Failure,
+        timeStamp: Date.now()
       };
     }
     // when the login auth is loged - out

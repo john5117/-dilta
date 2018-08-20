@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/libs/auth-base",
+    "outDir": "../../dist/out-tsc/libs/platform-config",
     "types": [
       "jasmine",
       "node"

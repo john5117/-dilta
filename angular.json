@@ -1023,6 +1023,34 @@
           }
         }
       }
+    },
+    "platform-config": {
+      "root": "libs/platform-config",
+      "sourceRoot": "libs/platform-config/src",
+      "projectType": "library",
+      "prefix": "dilta",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/platform-config/src/test.ts",
+            "tsConfig": "libs/platform-config/tsconfig.spec.json",
+            "karmaConfig": "libs/platform-config/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/platform-config/tsconfig.lib.json",
+              "libs/platform-config/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo",

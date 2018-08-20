@@ -1,8 +1,9 @@
 import { OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthFeature, AuthSignUp } from '@dilta/auth-module/src/lib/ngrx';
 import { Auth } from '@dilta/models';
-import { AuthService } from '@dilta/store';
-import { UtilService } from '@dilta/util';
+import { AppConfiguration } from '@dilta/platform-config/src';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
@@ -37,10 +38,10 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
   public localSubscription: Subscription[] = [];
 
   constructor(
+    private config: AppConfiguration,
     private route: Router,
     private _actR: ActivatedRoute,
-    private util: UtilService,
-    private auth: AuthService
+    private store: Store<any>
   ) {}
 
   /**
@@ -50,8 +51,7 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
    * @memberof AuthUserSignupBase
    */
   signUp($event: Signup) {
-    const id = this.util.randomuuid();
-    this.auth.add({ ...$event, school: this.schoolId, id });
+    this.store.dispatch(new AuthSignUp({ ...$event, school: this.schoolId }));
   }
 
   /**
@@ -62,8 +62,8 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
    */
   changeRoute(auth: Auth) {
     if (auth) {
-      this.route.navigate(['biodata'], {
-        queryParams: { authId: auth.id, schoolId: this.schoolId }
+      this.route.navigate([this.config.signupRedirect], {
+        queryParams: { authId: auth.id, schoolId: auth.school }
       });
       // this.route.navigateByUrl(`/biodata/${auth.id}`);
     }
@@ -75,29 +75,16 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
    * @memberof AuthUserSignupBase
    */
   storeListen() {
-    this.localSubscription.push(this.onError(), this.onValue());
-  }
-
-  /**
-   * listener for  entity error
-   *
-   * @memberof AuthUserSignupBase
-   */
-  onError() {
-    return this.auth.errors$
-      .pipe(map(e => e.payload.error))
-      .subscribe(this.sendError.bind(this));
-  }
-
-  /**
-   * Listerner for entity value
-   *
-   * @memberof AuthUserSignupBase
-   */
-  onValue() {
-    return this.auth.entities$
-      .pipe(map(e => e[0]))
-      .subscribe(this.changeRoute.bind(this));
+    return this.store.select(AuthFeature)
+      .pipe(
+        map((state) => {
+          if (state.error) {
+            this.sendError(state.error);
+            return;
+          }
+          this.changeRoute(state.details);
+        })
+      );
   }
 
   /**
