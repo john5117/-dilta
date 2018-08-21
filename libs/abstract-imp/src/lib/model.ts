@@ -17,7 +17,7 @@ export abstract class Model<T> {
    * @param {Partial<T>} id unique identifer to retrieve
    * @memberof Model
    */
-  abstract retrieve$(query: Partial<T>): Observable<T>;
+  abstract retrieve$(query: string): Observable<T>;
   /**
    * method called to query the model from database
    *
@@ -41,5 +41,5 @@ export abstract class Model<T> {
    * @param {item} T unique identifer to delete
    * @memberof Model
    */
-  abstract delete$(item: Partial<T>): Observable<boolean>;
+  abstract delete$(item: string): Observable<boolean>;
 }

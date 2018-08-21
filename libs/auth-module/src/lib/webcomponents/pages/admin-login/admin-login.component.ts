@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
 import { AuthUserLoginBase } from '../../../base/pages';
@@ -13,9 +13,8 @@ export class AuthUserLoginComponent extends AuthUserLoginBase {
   constructor(
     store: Store<any>,
     route: Router,
-    _actR: ActivatedRoute,
     util: UtilService
   ) {
-    super(store, route, _actR, util);
+    super(store, route, util);
   }
 }

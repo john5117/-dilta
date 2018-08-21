@@ -1,5 +1,5 @@
 import { OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
@@ -19,7 +19,6 @@ export class AuthUserLoginBase implements OnInit {
   constructor(
     private store: Store<any>,
     private route: Router,
-    private _actR: ActivatedRoute,
     private util: UtilService
   ) {}
 

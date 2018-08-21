@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SchoolService, UserService } from '@dilta/store';
+import { UserBioDataFormPageBase } from '@dilta/dream-users/src/lib/pages/base';
+import { UserEntityService } from '@dilta/dream-users/src/lib/services/dream-users.entity';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
-import { UserBioDataFormPageBase } from '@dilta/common-ui';
 
 @Component({
-  selector: 'app-user-biodata-form-page',
+  selector: 'dilta-user-biodata-form-page',
   templateUrl: './admin-biodata.component.html',
   styleUrls: ['./admin-biodata.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -16,10 +16,9 @@ export class UserBioDataFormPageComponent extends UserBioDataFormPageBase {
     _actR: ActivatedRoute,
     route: Router,
     util: UtilService,
-    admin: UserService,
-    school: SchoolService,
+    admin: UserEntityService,
     store: Store<any>
   ) {
-    super(_actR, route, util, admin, school, store);
+    super(_actR, route, util, admin, store);
   }
 }

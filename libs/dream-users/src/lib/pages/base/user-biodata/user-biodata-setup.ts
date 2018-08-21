@@ -1,9 +1,9 @@
 import { OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '@dilta/models';
+import { schoolFeature } from '@dilta/commonwebui/src/lib/ngrx';
+import { UserEntityService } from '@dilta/dream-users/src/lib/services/dream-users.entity';
+import { School, User } from '@dilta/models';
 import { SchoolDict } from '@dilta/presets';
-import { processFeature } from '@dilta/process';
-import { SchoolService, UserService } from '@dilta/store';
 import { UtilService } from '@dilta/util';
 import { Store } from '@ngrx/store';
 import { RxError } from 'rxdb';
@@ -12,6 +12,10 @@ import { Observable } from 'rxjs/observable';
 import { of } from 'rxjs/observable/of';
 import { combineLatest, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
+
+export interface BiodataFormPageARQMap {
+  authId: string;
+}
 
 export class UserBioDataFormPageBase implements OnInit, OnDestroy {
   /**
@@ -73,8 +77,7 @@ export class UserBioDataFormPageBase implements OnInit, OnDestroy {
     private _actR: ActivatedRoute,
     private route: Router,
     private util: UtilService,
-    private user: UserService,
-    private school: SchoolService,
+    private user: UserEntityService,
     private store: Store<any>
   ) {}
 
@@ -89,11 +92,11 @@ export class UserBioDataFormPageBase implements OnInit, OnDestroy {
   remapEvent$($event: any) {
     const event$ = of($event);
     const authId$ = this._actR.queryParams.pipe(
-      map((params: { authId: string; schoolId: string }) => params.authId)
+      map((params: BiodataFormPageARQMap) => params.authId)
     );
     const schoolId$ = this.store
-      .select(processFeature)
-      .pipe(map(process => process.schoolData.schoolId));
+      .select(schoolFeature)
+      .pipe(map(school => school.id));
     return event$.pipe(
       combineLatest(authId$, schoolId$),
       map(this.remap.bind(this))
@@ -109,7 +112,6 @@ export class UserBioDataFormPageBase implements OnInit, OnDestroy {
    */
   remap([event, authId, schoolId]: [User, string, string]) {
     event.authId = authId;
-    event.id = this.util.randomuuid();
     event.school = schoolId;
     return event;
   }
@@ -159,19 +161,19 @@ export class UserBioDataFormPageBase implements OnInit, OnDestroy {
    * @memberof UserBioDataFormPageBase
    */
   schoolDetails() {
-    return this.school.entities$
-      .pipe(
-        map(schools =>
-          this.util.schoolPreset(schools[0].category || ('primary' as any))
-        ),
-        map(view => {
-          view.permisions = Object.keys(view.permisions);
-          return view;
-        })
-      )
+    return this.store
+      .select(schoolFeature)
+      .pipe(map(this.selectView))
       .subscribe(v => {
         this.view$.next(v);
       }, this.displayError.bind(this));
+  }
+
+  /** app view state for different school categories */
+  selectView({ category }: School) {
+    const view = this.util.schoolPreset(category || ('primary' as any));
+    view.permisions = Object.keys(view.permisions);
+    return view;
   }
 
   /**
@@ -213,6 +215,7 @@ export class UserBioDataFormPageBase implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.user.clearCache();
     this.storeListen();
   }
 

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiResponse } from '@dilta/authentication/src/lib/shared';
 import { dictSchool } from '@dilta/presets';
 import { formatError } from '@dilta/screwbox';
-import { ApiResponseError } from '@dilta/util/src/lib/error';
+import { ApiResponseError, ApolloResponseError } from '@dilta/util/src/lib/error';
+import { ApolloQueryResult } from 'apollo-client';
+import { FetchResult } from 'apollo-link';
 import { RxError } from 'rxdb';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { map } from 'rxjs/operators';
@@ -90,6 +92,29 @@ export class UtilService {
       throw new ApiResponseError(details);
     }
     return details.data;
+  }
+
+
+  /**
+   * cleans apollo response especially for ngrx entities
+   *
+   * @template T
+   * @param {ApolloQueryResult<T>} result
+   * @returns
+   * @memberof UtilService
+   */
+  cleanApolloQueryResponse<T>(result: ApolloQueryResult<T>)  {
+    if (result.errors) {
+      throw new ApolloResponseError(result.errors);
+    }
+    return result.data;
+  }
+
+  cleanApolloMutationResponse<T>(result: FetchResult<T, Record<string, any>>) {
+    if (result.errors) {
+      throw new ApolloResponseError(result.errors);
+    }
+    return result.context;
   }
 
 }

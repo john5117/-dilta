@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
 import { AuthFeature, Authsuccess } from '@dilta/auth-module/src/lib/ngrx';
-import { School, Setting, SettingPreference, User } from '@dilta/models';
+import { School, Setting, SettingPreference } from '@dilta/models';
 import { dictSchool } from '@dilta/presets';
 import { processFeature, ProcessState } from '@dilta/process';
 import { SchoolService } from '@dilta/store';
@@ -22,7 +22,7 @@ interface DashBoardStore {
  * @interface LocalInputs
  */
 interface LocalInputs {
-  teacher: User;
+  teacher: string;
   termList: string[];
   sessionList: string[];
   classList: string[];
@@ -56,7 +56,7 @@ function remap(p: ProcessState, b: Setting, a: Authsuccess): LocalInputs {
     ? b.settings ? (b.settings as any).others.submenus : null
     : null;
   return {
-    teacher: a.user,
+    teacher: a.details.id,
     termList: settings ? inputNames(settings.termList) : [],
     sessionList: settings ? inputNames(settings.sessionList) : [],
     classList: []

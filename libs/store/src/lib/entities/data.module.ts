@@ -6,10 +6,8 @@ import { ManagerDataService } from '@dilta/store/src/lib/entities/manager.servic
 import { ReceiptDataService } from '@dilta/store/src/lib/entities/reciept.service';
 import { SchoolDataService } from '@dilta/store/src/lib/entities/school.service';
 import { SettingDataService } from '@dilta/store/src/lib/entities/setting.service';
-import { UserDataService } from '@dilta/store/src/lib/entities/users.service';
 
 const providers = [
-  UserDataService,
   SchoolDataService,
   ManagerDataService,
   AuthDataService,

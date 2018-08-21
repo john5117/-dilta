@@ -1,11 +1,12 @@
 import { OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthFeature, AuthSignUp } from '@dilta/auth-module/src/lib/ngrx';
+import { schoolFeature } from '@dilta/commonwebui/src/lib/ngrx';
 import { Auth } from '@dilta/models';
 import { AppConfiguration } from '@dilta/platform-config/src';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { Signup } from '../../shared';
 
@@ -33,14 +34,11 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
    */
   public authLevels = ['Teacher', 'Busar', 'Manager', 'Administrator'];
 
-  public schoolId: string;
-
   public localSubscription: Subscription[] = [];
 
   constructor(
     private config: AppConfiguration,
     private route: Router,
-    private _actR: ActivatedRoute,
     private store: Store<any>
   ) {}
 
@@ -51,7 +49,11 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
    * @memberof AuthUserSignupBase
    */
   signUp($event: Signup) {
-    this.store.dispatch(new AuthSignUp({ ...$event, school: this.schoolId }));
+    this.store.select(schoolFeature)
+      .pipe(first())
+      .subscribe(({ id }) => {
+        this.store.dispatch(new AuthSignUp({ ...$event, school: id }));
+      });
   }
 
   /**
@@ -63,9 +65,8 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
   changeRoute(auth: Auth) {
     if (auth) {
       this.route.navigate([this.config.signupRedirect], {
-        queryParams: { authId: auth.id, schoolId: auth.school }
+        queryParams: { authId: auth.id }
       });
-      // this.route.navigateByUrl(`/biodata/${auth.id}`);
     }
   }
 
@@ -101,7 +102,6 @@ export class AuthUserSignupBase implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.schoolId = this._actR.snapshot.params['id'];
     this.storeListen();
   }
 
