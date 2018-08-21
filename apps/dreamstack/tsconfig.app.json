@@ -14,6 +14,7 @@
     "**/*.ts"
   ],
   "files": [
-    "../../libs/auth-module/src/lib/webcomponents/pages/auth.module.ts"
+    "../../libs/auth-module/src/lib/webcomponents/pages/auth.module.ts",
+    "../../libs/dream-users/src/lib/pages/web/dream-users.module.ts"
   ]
 }

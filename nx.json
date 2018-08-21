@@ -84,6 +84,9 @@
     },
     "platform-config": {
       "tags": []
+    },
+    "dream-users": {
+      "tags": []
     }
   },
   "implicitDependencies": {

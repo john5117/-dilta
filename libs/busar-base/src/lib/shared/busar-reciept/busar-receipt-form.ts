@@ -1,7 +1,7 @@
 import { EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Receipt, User } from '@dilta/models';
-import { confirmRequiredKeys, defaultKeys, errorInvalid, errorNotAndObject, getProp } from '@dilta/screwbox';
+import { Receipt } from '@dilta/models';
+import { defaultKeys, errorInvalid, errorNotAndObject, getProp } from '@dilta/screwbox';
 import { isEmpty } from 'lodash';
 
 // Reciept Object Keys
@@ -30,10 +30,9 @@ export class BusarReceiptFormBase implements OnInit {
   be a valid array :<busar-receipt-editor></busar-receipt-editor>`);
   public static CLASSLISTINPUTERROR = new Error(`expected classList Input to
   be a valid array :<busar-receipt-editor></busar-receipt-editor>`);
-  public static TEACHERINPUTERROR = new Error(`expected teacher property to
-  have id and name properties`);
+  public static TEACHERINPUTERROR = new Error(`expected teacher id `);
 
-  @Input() public teacher = ({} as any) as User;
+  @Input() public teacher: string;
   @Input() public reciept: Receipt;
   @Input() public termsList: string[] = [];
   @Input() public classList: string[] = [];
@@ -76,7 +75,7 @@ export class BusarReceiptFormBase implements OnInit {
    * @memberof BusarReceiptFormBase
    */
   public emit(envt: Receipt) {
-    envt.teacherId = this.teacher.id || this.reciept.teacherId;
+    envt.teacherId = this.teacher || this.reciept.teacherId;
     this.evntEmitter.emit(envt);
   }
 
@@ -101,11 +100,7 @@ export class BusarReceiptFormBase implements OnInit {
     // }
 
     if (!isEmpty(this.teacher)) {
-      confirmRequiredKeys(
-        this.teacher,
-        collectorKeys,
-        `teacher:Constructor:BusarReceiptFormBase`
-      );
+      // throwError
     }
 
     if (this.reciept) {

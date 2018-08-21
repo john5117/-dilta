@@ -5,9 +5,9 @@
 
   <!-- biodata -->
   <div>
-    <app-user-biodata-form [classes]=" (view$ | async)?.classes"
+    <dilta-user-biodata-form [classes]=" (view$ | async)?.classes"
     [subjects]="(view$ | async)?.subjects"
-    [levels]="(view$ | async)?.permisions" (emitter)="saveBiodata($event)" ></app-user-biodata-form>
+    [levels]="(view$ | async)?.permisions" (emitter)="saveBiodata($event)" ></dilta-user-biodata-form>
   </div>
 
   <p class="alert-text"> {{ err$ | async }} </p>

@@ -7,4 +7,4 @@ export * from '@dilta/store/src/lib/entities/manager.service';
 export * from '@dilta/store/src/lib/entities/reciept.service';
 export * from '@dilta/store/src/lib/entities/school.service';
 export * from '@dilta/store/src/lib/entities/setting.service';
-export * from '@dilta/store/src/lib/entities/users.service';
+

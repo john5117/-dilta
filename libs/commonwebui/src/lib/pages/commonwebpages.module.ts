@@ -6,7 +6,6 @@ import { EntityServicesModule } from '@dilta/store';
 import { UtilModule } from '@dilta/util';
 import { NgUploaderModule } from 'ngx-uploader';
 import { CommonwebuiModule } from '../shared/commonwebui.module';
-import { UserBioDataFormPageComponent } from './user-biodata-setup/admin-biodata.component';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { UserBioDataFormPageComponent } from './user-biodata-setup/admin-biodata
     RouterModule,
     EntityServicesModule
   ],
-  declarations: [UserBioDataFormPageComponent]
+  declarations: []
 })
 export class CommonWebPagesModule {}

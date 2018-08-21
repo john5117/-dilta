@@ -2,30 +2,9 @@ import { CommonModule } from '@angular/common';
 import { forwardRef, NgModule } from '@angular/core';
 import { Database } from '@dilta/offlinedatabase/src/lib/Database';
 // tslint:disable-next-line:max-line-length
-import {
-  AuthDBService,
-  ExpenseDBService,
-  ManagerDBService,
-  ParentDBService,
-  ReceiptDBService,
-  SchoolDBService,
-  ScoreDBService,
-  SettingDBService,
-  StudentDBService,
-  UserDBService
-} from '@dilta/offlinedatabase/src/lib/database.service';
+import { AuthDBService, ExpenseDBService, ManagerDBService, ParentDBService, ReceiptDBService, SchoolDBService, ScoreDBService, SettingDBService, StudentDBService } from '@dilta/offlinedatabase/src/lib/database.service';
 // tslint:disable-next-line:max-line-length
-import {
-  AuthModel,
-  ExpenseModel,
-  ManagerModel,
-  RecieptModel,
-  SchoolModel,
-  ScoreModel,
-  SettingModel,
-  StudentModel,
-  UserModel
-} from '@dilta/offlinedatabase/src/lib/model.tokens';
+import { AuthModel, ExpenseModel, ManagerModel, RecieptModel, SchoolModel, ScoreModel, SettingModel, StudentModel } from '@dilta/offlinedatabase/src/lib/model.tokens';
 
 const injectMappings = [
   {
@@ -49,10 +28,7 @@ const injectMappings = [
     provide: ScoreModel,
     useExisting: forwardRef(() => ScoreDBService)
   },
-  {
-    provide: UserModel,
-    useExisting: forwardRef(() => UserDBService)
-  },
+
   {
     provide: SettingModel,
     useExisting: forwardRef(() => SettingDBService)
@@ -76,7 +52,6 @@ const providers = [
   SchoolDBService,
   ScoreDBService,
   StudentDBService,
-  UserDBService,
   SettingDBService,
   ExpenseDBService
 ];

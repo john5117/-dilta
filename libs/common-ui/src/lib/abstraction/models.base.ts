@@ -1,9 +1,8 @@
-import { Model } from '@dilta/abstract-imp';
 import { OfflineDB } from '@dilta/models';
 import { RxCollection } from 'rxdb';
 import { Observable } from 'rxjs/observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { map, switchMap, debounceTime, delay } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 /**
  * base class for all model must adhere to has an interface for interaction
@@ -13,7 +12,7 @@ import { map, switchMap, debounceTime, delay } from 'rxjs/operators';
  * @implements {Model<T>}
  * @template T
  */
-export class ModelBase<T> implements Model<T> {
+export class ModelBase<T> {
   public collection: RxCollection<T>;
 
   constructor(

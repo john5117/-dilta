@@ -10,96 +10,35 @@
     "removeComments": false,
     "experimentalDecorators": true,
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom", "esnext.asynciterable"],
     "paths": {
-      "@dilta/process": [
-        "libs/process"
-      ],
-      "@dilta/store": [
-        "libs/store"
-      ],
-      "@dilta/commonwebui": [
-        "libs/commonwebui"
-      ],
-      "@dilta/models": [
-        "libs/models"
-      ],
-      "@dilta/util": [
-        "libs/util"
-      ],
-      "@dilta/screwbox": [
-        "libs/screwbox"
-      ],
-      "@dilta/presets": [
-        "libs/presets"
-      ],
-      "@dilta/offlinedatabase": [
-        "libs/offlinedatabase"
-      ],
-      "@dilta/security": [
-        "libs/security"
-      ],
-      "@dilta/electron": [
-        "libs/electron"
-      ],
-      "@dilta/abstract-imp": [
-        "libs/abstract-imp"
-      ],
-      "@dilta/*": [
-        "libs/*"
-      ],
-      "@dilta/auth-module": [
-        "libs/auth-module/src/index.ts"
-      ],
-      "@dilta/busar": [
-        "libs/busar/src/index.ts"
-      ],
-      "@dilta/busar-base": [
-        "libs/busar-base/src/index.ts"
-      ],
-      "common-ui/*": [
-        "dist/common-ui/*"
-      ],
-      "@dilta/common-ui": [
-        "libs/common-ui/src/index.ts"
-      ],
-      "@dilta/database": [
-        "libs/database/src/index.ts"
-      ],
-      "@dilta/embededdb": [
-        "libs/embededdb/src/index.ts"
-      ],
-      "@dilta/graphql": [
-        "libs/graphql/src/index.ts"
-      ],
-      "@dilta/server": [
-        "libs/server/src/index.ts"
-      ],
-      "@dilta/authentication": [
-        "libs/authentication/src/index.ts"
-      ],
-      "@dilta/auth-base": [
-        "libs/auth-base/src/index.ts"
-      ],
-      "@dilta/platform-config": [
-        "libs/platform-config/src/index.ts"
-      ]
+      "@dilta/process": ["libs/process"],
+      "@dilta/store": ["libs/store"],
+      "@dilta/commonwebui": ["libs/commonwebui"],
+      "@dilta/models": ["libs/models"],
+      "@dilta/util": ["libs/util"],
+      "@dilta/screwbox": ["libs/screwbox"],
+      "@dilta/presets": ["libs/presets"],
+      "@dilta/offlinedatabase": ["libs/offlinedatabase"],
+      "@dilta/security": ["libs/security"],
+      "@dilta/electron": ["libs/electron"],
+      "@dilta/abstract-imp": ["libs/abstract-imp"],
+      "@dilta/*": ["libs/*"],
+      "@dilta/auth-module": ["libs/auth-module/src/index.ts"],
+      "@dilta/busar": ["libs/busar/src/index.ts"],
+      "@dilta/busar-base": ["libs/busar-base/src/index.ts"],
+      "@dilta/common-ui": ["libs/common-ui/src/index.ts"],
+      "@dilta/database": ["libs/database/src/index.ts"],
+      "@dilta/embededdb": ["libs/embededdb/src/index.ts"],
+      "@dilta/graphql": ["libs/graphql/src/index.ts"],
+      "@dilta/server": ["libs/server/src/index.ts"],
+      "@dilta/authentication": ["libs/authentication/src/index.ts"],
+      "@dilta/auth-base": ["libs/auth-base/src/index.ts"],
+      "@dilta/platform-config": ["libs/platform-config/src/index.ts"],
+      "@dilta/dream-users": ["libs/dream-users/src/index.ts"]
     },
     "baseUrl": "."
   },
-  "exclude": [
-    "test.ts",
-    "apps/demo",
-    "**/*.spec.ts",
-    "src/test.ts"
-  ],
-  "include": [
-    "**/*.ts"
-  ]
+  "exclude": ["test.ts", "apps/demo", "**/*.spec.ts", "src/test.ts"]
 }

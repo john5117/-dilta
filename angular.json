@@ -1051,6 +1051,34 @@
           }
         }
       }
+    },
+    "dream-users": {
+      "root": "libs/dream-users",
+      "sourceRoot": "libs/dream-users/src",
+      "projectType": "library",
+      "prefix": "dilta",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/dream-users/src/test.ts",
+            "tsConfig": "libs/dream-users/tsconfig.spec.json",
+            "karmaConfig": "libs/dream-users/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/dream-users/tsconfig.lib.json",
+              "libs/dream-users/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo",

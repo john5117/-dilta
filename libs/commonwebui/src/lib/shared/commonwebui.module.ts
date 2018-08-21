@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ClarityModule, ClrFormsNextModule } from '@clr/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgUploaderModule } from 'ngx-uploader';
-import { AdminBiodataEditorComponent } from './admin-biodata-editor/admin-biodata-editor.component';
 import { PreferencesFormComponent } from './app-preferences-form/app-preferences-form.component';
 import { PreferencesFormListComponent } from './app-preferences-list/preferences-list.component';
 // import { DynamicDataGridComponent } from './dynamic-datagrid/dynamic-datagrid.component';
@@ -20,7 +19,6 @@ const _comps = [
   SideBarComponent,
   PreferencesFormListComponent,
   StudentBiodataEditorComponent,
-  AdminBiodataEditorComponent,
   ManagersBiodataEditorComponent,
   ParentBiodataEditorComponent,
   SchoolBiodataEditorComponent,
