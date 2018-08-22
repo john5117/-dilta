@@ -15,6 +15,5 @@ export class BusarHomePageBase implements OnInit {
   }
 
   ngOnInit() {
-    this.busary.checkBusarySettings();
   }
 }

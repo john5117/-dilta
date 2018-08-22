@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { EntityNames } from '@dilta/commonwebui/src/lib/ngrx/entities/constants';
-import { GeneralClientGQLServicesModule } from '@dilta/commonwebui/src/lib/services';
-import { EntityDataService } from 'ngrx-data';
+import { GeneralClientGQLServicesModule } from '@dilta/common-ui/src/lib/services';
+import { EntityNames } from '@dilta/models';
+import { EntityDataService, NgrxDataModule } from 'ngrx-data';
 import { ExpenseEntityGQLService, ExpenseEntityService } from './expense.entity';
 import { ManagerEntityGQLService, ManagerEntityService } from './manager.entity';
 import { ReceiptEntityGQLService, ReceiptEntityService } from './reciept.entity';
@@ -19,10 +19,10 @@ export const providers = [
 ];
 
 @NgModule({
-  imports: [GeneralClientGQLServicesModule],
+  imports: [NgrxDataModule.forRoot({}), GeneralClientGQLServicesModule],
   providers
 })
-export class EntityServicesModule {
+export class CommonNgrxEntityServicesModule {
   constructor(
     eds: EntityDataService,
     expense: ExpenseEntityGQLService,

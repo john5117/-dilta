@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Model } from '@dilta/abstract-imp';
-import { createExpense, deleteExpense, findExpenses, getExpense, updateExpense } from '@dilta/commonwebui/src/lib/services/graphql';
 import { Expense } from '@dilta/models';
 import { UtilService } from '@dilta/util';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
+import { createExpense, deleteExpense, findExpenses, getExpense, updateExpense } from './graphql';
 
 @Injectable()
 export class DreamExpenseService implements Model<Expense> {

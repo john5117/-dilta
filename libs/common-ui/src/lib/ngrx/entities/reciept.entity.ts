@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DreamReceiptService } from '@dilta/commonwebui/src/lib/services';
-import { Receipt } from '@dilta/models';
+import { DreamReceiptService } from '@dilta/common-ui/src/lib/services';
+import { EntityNames, Receipt } from '@dilta/models';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
-import { EntityNames } from './constants';
 import { EntityDataBase } from './entitybase';
 
 /**

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Model } from '@dilta/abstract-imp';
-import { createReceipt, deleteReceipt, findReceipts, getReceipt, updateReceipt } from '@dilta/commonwebui/src/lib/services/graphql';
 import { Receipt } from '@dilta/models';
 import { UtilService } from '@dilta/util';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
+import { createReceipt, deleteReceipt, findReceipts, getReceipt, updateReceipt } from './graphql';
 
 @Injectable()
 export class DreamReceiptService implements Model<Receipt> {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DreamManagerService } from '@dilta/commonwebui/src/lib/services';
-import { Manager } from '@dilta/models';
+import { DreamManagerService } from '@dilta/common-ui/src/lib/services';
+import { EntityNames, Manager } from '@dilta/models';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
-import { EntityNames } from './constants';
 import { EntityDataBase } from './entitybase';
 
 /**

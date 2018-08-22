@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component } from '@angular/core';
 import { BusarExpenseFormPageBase } from '@dilta/busar-base';
-import { SchoolService } from '@dilta/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'busar-expense-web',
@@ -9,7 +8,7 @@ import { SchoolService } from '@dilta/store';
   styleUrls: ['./busar-expense-form.component.scss']
 })
 export class BusarExpenseWebFormComponent extends BusarExpenseFormPageBase {
-  constructor(store: Store<any>, school: SchoolService) {
-    super(store, school);
+  constructor(store: Store<any>) {
+    super(store);
   }
 }

@@ -4,13 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterState } from '@dilta/common-ui';
 import { AppConfiguration, WebPlatformConfigModule } from '@dilta/platform-config/src';
-import { entityMetadata } from '@dilta/store';
 import { LoggerService } from '@dilta/util';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/nx';
-import { NgrxDataModule } from 'ngrx-data';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { DreamstackRoutingModule } from './app.routing.module';
@@ -29,9 +27,6 @@ const config: AppConfiguration = {
     BrowserModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
-    NgrxDataModule.forRoot({
-      entityMetadata
-    }),
     EffectsModule.forRoot([]),
     !environment.production
       ? StoreDevtoolsModule.instrument({

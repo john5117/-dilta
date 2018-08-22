@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Model } from '@dilta/abstract-imp';
-import { createSetting, deleteSetting, findSettings, getSetting, updateSetting } from '@dilta/commonwebui/src/lib/services/graphql';
 import { Setting } from '@dilta/models';
 import { UtilService } from '@dilta/util';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
+import { createSetting, deleteSetting, findSettings, getSetting, updateSetting } from './graphql';
 
 @Injectable()
 export class DreamSettingService implements Model<Setting> {

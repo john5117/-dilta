@@ -1,6 +1,6 @@
 import { OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { schoolFeature } from '@dilta/commonwebui/src/lib/ngrx';
+import { schoolFeature } from '@dilta/common-ui/src/lib/ngrx';
 import { UserEntityService } from '@dilta/dream-users/src/lib/services/dream-users.entity';
 import { School, User } from '@dilta/models';
 import { SchoolDict } from '@dilta/presets';

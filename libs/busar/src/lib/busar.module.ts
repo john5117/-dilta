@@ -1,19 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClarityModule } from '@clr/angular';
+import { BusaryNgrxModule } from '@dilta/busar-base';
+import { CommonNgrxEntityServicesModule } from '@dilta/common-ui/src';
 import { CommonwebuiModule } from '@dilta/commonwebui';
-// tslint:disable-next-line:max-line-length
-import {
-  BusarHomePageComponent,
-  BusarInfoDashboardComponent,
-  BusarPreferencesComponent,
-  BusarRecieptWebFormComponent,
-  BusarExpenseWebFormComponent
-} from './pages';
 import { BusarRoutingModule } from './busar-routes.module';
 import { BusarDumbsModule } from './dumbcomponents';
-import { BusaryNgrxModule } from '@dilta/busar-base';
-import { EntityServicesModule } from '@dilta/store';
+// tslint:disable-next-line:max-line-length
+import { BusarExpenseWebFormComponent, BusarHomePageComponent, BusarInfoDashboardComponent, BusarPreferencesComponent, BusarRecieptWebFormComponent } from './pages';
 
 @NgModule({
   imports: [
@@ -23,7 +17,7 @@ import { EntityServicesModule } from '@dilta/store';
     ClarityModule,
     CommonwebuiModule,
     BusaryNgrxModule,
-    EntityServicesModule
+    CommonNgrxEntityServicesModule
   ],
   exports: [
     BusarDumbsModule,

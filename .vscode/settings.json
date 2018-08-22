@@ -14,7 +14,7 @@
     "source.organizeImports": true
   },
   "typescript.implementationsCodeLens.enabled": true,
-  "typescript.tsdk": "C:\\Users\\AbiZeus\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
