@@ -1,9 +1,9 @@
 import { OnInit } from '@angular/core';
 import { AuthFeature, Authsuccess } from '@dilta/auth-module/src/lib/ngrx';
+import { schoolFeature } from '@dilta/common-ui/src';
 import { School, Setting, SettingPreference } from '@dilta/models';
 import { dictSchool } from '@dilta/presets';
 import { processFeature, ProcessState } from '@dilta/process';
-import { SchoolService } from '@dilta/store';
 import { select, Store } from '@ngrx/store';
 import { isNil } from 'lodash';
 import { Observable } from 'rxjs/observable';
@@ -71,10 +71,7 @@ interface EntitySchool {
 export class BusarPaymentBase implements OnInit {
   localStore$: Observable<LocalInputs>;
 
-  constructor(
-    public store: Store<DashBoardStore>,
-    public school: SchoolService
-  ) {}
+  constructor(public store: Store<DashBoardStore>) {}
 
   /**
    * sets the localstore to remaped inputs for the view
@@ -84,9 +81,7 @@ export class BusarPaymentBase implements OnInit {
   storeListen() {
     this.localStore$ = this.store.pipe(
       select(localInputStateSelector),
-      combineLatest(
-        this.school.entities$.pipe(map(e => e[0]), skipWhile(isNil))
-      ),
+      combineLatest(this.store.select(schoolFeature)),
       map(this.remapInput),
       skipWhile(
         ({ sessionList, teacher }) => sessionList === [] || isNil(teacher)

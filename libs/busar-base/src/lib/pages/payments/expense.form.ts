@@ -1,9 +1,8 @@
-import { BusarPaymentBase } from './payments.form';
 import { Store } from '@ngrx/store';
-import { SchoolService } from '@dilta/store';
+import { BusarPaymentBase } from './payments.form';
 
 export class BusarExpenseFormPageBase extends BusarPaymentBase {
-  constructor(store: Store<any>, school: SchoolService) {
-    super(store, school);
+  constructor(store: Store<any>) {
+    super(store);
   }
 }

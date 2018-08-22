@@ -1,7 +1,7 @@
 import { OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFeature, AuthSignUp } from '@dilta/auth-module/src/lib/ngrx';
-import { schoolFeature } from '@dilta/commonwebui/src/lib/ngrx';
+import { schoolFeature } from '@dilta/common-ui/src';
 import { Auth } from '@dilta/models';
 import { AppConfiguration } from '@dilta/platform-config/src';
 import { Store } from '@ngrx/store';

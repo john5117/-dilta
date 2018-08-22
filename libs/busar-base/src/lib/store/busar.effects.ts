@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-// tslint:disable-next-line:max-line-length
+import { DreamSettingService, schoolFeature } from '@dilta/common-ui/src';
+import { Setting } from '@dilta/models';
+import { InitalBusaryPreset, SettingTypes } from '@dilta/presets';
+import { Actions, Effect } from '@ngrx/effects';
+import { createFeatureSelector, Store } from '@ngrx/store';
+import { isNil } from 'lodash';
+import { of } from 'rxjs/observable/of';
+import { catchError, exhaustMap, map, skipWhile, tap } from 'rxjs/operators';
 import {
   BusarActionTypes,
   BusarDelete,
@@ -9,28 +16,6 @@ import {
   BusarSave,
   BusarUpdate
 } from './busar.actions';
-import { Settings, Setting } from '@dilta/models';
-import {
-  SchoolDBService,
-  SettingDBService
-} from '@dilta/offlinedatabase/src/lib/database.service';
-import { InitalBusaryPreset, SettingTypes } from '@dilta/presets';
-import { processFeature, SettingsEffects } from '@dilta/process';
-import { Actions, Effect } from '@ngrx/effects';
-import { createFeatureSelector, Store } from '@ngrx/store';
-import { of } from 'rxjs/observable/of';
-import {
-  catchError,
-  exhaustMap,
-  map,
-  switchMap,
-  tap,
-  debounce,
-  debounceTime,
-  skipWhile
-} from 'rxjs/operators';
-import { SchoolDataService, SettingDataService } from '@dilta/store';
-import { isNil } from 'lodash';
 
 export const BusaryStoreFeatureName = 'busary';
 export const BusarFeature = createFeatureSelector<Setting>(
@@ -48,12 +33,13 @@ export class BusaryEffects {
   loadBusary$ = this.actions$.ofType<BusarLoad>(BusarActionTypes.Load).pipe(
     skipWhile(action => isNil(action.payload)),
     exhaustMap(e =>
-      this.setting.retrieve$({
+      this.setting.find$({
         type: SettingTypes.school,
         owner: e.payload,
         school: e.payload
       })
     ),
+    map(([setting]) => setting),
     map(setting => {
       if (setting) {
         return setting;
@@ -102,16 +88,14 @@ export class BusaryEffects {
   deleteBusary$ = this.actions$
     .ofType<BusarDelete>(BusarActionTypes.Delete)
     .pipe(
-      exhaustMap(action => this.school.delete$({ id: action.payload })),
+      exhaustMap(action => this.setting.delete$(action.payload)),
       map(d => new BusarReset())
     );
 
   constructor(
     private actions$: Actions,
     private store: Store<any>,
-    public setting: SettingDBService,
-    private school: SchoolDBService,
-    private globalSettings: SettingsEffects
+    public setting: DreamSettingService
   ) {}
 
   /**
@@ -121,38 +105,13 @@ export class BusaryEffects {
    */
   presetBusary$() {
     return this.store
-      .select(processFeature)
+      .select(schoolFeature)
       .pipe(
-        exhaustMap(({ schoolData }) =>
-          this.school.retrieve$({ id: schoolData.schoolId })
-        ),
-        map(school => InitalBusaryPreset(school.category, school.id)),
+        exhaustMap(({ id }) => this.setting.find$({ owner: id, school: id })),
+        map(([school]) => school),
+        map(school => InitalBusaryPreset(school.type as any, school.id)),
         tap(e => console.log({ e }))
       );
-  }
-
-  /**
-   * Loads the application settings
-   *
-   * @returns
-   * @memberof BusaryEffects
-   */
-  loadBusarySettings() {
-    return this.store.select(processFeature).subscribe(e => {
-      if (e.schoolData) {
-        this.store.dispatch(new BusarLoad(e.schoolData.schoolId));
-      }
-    });
-  }
-
-  /**
-   * checks for the necessary busarys and application settings  when application is loaded
-   *
-   * @memberof SettingsEffects
-   */
-  checkBusarySettings() {
-    this.globalSettings.defaultLoadings();
-    this.loadBusarySettings();
   }
 }
 

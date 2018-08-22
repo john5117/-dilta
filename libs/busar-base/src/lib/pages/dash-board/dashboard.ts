@@ -1,7 +1,6 @@
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { busarExpenseSummary, busarRevenueSummary } from '@dilta/generator/src/lib/school.data';
-import { SchoolService } from '@dilta/store';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 
@@ -12,7 +11,6 @@ export class BusarDashBoardBase implements OnInit {
 
   constructor(
     private store: Store<any>,
-    private school: SchoolService,
     private router: Router
   ) {}
 

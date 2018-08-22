@@ -1,19 +1,12 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReceiptEntityService } from '@dilta/common-ui/src';
 import { receipt } from '@dilta/generator';
 import { Receipt } from '@dilta/models';
-import { ReceiptService, SchoolService } from '@dilta/store';
 import { Store } from '@ngrx/store';
 import { isNil, last } from 'lodash';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import {
-  exhaustMap,
-  first,
-  map,
-  skipWhile,
-  tap,
-  withLatestFrom
-} from 'rxjs/operators';
+import { exhaustMap, first, map, skipWhile, tap, withLatestFrom } from 'rxjs/operators';
 import { BusarFeature } from '../../store';
 import { BusarPaymentBase } from './payments.form';
 
@@ -48,13 +41,12 @@ export class BusarRecieptFormPageBase extends BusarPaymentBase
   onReciept$ = new BehaviorSubject<Receipt>(null);
 
   constructor(
-    public school: SchoolService,
     public store: Store<any>,
     public route: ActivatedRoute,
     public router: Router,
-    public reciptSvc: ReceiptService
+    public reciptSvc: ReceiptEntityService
   ) {
-    super(store, school);
+    super(store);
   }
 
   /**

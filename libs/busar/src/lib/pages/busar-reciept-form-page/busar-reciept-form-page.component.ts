@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusarRecieptFormPageBase } from '@dilta/busar-base';
-import { RouterState } from '@dilta/common-ui';
-import { ReceiptService, SchoolService } from '@dilta/store';
+import { ReceiptEntityService, RouterState } from '@dilta/common-ui';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -15,13 +14,12 @@ export class BusarRecieptWebFormComponent extends BusarRecieptFormPageBase
   displayRecieptForm = true;
   constructor(
     store: Store<any>,
-    school: SchoolService,
-    reciptSvc: ReceiptService,
+    reciptSvc: ReceiptEntityService,
     route: ActivatedRoute,
     public router: Router,
     public routerState: RouterState
   ) {
-    super(school, store, route, router, reciptSvc);
+    super(store, route, router, reciptSvc);
   }
 
   goback() {
