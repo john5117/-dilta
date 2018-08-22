@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { EntityNames } from '@dilta/commonwebui/src/lib/ngrx/entities/constants';
+import { EntityDataBase } from '@dilta/commonwebui/src/lib/ngrx/entities/entitybase';
 import { User } from '@dilta/models';
-import { EntityNames } from '@dilta/store/src/lib/entities/constants';
-import { EntityDataBase } from '@dilta/store/src/lib/entities/entitybase';
 import { EntityServiceBase, EntityServiceFactory } from 'ngrx-data';
 import { DreamUserService } from './dream-users.service';
 

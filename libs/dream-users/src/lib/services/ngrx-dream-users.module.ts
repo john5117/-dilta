@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { EntityNames } from '@dilta/store';
+import { EntityNames } from '@dilta/commonwebui/src/lib/ngrx/entities/constants';
 import { UtilService } from '@dilta/util';
 import { ApolloModule } from 'apollo-angular';
 import { EntityDataService, NgrxDataModule } from 'ngrx-data';

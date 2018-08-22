@@ -392,37 +392,6 @@
       },
       "prefix": "app"
     },
-    "offlinedatabase": {
-      "root": "libs/offlinedatabase",
-      "sourceRoot": "libs/offlinedatabase/src",
-      "projectType": "library",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/offlinedatabase/src/test.ts",
-            "karmaConfig": "libs/offlinedatabase/karma.conf.js",
-            "scripts": [],
-            "styles": [],
-            "assets": [],
-            "tsConfig": "libs/offlinedatabase/tsconfig.spec.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/offlinedatabase/tsconfig.lib.json",
-              "libs/offlinedatabase/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      },
-      "prefix": "app"
-    },
     "presets": {
       "root": "libs/presets",
       "sourceRoot": "libs/presets/src",
@@ -538,37 +507,6 @@
             "tsConfig": [
               "libs/security/tsconfig.lib.json",
               "libs/security/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      },
-      "prefix": "app"
-    },
-    "store": {
-      "root": "libs/store",
-      "sourceRoot": "libs/store/src",
-      "projectType": "library",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/store/src/test.ts",
-            "karmaConfig": "libs/store/karma.conf.js",
-            "scripts": [],
-            "styles": [],
-            "assets": [],
-            "tsConfig": "libs/store/tsconfig.spec.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/store/tsconfig.lib.json",
-              "libs/store/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -1081,7 +1019,7 @@
       }
     }
   },
-  "defaultProject": "demo",
+  "defaultProject": "dreamstack",
   "cli": {
     "defaultCollection": "@nrwl/schematics"
   }
